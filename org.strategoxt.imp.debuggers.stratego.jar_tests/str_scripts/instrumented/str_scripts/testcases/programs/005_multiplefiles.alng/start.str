@@ -1,0 +1,18 @@
+module start
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  foo/bar
+
+
+strategies
+  start-it =
+    s-enter(|"start.str", "start-it", "7,4,7,20")
+    ; s-step(|"start.str", "7,15,7,20")
+    ; my-bar
+    < s-exit(|"start.str", "start-it", "7,4,7,20")
+    + s-exit(|"start.str", "start-it", "7,4,7,20")
+      ; fail

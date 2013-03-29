@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="org.strategoxt.imp.debuggers.stratego.runtime" default="release">
+
+	<property name="src.java.dir" value="src"/>
+    <!-- generated java files from stratego code using strj -->
+	<property name="build.dir" value="build"/>
+	<property name="src.java-generated.dir" value="${build.dir}/java-str-lib"/>
+	<property name="str-lib.dir" value="${build.dir}/str-lib"/>
+	
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="jar.dir" value="${build.dir}/jar" />
+
+	<property name="jar.name" value="org.strategoxt.imp.debuggers.stratego.runtime" />
+	
+	<property name="lib.dir" value="lib" />
+	<property name="debug.interfaces.java.project.location" value="../org.spoofax.debug.interfaces.java" />
+	<property name="debug.interfaces.project.location" value="../org.spoofax.debug.interfaces" />
+
+    <path id="my_classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <fileset dir="${debug.interfaces.java.project.location}/build/jar" includes="**/*.jar"/>
+        <fileset dir="${debug.interfaces.project.location}/build/jar" includes="**/*.jar"/>
+
+    </path>
+    
+	<target name="generate-java">
+		<mkdir dir="${str-lib.dir}"/>
+		<mkdir dir="${src.java-generated.dir}"/>
+		<exec executable="sh">
+			<arg value="make-lib.sh"/>
+		</exec>
+	</target>
+	
+	<target name="compile" depends="generate-java">
+		<mkdir dir="${classes.dir}"/>
+		<javac destdir="${classes.dir}" classpathref="my_classpath" source="1.5" target="1.5" debug="on">
+			<src path="${src.java.dir}"/>
+		    <src path="${src.java-generated.dir}"/>
+		</javac>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar basedir="${classes.dir}" destfile="${jar.dir}/${jar.name}.tmp.jar"/>
+		<move file="${jar.dir}/${jar.name}.tmp.jar" tofile="${jar.dir}/${jar.name}.jar"/>
+	</target>
+
+	<target name="jar-source">
+		<jar destfile="${jar.dir}/${jar.name}-source.tmp.jar">
+			<fileset dir="${src.java.dir}" />
+			<fileset dir="${src.java-generated.dir}" />
+		</jar>
+		<move file="${jar.dir}/${jar.name}-source.tmp.jar" tofile="${jar.dir}/${jar.name}-source.jar" />
+	</target>
+	
+	<target name="release" depends="clean, jar, jar-source" />
+</project>

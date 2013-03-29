@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="org.strategoxt.imp.debuggers.stratego.jar_tests" default="update-jars" basedir=".">
+
+	<property name="lib.dsldi.dir" location="lib/instrumentation" />
+	<property name="lib.stratego.dir" location="lib/stratego" />
+	<property name="lib.runtime.dir" location="lib/runtime" />
+
+	<loadproperties srcFile="config.properties" />
+	<import file="build.libs.xml"/>
+
+	<target name="copy-stratego-di-jars">
+		<mkdir dir="${lib.stratego.dir}"/>
+		<copy file="${stratego-di.project}/build/jar/stratego-di.jar" todir="${lib.stratego.dir}"/>
+		<copy file="${stratego-di.project}/build/jar/stratego-di-source.jar" todir="${lib.stratego.dir}"/>
+	</target>
+	<target name="build-stratego-di-jars" if="build.libraries">
+		<ant antfile="${stratego-di.project}/build.main.xml" dir="${stratego-di.project}"/>
+	</target>
+
+	<target name="copy-stratego-sugar-jars">
+		<mkdir dir="${lib.stratego.dir}"/>
+		<copy file="${stratego.project}/include/stratego_sugar-java.jar" todir="${lib.stratego.dir}" overwrite="true"/>
+		<copy file="${stratego.project}/include/stratego_sugar.jar" todir="${lib.stratego.dir}" overwrite="true"/>
+	</target>
+
+	<target name="copy-stratego-runtime-jars">
+		<mkdir dir="${lib.runtime.dir}"/>
+		<copy file="${stratego-debug-runtime.project}/build/jar/org.strategoxt.imp.debuggers.stratego.runtime.jar" todir="${lib.runtime.dir}" overwrite="true"/>
+		<copy file="${stratego-debug-runtime.project}/build/jar/org.strategoxt.imp.debuggers.stratego.runtime-source.jar" todir="${lib.runtime.dir}" overwrite="true"/>
+		<copy file="${stratego-debug-runtime.project}/build/str-lib/org.strategoxt.imp.debuggers.stratego.runtime.rtree" todir="${lib.runtime.dir}" overwrite="true"/>
+	</target>
+
+	<target name="update-stratego-jars" depends="copy-stratego-di-jars, copy-stratego-sugar-jars, copy-stratego-runtime-jars">
+		<!--<target name="update-stratego-jars" depends="build-stratego-di-jars,copy-stratego-di-jars">-->
+		<description>Get all the required jars from the stratego projects</description>
+		<!-- TODO: also rebuild the stratego_sugar.jar from org.strategoxt.imp.editors.stratego -->
+	</target>
+
+	<target name="update-jars" depends="update-libraries,update-stratego-jars" />
+	
+	<!-- TODO: bootstrap: 
+	put jdi.jar and jdimodel.jar in lib/jdi
+	put ecj-3.8.jar and ecjsrc-3.8.jar in lib/ecj
+	-->
+</project>

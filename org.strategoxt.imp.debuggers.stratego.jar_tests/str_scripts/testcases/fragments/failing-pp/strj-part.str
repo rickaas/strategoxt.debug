@@ -1,0 +1,4 @@
+module strj-part
+strategies
+  foo =
+    foo := $[StringStuff [<output-dirname>]]

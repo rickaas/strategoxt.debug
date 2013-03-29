@@ -1,0 +1,3 @@
+instrumentation 
+
+event enter at StrategyDef._ creates gen-strategy-enter from extract-strategy-info

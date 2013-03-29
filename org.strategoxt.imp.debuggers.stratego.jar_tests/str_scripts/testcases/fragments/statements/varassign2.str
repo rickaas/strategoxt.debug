@@ -1,0 +1,47 @@
+module localvar
+
+signature
+  sorts
+    Prop
+
+  constructors
+    False : Prop
+    
+    
+    
+// =============  
+// test rules
+
+rules
+  foo1 : t -> t'
+  with t' := t; try(get)
+
+  foo1(s) : t -> t'
+  with t' := t
+
+  foo1(s|term) : t -> t'
+  with t' := t
+
+  foo1(s|term) : t -> t'
+  where t' := t 
+ 
+  foo1(s|term) : t -> t'
+  where t' := t; try(get)
+  where t'' := t 
+
+  foo1(s|term) : t -> t'
+  with t' := t 
+  with t'' := t 
+  
+  foo:
+  	t -> <(q := <get>); start> t
+  	
+  foo:
+  	t -> <q := <get; start>> t
+  	where f := <get>; try(get) 
+
+strategies  	
+  	start = id
+  
+  get =
+    !False()

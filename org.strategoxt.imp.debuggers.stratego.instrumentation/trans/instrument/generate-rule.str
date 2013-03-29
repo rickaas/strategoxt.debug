@@ -1,0 +1,138 @@
+module instrument/generate-rule
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+imports instrument/generate-str-statements
+
+strategies
+	gen-rule-enter:
+        rule-def -> instrumented-rule-def
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
+            ;?(filename, a, b, c, d, f-name)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; functionName := $["[f-name]"]
+            ; enter-event := <create-r-enter-call(|program-filename, functionName, location)>
+            ; instrumented-rule-def := <insert-enter-event(|enter-event)> rule-def
+
+    insert-enter-event(|enter-event):
+        RDefNoArgs(r-name, r) -> RDefNoArgs(r-name, r')
+        with r' := <wrap-r-enter(|enter-event)> r
+    insert-enter-event(|enter-event):
+        RDef(r-name, s-args, r) -> RDef(r-name, s-args, r')
+        with r' := <wrap-r-enter(|enter-event)> r
+    insert-enter-event(|enter-event):
+        RDefT(r-name, s-args, t-args, r) -> RDefT(r-name, s-args, t-args, r')
+        with r' := <wrap-r-enter(|enter-event)> r
+
+    wrap-r-enter(|enter-event) :
+        RuleNoCond(match-term, build-term) -> Rule(match-term, build-term, cond* )
+        where 
+        cond* := enter-event
+          
+          
+    wrap-r-enter(|enter-event):
+        Rule(match-term, build-term, rule-cond) -> Rule(match-term, build-term, rule-cond'*)
+        where
+            // if rule-cond is a list, insert the r-exit at index 1
+            // if rule-cond is not a list, create a list
+            rule-cond'* := <add-rule-cond(|enter-event)> rule-cond
+
+    // current term can be a list with WhereClause and WithClause terms
+    // the r-enter call should be inserted before all these clauses at position 0
+    add-rule-cond(|enter-event) :
+        clause-list* -> clause-list'*
+        where <is-list> clause-list*
+        ; clause-list'* := <insert> (0, WhereClause(enter-event), clause-list*)
+        
+    // current term is not a list of WhereClause or WithClause terms
+    // current term can be a Strategy
+    // create a list of size 2, with the first term a r-enter call and the second term the original Strategy
+    add-rule-cond(|enter-event) :
+        s -> clause-list*
+        where not(<is-list> s)
+        where clause-list* := [WhereClause(enter-event), WhereClause(s)]
+
+strategies
+    
+    gen-rule-exit:
+        rule-def -> instrumented-rule-def
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
+            ;?(filename, a, b, c, d, f-name)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; functionName := $["[f-name]"]
+            ; exit-event := <create-r-exit-call(|program-filename, functionName, location)>
+            ; instrumented-rule-def := <insert-exit-event(|exit-event)> rule-def
+
+    insert-exit-event(|exit-event):
+        RDefNoArgs(r-name, r) -> RDefNoArgs(r-name, r')
+        with r' := <wrap-r-exit(|exit-event)> r
+    insert-exit-event(|exit-event):
+        RDef(r-name, s-args, r) -> RDef(r-name, s-args, r')
+        with r' := <wrap-r-exit(|exit-event)> r
+    insert-exit-event(|exit-event):
+        RDefT(r-name, s-args, t-args, r) -> RDefT(r-name, s-args, t-args, r')
+        with r' := <wrap-r-exit(|exit-event)> r
+
+    wrap-r-exit(|exit-event) :
+        RuleNoCond(match-term, build-term) -> RuleNoCond(match-term, build-term')
+        with 
+            build-term' := App(exit-event, build-term)
+    wrap-r-exit(|exit-event):
+        Rule(match-term, build-term, rule-cond) -> Rule(match-term, build-term', rule-cond'*)
+        where
+            build-term' := App(exit-event, build-term)
+            // when a rule has multiple definition each rule is executed and the current term is matched against the rule-match-term
+            // and each rule-cond is executed.
+            // We have to fire an exit event when a rule-cond fails because the first where-clause contains an enter-event
+            // and we don't know beforehand if the rule will succeed.
+            ; rule-cond'* := <try(add-block-to-conditions(|exit-event))> rule-cond
+            
+strategies
+	   // current term is not a list of WhereClause or WithClause terms
+    // current term can be a Strategy
+    add-block-to-conditions(|exit-event) :
+            s -> s'
+        where not(<is-list> s)
+        with
+            s' := <create-block(|exit-event)> s
+        
+    // current term can be a list with WhereClause and WithClause terms
+    add-block-to-conditions(|exit-event) :
+        clause-list* -> clause-list'*
+        where <is-list> clause-list*
+        ; clause-list'* := <map(try(add-block-to-clause(|exit-event)))> clause-list*
+
+    add-block-to-clause(|exit-event) :
+        WhereClause(s) -> WhereClause(s')
+        with
+            s' := <create-block(|exit-event)> s
+            
+    add-block-to-clause(|exit-event) :
+        WithClause(s) -> WithClause(s')
+        with
+            s' := <create-block(|exit-event)> s
+            
+    create-block(|exit-event) = 
+        ?s
+        ; failed-call := <create-fail-exit(|exit-event)>
+        ; !LChoice(s, failed-call) // rule-cond-body <+ r-exit-event
+    
+    // fire exit-event
+    create-fail-exit(|exit-event) = 
+        // TODO: fire a specific event to indicate that a where clause failed
+        // fail-event-call := <create-s-fail-call(|filename, r-name, a)>
+        // ; exit-event-call := <create-r-exit-call(|filename, r-name, a)>
+        // ; fail-call := <create-fail>
+        // RL: just fire the exit-event
+        !exit-event
+        // ; !Seq(Seq(fail-event-call, exit-event-call), fail-call)

@@ -1,0 +1,32 @@
+module instrument/generate-step
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+imports instrument/generate-str-statements
+
+strategies
+
+    gen-step:
+        strategy -> instrumented-strategy
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
+            ;?(filename, a, b, c, d)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; step-event := <create-step-call(|program-filename, location)>
+            ; instrumented-strategy := <insert-step-event(|step-event)> strategy
+              
+    insert-step-event(|step-event) :
+        s -> s'
+        where
+            s' := Seq(step-event, s)
+
+
+strategies
+    create-step-call(|filename, location) = !CallT(SVar("s-step"), [], [NoAnnoList(Str(filename)), NoAnnoList(Str(location))])

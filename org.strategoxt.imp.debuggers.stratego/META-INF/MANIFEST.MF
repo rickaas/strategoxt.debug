@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Stratego Debugger (spoofax)
+Bundle-SymbolicName: org.strategoxt.imp.debuggers.stratego;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.strategoxt.imp.debuggers.stratego.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.editors,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.debug,
+ org.eclipse.jdt.launching,
+ org.eclipse.imp.runtime,
+ org.spoofax.debug.core,
+ org.spoofax.debug.libraries,
+ org.strategoxt.imp.editors.stratego,
+ org.strategoxt.imp.runtime,
+ org.strategoxt.strj,
+ org.eclipse.jface.text,
+ org.strategoxt.imp.debuggers.stratego.libraries
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .
+Bundle-Vendor: Spoofax.org

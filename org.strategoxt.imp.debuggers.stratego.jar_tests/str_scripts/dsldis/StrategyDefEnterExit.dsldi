@@ -1,0 +1,4 @@
+instrumentation 
+
+event enter at StrategyDef._ creates gen-strategy-enter from extract-strategy-info
+event exit at StrategyDef._ creates gen-strategy-exit from extract-strategy-info

@@ -1,0 +1,44 @@
+module localvar
+
+signature
+
+
+  constructors
+  	
+  	Var		: String -> Expression
+  	Number	: Int -> Expression
+  	Add		: Expression * Expression -> Expression
+  	Sub		: Expression * Expression -> Expression
+  	
+  	Print	: Expression -> Statement
+  	Assign	: String * Expression -> Statement
+  	
+  	Function : String * List(Statement) -> Definition
+  	
+  	Comment : String * String -> Definition
+  	
+  	Program : String * List(Definition) -> Program
+  	
+strategies
+  main =
+    io-wrap(execute)
+    
+rules
+	execute:
+		input -> output
+		where
+			(a, b) := ("foo", "bar")
+			; debug(!"a & b should be variables ")
+			; output := a
+			
+strategies
+	create-term = Add(Number(2),Number(7))
+	
+	/*
+	// terms not allowed in the term arguments section
+	match-in-t-args(|Add(v1, v2)) :
+		current -> current
+		where
+			<debug(!"v1:")> v1
+			; <debug(!"v2:")> v2
+	  */

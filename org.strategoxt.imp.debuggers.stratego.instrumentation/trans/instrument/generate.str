@@ -1,0 +1,24 @@
+module instrument/generate
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+imports instrument/generate-str-statements
+
+strategies
+	stratego-post-instrumentation =
+        add-debug-import
+        
+strategies
+// add the imports stratego-debug-lib
+// current term should be a module
+    add-debug-import:
+        Module(x, def*) -> Module(x, def'*)
+        // insert Imports([Import("strategodebuglib")])
+        with def'* := <insert> (0, Imports([Import("org.strategoxt.imp.debuggers.stratego.runtime")]), def*)
+        // make sure strategodebuglib.rtree is on the path when compiling str to java

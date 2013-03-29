@@ -1,0 +1,24 @@
+module foo/bar
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstrategolib
+
+
+strategies
+  my-bar =
+    s-enter(|"foo/bar.str", "my-bar", "7,4,7,42")
+    ; s-step(|"foo/bar.str", "7,13,7,42")
+    ; (s-step(|"foo/bar.str", "7,13,7,14")
+       ; !4)
+    ; s-step(|"foo/bar.str", "7,17,7,42")
+    ; debug(
+        s-step(|"foo/bar.str", "7,23,7,41")
+        ; !"This is my bar! "
+      )
+    < s-exit(|"foo/bar.str", "my-bar", "7,4,7,42")
+    + s-exit(|"foo/bar.str", "my-bar", "7,4,7,42")
+      ; fail

@@ -1,0 +1,125 @@
+module instrument/initialize
+
+// some default imports
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+
+// sel imports
+imports
+  lib/libdsldi
+  
+imports
+  instrument/-
+  
+strategies
+    
+    // Initialize Stratego specific instrumentation constants.
+    // These should not differ between runs.
+    init-config =
+        <log-info-msg(|"Initializing Stratego debug instrumentation...")> ""
+        // extract:
+        ; ext-register-extract-strategy(extract-strategy-info|"extract-strategy-info")
+        ; ext-register-extract-strategy(extract-rule-info|"extract-rule-info")
+        ; ext-register-extract-strategy(extract-step-info|"extract-step-info")
+        // generate
+        ; ext-register-gen-strategy(gen-step|"gen-step")
+        ; ext-register-gen-strategy(gen-rule-enter|"gen-rule-enter")
+        ; ext-register-gen-strategy(gen-rule-exit|"gen-rule-exit")
+        ; ext-register-gen-strategy(gen-strategy-enter|"gen-strategy-enter")
+        ; ext-register-gen-strategy(gen-strategy-exit|"gen-strategy-exit")
+          
+        ; <SET-LANGUAGE-ID> "Stratego"
+        ; <SET-POST-INSTRUMENTATION-NAME> "stratego-post-instrumentation"
+        ; ext-register-post-instrumentation-strategy(stratego-post-instrumentation|"stratego-post-instrumentation")
+          
+        ; <add-dsl-specific-write-file> ("Stratego", "write-stratego-as-dsl")
+        ; ext-register-write-strategy(write-stratego-as-dsl|"write-stratego-as-dsl")
+          
+        ; <add-dsl-specific-parse-file> ("Stratego", "parse-stratego-as-dsl")
+        ; ext-register-parse-strategy(parse-stratego-as-dsl|"parse-stratego-as-dsl")
+        
+        ; <log-info-msg(|"Initializing Stratego debug instrumentation complete")> ""
+          
+        ; init-dsldi
+          
+        ; <set-config> ("--file-extension", "str")
+
+    override filter-dirs = 
+        ?paths*
+        //; log-vomit(|"Override filter-dirs ")
+        ; filter(not(is-hidden-file))
+        ; proceed
+    
+    is-hidden-file :
+        filename -> filename
+        where
+            <base-filename; string-starts-with(|".")> filename
+
+    start-instrumentation =
+        dsl-program-basepath := <GET-DSL-PROGRAM-BASEPATH>
+        ; extensions* := ["str"]
+        ; !(dsl-program-basepath, extensions*)
+        ; get-dsl-program-files // the returned files all start with the basepath
+        // remove the basepath prefix so all files are relative to the basepath
+        ; map(split-path(|dsl-program-basepath); second-tuple-item)
+        ; ?all-files // relative to GET-DSL-PROGRAM-BASEPATH
+        // exclude generated files from this list
+        ; filter-dsl-program-files
+        // check if generated file has older timestamp than input file, only instrument changed files
+        ; filter-cached-generated-files
+        ; instrument-files
+          
+    second-tuple-item:
+        (a,b) -> b
+        
+    
+    // GET-OUTPUT-BASEPATH is a subdirectory of GET-TEMP-DIRECTORY (see ICompilerPaths)
+    // if GET-TEMP-DIRECTORY is a subdirectory of GET-DSL-PROGRAM-BASEPATH then we should exclude all files from the temp directory
+    // Instrumenting (already instrumented) generated temp files is ridiculous.
+    filter-dsl-program-files = 
+        ?all-files*
+        ; if GET-TEMP-DIRECTORY; string-starts-with(|<GET-DSL-PROGRAM-BASEPATH>) then
+              log-info(|"The output directory is included in the source directory, the generated files will be excluded from instrumentation. ")
+              ; filtered-files* := <filter(not(starts-with-temp-directory))> all-files*
+          end
+          
+    starts-with-temp-directory =
+        // location is relative to GET-DSL-PROGRAM-BASEPATH
+        ?location
+        ; prefix-with(|<GET-DSL-PROGRAM-BASEPATH>)
+        ; string-starts-with(|<GET-TEMP-DIRECTORY>)
+    
+    init-dsldi =
+    	import-term(lib/Stratego.dsldi.aterm) // can only read aterms, plain-text is not supported
+    	; ?SEL(_)
+    	; SET-SEL-DEFINITION
+    
+    SET-TEMP-DIRECTORY = ?temp-directory
+    ; rules(
+        GET-TEMP-DIRECTORY: _ -> temp-directory // string
+    )
+    
+    // remove all files from the list that do not have a source file that is modified after the last instrumentation
+    filter-cached-generated-files = 
+        ?files // relative to GET-DSL-PROGRAM-BASEPATH
+        ; filter(keep-source-has-changed)
+        
+    keep-source-has-changed =
+        ?location // relative to GET-DSL-PROGRAM-BASEPATH
+//        ; GET-DSL-PROGRAM-BASEPATH; debug
+//        ; GET-OUTPUT-BASEPATH; debug
+        ; source := <prefix-with(|<GET-DSL-PROGRAM-BASEPATH>)> location
+        ; generated := <prefix-with(|<GET-OUTPUT-BASEPATH>)> location
+//        ; <debug(!"source: ")> source
+//        ; <debug(!"generated: ")> generated
+//        ; <modification-time; debug(!"generated: ")> generated
+//        ; <modification-time; debug(!"source: ")> source
+        ; if <file-newer> (source, generated) then // if generated is newer, then fail
+              <dbg(|"Source file is modified since last instrumentation: ")> source
+          else
+              <dbg(|"Reusing previous instrumented file: ")> source
+              ; fail
+          end
+        ; !location

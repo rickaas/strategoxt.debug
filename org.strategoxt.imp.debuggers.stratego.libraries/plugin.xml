@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ant.core.antProperties">
+      <antProperty
+            class="org.strategoxt.imp.debuggers.stratego.libraries.StrategoDebugAntPropertyProvider"
+            name="eclipse.stratego.di.jar">
+      </antProperty>
+      <antProperty
+            class="org.strategoxt.imp.debuggers.stratego.libraries.StrategoDebugAntPropertyProvider"
+            name="eclipse.stratego.debug.runtime.jar">
+      </antProperty>
+      <antProperty
+            class="org.strategoxt.imp.debuggers.stratego.libraries.StrategoDebugAntPropertyProvider"
+            name="eclipse.stratego.debug.runtime.rtree">
+      </antProperty>
+   </extension>
+
+</plugin>

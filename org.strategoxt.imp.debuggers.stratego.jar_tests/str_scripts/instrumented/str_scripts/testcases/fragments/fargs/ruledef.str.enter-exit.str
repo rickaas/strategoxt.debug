@@ -1,0 +1,28 @@
+module ruledef
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+rules
+
+  main :
+    input -> <r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "5,2,8,20")> output
+    where r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "5,2,8,20")
+          <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "5,2,8,20")
+    with output := input
+         <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "5,2,8,20")
+
+  main(s) :
+    input -> <r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "10,2,13,20")> output
+    where r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "10,2,13,20")
+          <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "10,2,13,20")
+    with output := input
+         <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "10,2,13,20")
+
+  main(s|t):
+    input -> <r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "15,2,18,20")> output
+    where r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "15,2,18,20")
+          <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "15,2,18,20")
+    with output := input
+         <+ r-exit(|"str_scripts/testcases/fragments/fargs/ruledef.str", "main", "15,2,18,20")

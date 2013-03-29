@@ -1,0 +1,26 @@
+Module(
+  "strj-part"
+, [ Strategies(
+      [ SDefT(
+          "foo"
+        , []
+        , []
+        , CallT(
+            SVar("log-timed")
+          , [CallT(SVar("getcwd"), [], [])]
+          , [ NoAnnoList(
+                StringQuotation1(
+                  "        "
+                , [ QStr("StringStuff ")
+                  , StringEscape1("                    ", RootApp(CallT(SVar("output-dirname"), [], [])))
+                  ]
+                )
+              )
+            , NoAnnoList(Int("1"))
+            ]
+          )
+        )
+      ]
+    )
+  ]
+)

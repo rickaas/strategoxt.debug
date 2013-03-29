@@ -1,0 +1,68 @@
+module instrument/extract
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+
+// get the name of strategies
+strategies
+
+    get-strategy-name:
+        SDefNoArgs(s-name, s) -> s-name // strategy with no args
+    get-strategy-name:
+        SDef(s-name, s-args, s) -> s-name // strategy with strategy-args
+    get-strategy-name:
+        SDefT(s-name, s-args, t-args, s) -> s-name // strategy with strategy-args and term-args
+        
+// get the name of rules
+strategies
+    get-rule-name:
+        RDefNoArgs(r-name, r) -> r-name
+    get-rule-name:
+        RDef(r-name, s-args, r) -> r-name
+    get-rule-name:
+        RDefT(r-name, s-args, t-args, r) -> r-name
+
+strategies
+    
+    extract-strategy-info:
+        f -> debug-information
+        where
+        get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+        ; filename := <GET-DSL-PROGRAM-FILENAME>
+        ; f-name := <get-strategy-name> f
+        ; debug-information := (filename, a, b, c, d, f-name)
+        //; None()
+        //; if <has-annos> matched-term then <get-annos> matched-term end
+        
+    extract-rule-info:
+        f -> debug-information
+        where
+        get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+        ; filename := <GET-DSL-PROGRAM-FILENAME>
+        ; f-name := <get-rule-name> f
+        ; debug-information := (filename, a, b, c, d, f-name)
+        //; None()
+        //; if <has-annos> matched-term then <get-annos> matched-term end
+        
+    extract-step-info:
+        f -> debug-information
+        where
+            get-a-b-c-d ; ?(a,b,c,d) // (1-based, 0-based, 1-based, 0-based)
+            ; filename := <GET-DSL-PROGRAM-FILENAME>
+            ; debug-information := (filename, a, b, c, d)
+
+strategies
+    
+        // return the name of the Var   
+    get-var-name:
+        Var(name) -> name
+        where not (?Var(ListVar(lv)))
+    // return the name of the Var  
+    get-var-name:
+        Var(ListVar(name)) -> name

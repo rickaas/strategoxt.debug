@@ -1,0 +1,22 @@
+Module(
+  "tiny"
+, [ Imports([Import("libstrategolib")])
+  , Strategies(
+      [ SDefNoArgs(
+          "main"
+        , Seq(
+            CallNoArgs(SVar("foo"))
+          , Seq(
+              Build(
+                NoAnnoList(
+                  List([NoAnnoList(Int("3")), NoAnnoList(Int("5"))])
+                )
+              )
+            , Call(SVar("map"), [CallNoArgs(SVar("inc"))])
+            )
+          )
+        )
+      ]
+    )
+  ]
+)

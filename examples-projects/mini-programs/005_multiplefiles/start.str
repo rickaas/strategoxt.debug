@@ -1,0 +1,13 @@
+module start
+
+imports
+    foo/bar
+    
+strategies
+    
+    main = 
+    	start-it
+    	; debug
+    
+    start-it = 
+    	my-bar

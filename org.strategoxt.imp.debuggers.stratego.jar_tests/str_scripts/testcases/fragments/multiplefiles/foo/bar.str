@@ -1,0 +1,8 @@
+module foo/bar
+
+imports
+    libstrategolib
+    
+strategies
+    
+    my-bar = !4; debug(!"This is my bar! ")

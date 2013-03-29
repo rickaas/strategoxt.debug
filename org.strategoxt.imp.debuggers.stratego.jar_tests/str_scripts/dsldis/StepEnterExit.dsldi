@@ -1,0 +1,9 @@
+instrumentation 
+
+event step at Strategy._ creates gen-step from extract-step-info
+
+event enter at RuleDef._ creates gen-rule-enter from extract-rule-info
+event exit at RuleDef._ creates gen-rule-exit from extract-rule-info
+
+event enter at StrategyDef._ creates gen-strategy-enter from extract-strategy-info
+event exit at StrategyDef._ creates gen-strategy-exit from extract-strategy-info

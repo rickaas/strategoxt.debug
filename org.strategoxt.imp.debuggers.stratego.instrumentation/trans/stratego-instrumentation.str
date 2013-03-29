@@ -1,0 +1,13 @@
+module stratego-instrumentation
+
+imports
+    instrument/-
+imports
+    libdsldi
+    
+strategies
+    
+    stratego-di-cli-main = 
+        option-wrap(create-dsldi-options, stratego-di-main)
+
+    stratego-di-main = init-config ; execute

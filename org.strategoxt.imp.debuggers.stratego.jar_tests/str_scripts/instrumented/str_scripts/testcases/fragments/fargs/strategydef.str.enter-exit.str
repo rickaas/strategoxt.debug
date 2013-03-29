@@ -1,0 +1,27 @@
+module strategydef
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
+  main =
+    s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "4,4,4,12")
+    ; id
+    < s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "4,4,4,12")
+    + s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "4,4,4,12")
+      ; fail
+
+  main(s) =
+    s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "6,4,6,15")
+    ; id
+    < s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "6,4,6,15")
+    + s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "6,4,6,15")
+      ; fail
+
+  main(s|t) =
+    s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "8,4,8,17")
+    ; id
+    < s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "8,4,8,17")
+    + s-exit(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "8,4,8,17")
+      ; fail

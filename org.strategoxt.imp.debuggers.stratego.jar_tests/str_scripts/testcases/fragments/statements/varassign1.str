@@ -1,0 +1,29 @@
+module localvar
+
+signature
+  sorts
+    Prop
+
+  constructors
+    False : Prop
+
+
+strategies
+
+// ===========
+// test strategies
+
+  do =
+    foo := <get>
+    
+  do1 = where(bar := <get>); debug  
+
+  do2(s) = where(bar := <get>); debug
+
+  do3(s|t) = where(bar := <get>; foo := <get>); baz := <get>
+  
+  do4(s|t) = where(bar := <get>; foo := <get>); baz := <get>; bas := <get>
+
+strategies
+  get =
+    !False()

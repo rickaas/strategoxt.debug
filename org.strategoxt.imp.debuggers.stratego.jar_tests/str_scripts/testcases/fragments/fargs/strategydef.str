@@ -1,0 +1,8 @@
+module strategydef
+
+strategies
+    main = id
+
+    main(s) = id
+
+    main(s|t) = id

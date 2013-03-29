@@ -1,0 +1,347 @@
+Module(
+  "test-prop"
+, [ Imports([Import("stratego-debug-lib")])
+  , Imports([Import("libstrategolib")])
+  , Signature(
+      [ Sorts([SortNoArgs("Prop")])
+      , Constructors(
+          [ OpDecl("False", ConstType(SortNoArgs("Prop")))
+          , OpDecl("True", ConstType(SortNoArgs("Prop")))
+          , OpDecl(
+              "Atom"
+            , FunType([ConstType(SortNoArgs("String"))], ConstType(SortNoArgs("Prop")))
+            )
+          , OpDecl(
+              "Not"
+            , FunType([ConstType(SortNoArgs("Prop"))], ConstType(SortNoArgs("Prop")))
+            )
+          , OpDecl(
+              "And"
+            , FunType(
+                [ConstType(SortNoArgs("Prop")), ConstType(SortNoArgs("Prop"))]
+              , ConstType(SortNoArgs("Prop"))
+              )
+            )
+          , OpDecl(
+              "Or"
+            , FunType(
+                [ConstType(SortNoArgs("Prop")), ConstType(SortNoArgs("Prop"))]
+              , ConstType(SortNoArgs("Prop"))
+              )
+            )
+          , OpDecl(
+              "Impl"
+            , FunType(
+                [ConstType(SortNoArgs("Prop")), ConstType(SortNoArgs("Prop"))]
+              , ConstType(SortNoArgs("Prop"))
+              )
+            )
+          , OpDecl(
+              "Eq"
+            , FunType(
+                [ConstType(SortNoArgs("Prop")), ConstType(SortNoArgs("Prop"))]
+              , ConstType(SortNoArgs("Prop"))
+              )
+            )
+          ]
+        )
+      ]
+    )
+  , Strategies(
+      [ SDefNoArgs(
+          "main"
+        , Seq(
+            CallT(
+              SVar("s-enter")
+            , []
+            , [NoAnnoList(Str("main")), Location(20, 2, 20, 22)]
+            )
+          , Seq(
+              Call(SVar("io-wrap"), [CallNoArgs(SVar("eval"))])
+            , CallT(SVar("s-exit"), [], [NoAnnoList(Str("main"))])
+            )
+          )
+        )
+      , SDefNoArgs(
+          "eval"
+        , Seq(
+            CallT(
+              SVar("s-enter")
+            , []
+            , [NoAnnoList(Str("eval")), Location(21, 2, 21, 21)]
+            )
+          , Seq(
+              Call(SVar("innermost"), [CallNoArgs(SVar("E"))])
+            , CallT(SVar("s-exit"), [], [NoAnnoList(Str("eval"))])
+            )
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(Op("Not", [NoAnnoList(Op("True", []))]))
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("False", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(Op("Not", [NoAnnoList(Op("False", []))]))
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("True", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "And"
+              , [NoAnnoList(Op("True", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "And"
+              , [Var("x"), NoAnnoList(Op("True", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "And"
+              , [NoAnnoList(Op("False", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("False", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "And"
+              , [Var("x"), NoAnnoList(Op("False", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("False", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Or"
+              , [NoAnnoList(Op("True", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("True", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Or"
+              , [Var("x"), NoAnnoList(Op("True", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("True", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Or"
+              , [NoAnnoList(Op("False", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Or"
+              , [Var("x"), NoAnnoList(Op("False", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Impl"
+              , [NoAnnoList(Op("True", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Impl"
+              , [Var("x"), NoAnnoList(Op("True", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("True", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Impl"
+              , [NoAnnoList(Op("False", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("True", []))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Eq"
+              , [NoAnnoList(Op("False", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("Not", [Var("x")]))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Eq"
+              , [Var("x"), NoAnnoList(Op("False", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , NoAnnoList(Op("Not", [Var("x")]))
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Eq"
+              , [NoAnnoList(Op("True", [])), Var("x")]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      , RDefNoArgs(
+          "E"
+        , Rule(
+            NoAnnoList(
+              Op(
+                "Eq"
+              , [Var("x"), NoAnnoList(Op("True", []))]
+              )
+            )
+          , App(
+              CallT(SVar("r-exit"), [], [NoAnnoList(Str("E"))])
+            , Var("x")
+            )
+          , CallT(SVar("r-enter"), [], [NoAnnoList(Str("E"))])
+          )
+        )
+      ]
+    )
+  ]
+)

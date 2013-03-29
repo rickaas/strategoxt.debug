@@ -1,0 +1,5 @@
+module onestrategydefs
+
+strategies
+	
+	foo-strat = ?match; debug(!"foo: ")

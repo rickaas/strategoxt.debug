@@ -1,0 +1,18 @@
+module ruledef
+
+rules
+
+  main:
+    input -> output
+    with
+      output := input
+
+  main(s):
+    input -> output
+    with
+      output := input
+
+  main(s|t):
+    input -> output
+    with
+      output := input

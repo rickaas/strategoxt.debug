@@ -1,0 +1,4 @@
+instrumentation 
+
+event enter at RuleDef._ creates gen-rule-enter from extract-rule-info
+event exit at RuleDef._ creates gen-rule-exit from extract-rule-info

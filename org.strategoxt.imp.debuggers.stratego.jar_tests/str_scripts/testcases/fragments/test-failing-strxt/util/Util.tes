@@ -1,0 +1,11 @@
+module stratego/gpp/Util
+strategies
+
+  gpp-topdown-fputs(|stream) =
+    where(Stream(pointer) := stream)
+    ; topdown(
+        try(
+          is-string
+          ; where(gpp-fputs(|pointer))
+        )
+      )

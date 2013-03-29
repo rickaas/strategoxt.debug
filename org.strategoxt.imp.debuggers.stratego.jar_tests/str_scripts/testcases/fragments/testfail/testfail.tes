@@ -1,0 +1,49 @@
+module testfail
+
+signature
+
+
+  constructors
+  	
+  	Var		: String -> Expression
+  	Number	: Int -> Expression
+  	Add		: Expression * Expression -> Expression
+  	Sub		: Expression * Expression -> Expression
+  	
+  	Print	: Expression -> Statement
+  	Assign	: String * Expression -> Statement
+  	
+  	Function : String * List(Statement) -> Definition
+  	
+  	Comment : String * String -> Definition
+  	
+  	Program : String * List(Definition) -> Program
+  	
+strategies
+  main =
+    io-wrap(execute)
+    
+rules
+	execute :
+		input -> output
+		where
+			i' := create-input
+			; output := test-i <+ test-i2
+			
+	test-i2:
+		input -> output
+		with
+			output := <fail>
+			
+	test-ii2(s1, s2| t) =
+		\ input -> output with output := <fail> ; test := t \ < s1 + (s2; fail)
+strategies
+	create-input = !["fda"]
+	
+	is-empty = ?[]
+	
+	test-i = is-empty
+	
+	create-fail(s) = s; fail
+	
+	test-fail(s1, s2, s3) =  s1 < s2 + s3

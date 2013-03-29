@@ -1,0 +1,11 @@
+module strategydef
+
+strategies
+    main = s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "4,4,4,12") 
+        ; id
+
+    main(s) = s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "6,4,6,15")
+        ; id
+
+    main(s|t) = s-enter(|"str_scripts/testcases/fragments/fargs/strategydef.str", "main", "8,4,8,17")
+        ; id

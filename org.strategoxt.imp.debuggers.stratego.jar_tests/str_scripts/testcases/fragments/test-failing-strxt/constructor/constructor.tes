@@ -1,0 +1,67 @@
+/**
+ * Implosion of productions that result in constructor applications.
+ *
+ * An application of a context-free production is transformed
+ * into an actual application of a constructor name to the list
+ * of children. The Stratego primitive \verb|mkterm| takes a pair
+ * of a string \verb|c| and a list of terms \verb|ts| and turns
+ * it into the term \verb|c(ts)|. The constructor \verb|c| is
+ * derived from the production. If it has a \verb|cons(c)|
+ * attribute that attribute is taken. Otherwise the production
+ * should be some derived production for regular expressions.
+ */
+module stratego/asfix/implode/constructor
+
+
+rules
+
+  /**
+   * Handles the experimental ast annotations.
+   */
+  ReplAstPattern(impl) : 
+    appl(p, ts){a*} -> term{c*}
+    where
+      <get-ast-pattern> p => pattern 
+    ; <map(impl)>ts => is
+    ; {| ReplacePlaceholder: 
+        <map-with-index({ ?(i, t) ; rules( ReplacePlaceholder : i -> t ) })>is
+      ; !pattern
+      ; rec rec(
+           alltd({ ph, t1, t2, a*, b*, c*:
+             if is-placeholder then
+               ?_{a*}
+               ; get-placeholder => ph
+               ; (  ReplacePlaceholder
+
+                 <+ "conc"#([rec, rec])
+                    ; if "conc"#([is-list, is-list]) then
+                        \ "conc"#([xs, ys]) -> <conc> (xs, ys) \
+                      end
+
+                 <+ ?"yield"#([<ReplacePlaceholder>])
+                    ; asfix-yield-appl
+
+                 <+ log(| Error()
+                        , <concat-strings>[ "Could not replace placeholder <",<write-to-string>ph,"> in pattern "
+                                          , <write-to-string>pattern]) ; <exit> 1 )
+               ; if not([] := a*) then
+                   \ t1{b*} -> t1{c*} where c* := <conc> (<map(rec)> a*, b*) \
+                 end
+             else
+               ?_{^[_ | _]}
+               ; \ t1{a*} -> t2{b*} where b* := <map(rec)> a*; t2 := <rec> t1{^[]} \
+             end
+           })
+         )
+      ; ?term{b*}
+      ; if [] := a* then
+          !b*
+        else
+          if [] := b* then
+            <conc> (a*, b*)
+          else
+            !a*
+          end
+        end
+      ; ?c*
+      |}

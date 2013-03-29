@@ -1,0 +1,157 @@
+Module(
+  "_strj-version"
+, [ Imports([Import("org.strategoxt.imp.debuggers.stratego.runtime")])
+  , Strategies(
+      [ AnnoDef(
+          [Override()]
+        , SDefNoArgs(
+            "strc-version-number"
+          , GuardedLChoice(
+              Seq(
+                CallT(
+                  SVar("s-enter")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version-number\"")), NoAnnoList(Str("\"10,11,11,28\""))]
+                )
+              , Seq(
+                  CallT(
+                    SVar("s-step")
+                  , []
+                  , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"11,4,11,28\""))]
+                  )
+                , PrimNoArgs("\"STRJ_VERSION_TERM\"")
+                )
+              )
+            , CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version-number\"")), NoAnnoList(Str("\"10,11,11,28\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-exit")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version-number\"")), NoAnnoList(Str("\"10,11,11,28\""))]
+                )
+              , Fail()
+              )
+            )
+          )
+        )
+      , AnnoDef(
+          [Override()]
+        , SDefNoArgs(
+            "svn-revision-number"
+          , GuardedLChoice(
+              Seq(
+                CallT(
+                  SVar("s-enter")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"svn-revision-number\"")), NoAnnoList(Str("\"13,11,14,28\""))]
+                )
+              , Seq(
+                  CallT(
+                    SVar("s-step")
+                  , []
+                  , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"14,4,14,28\""))]
+                  )
+                , PrimNoArgs("\"SVN_REVISION_TERM\"")
+                )
+              )
+            , CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"svn-revision-number\"")), NoAnnoList(Str("\"13,11,14,28\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-exit")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"svn-revision-number\"")), NoAnnoList(Str("\"13,11,14,28\""))]
+                )
+              , Fail()
+              )
+            )
+          )
+        )
+      , AnnoDef(
+          [Override()]
+        , SDefNoArgs(
+            "strc-version"
+          , GuardedLChoice(
+              Seq(
+                CallT(
+                  SVar("s-enter")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version\"")), NoAnnoList(Str("\"16,11,17,70\""))]
+                )
+              , Seq(
+                  CallT(
+                    SVar("s-step")
+                  , []
+                  , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"17,4,17,70\""))]
+                  )
+                , Where(
+                    Seq(
+                      CallT(
+                        SVar("s-step")
+                      , []
+                      , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"17,10,17,69\""))]
+                      )
+                    , BA(
+                        Seq(
+                          CallT(
+                            SVar("s-step")
+                          , []
+                          , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"17,11,17,18\""))]
+                          )
+                        , CallNoArgs(SVar("fprintnl"))
+                        )
+                      , NoAnnoList(
+                          Tuple(
+                            [ NoAnnoList(Op("stdout", []))
+                            , NoAnnoList(
+                                List(
+                                  [ NoAnnoList(Str("\"STRJ \""))
+                                  , RootApp(
+                                      Seq(
+                                        CallT(
+                                          SVar("s-step")
+                                        , []
+                                        , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"17,42,17,60\""))]
+                                        )
+                                      , CallNoArgs(SVar("strc-version-number"))
+                                      )
+                                    )
+                                  , NoAnnoList(Str("\"\\n\""))
+                                  ]
+                                )
+                              )
+                            ]
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            , CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version\"")), NoAnnoList(Str("\"16,11,17,70\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-exit")
+                , []
+                , [NoAnnoList(Str("\"strategoxt/strategoxt-java-backend/trans/strj-version.str\"")), NoAnnoList(Str("\"strc-version\"")), NoAnnoList(Str("\"16,11,17,70\""))]
+                )
+              , Fail()
+              )
+            )
+          )
+        )
+      ]
+    )
+  ]
+)

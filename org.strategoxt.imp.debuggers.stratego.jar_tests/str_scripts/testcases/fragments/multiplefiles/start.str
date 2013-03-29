@@ -1,0 +1,8 @@
+module start
+
+imports
+    foo/bar
+    
+strategies
+    
+    start-it = my-bar

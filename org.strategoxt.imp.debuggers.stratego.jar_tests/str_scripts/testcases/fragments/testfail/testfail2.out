@@ -1,0 +1,284 @@
+module testfail
+
+imports
+  strategodebuglib
+
+
+signature
+  constructors
+    Var      : String -> Expression
+    Number   : Int -> Expression
+    Add      : Expression * Expression -> Expression
+    Sub      : Expression * Expression -> Expression
+    Print    : Expression -> Statement
+    Assign   : String * Expression -> Statement
+    Function : String * List(Statement) -> Definition
+    Comment  : String * String -> Definition
+    Program  : String * List(Definition) -> Program
+
+
+strategies
+  main =
+    s-enter(
+    | "test/src/testfail/testfail2.tes"
+    , "main"
+    , LocationInfo("23", "3", "24", "21")
+    )
+    ; (s-step(
+       | "test/src/testfail/testfail2.tes"
+       , "main"
+       , LocationInfo("24", "5", "24", "21")
+       )
+       ; io-wrap(execute)
+       < s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "main"
+         , LocationInfo("23", "3", "24", "21")
+         )
+       + s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "main"
+         , LocationInfo("23", "3", "24", "21")
+         )
+         ; fail)
+
+
+rules
+
+  execute :
+    input -> <r-exit(
+              | "test/src/testfail/testfail2.tes"
+              , "execute"
+              , LocationInfo("27", "2", "32", "22")
+              )> output
+    where r-enter(
+          | "test/src/testfail/testfail2.tes"
+          , "execute"
+          , LocationInfo("27", "2", "32", "22")
+          )
+    where <s-var(
+           | "test/src/testfail/testfail2.tes"
+           , "execute"
+           , "input"
+           , LocationInfo("28", "3", "28", "8")
+           )> input
+    where (s-step(
+           | "test/src/testfail/testfail2.tes"
+           , "execute"
+           , LocationInfo("30", "4", "30", "24")
+           )
+           ; i' := <create-input>
+           ; s-var(
+             | "test/src/testfail/testfail2.tes"
+             , "execute"
+             , "i'"
+             , LocationInfo("30", "4", "30", "24")
+             ))
+          ; (s-step(
+             | "test/src/testfail/testfail2.tes"
+             , "execute"
+             , LocationInfo("31", "6", "31", "46")
+             )
+             ; output := <test-i <+ test-i2 <+ test-i3>
+             ; s-var(
+               | "test/src/testfail/testfail2.tes"
+               , "execute"
+               , "output"
+               , LocationInfo("31", "6", "31", "46")
+               ))
+          ; s-step(
+            | "test/src/testfail/testfail2.tes"
+            , "execute"
+            , LocationInfo("32", "6", "32", "22")
+            )
+          ; debug(!"output")
+
+  test-i =
+    s-enter(
+    | "test/src/testfail/testfail2.tes"
+    , "test-i"
+    , LocationInfo("34", "2", "34", "19")
+    )
+    ; (s-step(
+       | "test/src/testfail/testfail2.tes"
+       , "test-i"
+       , LocationInfo("34", "11", "34", "19")
+       )
+       ; is-empty
+       < s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-i"
+         , LocationInfo("34", "2", "34", "19")
+         )
+       + s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-i"
+         , LocationInfo("34", "2", "34", "19")
+         )
+         ; fail)
+
+  test-i2 :
+    input -> <r-exit(
+              | "test/src/testfail/testfail2.tes"
+              , "test-i2"
+              , LocationInfo("37", "2", "41", "22")
+              )> output
+    where r-enter(
+          | "test/src/testfail/testfail2.tes"
+          , "test-i2"
+          , LocationInfo("37", "2", "41", "22")
+          )
+    where <s-var(
+           | "test/src/testfail/testfail2.tes"
+           , "test-i2"
+           , "input"
+           , LocationInfo("38", "3", "38", "8")
+           )> input
+    where (s-step(
+           | "test/src/testfail/testfail2.tes"
+           , "test-i2"
+           , LocationInfo("40", "4", "40", "24")
+           )
+           ; bar := <create-term>
+           ; s-var(
+             | "test/src/testfail/testfail2.tes"
+             , "test-i2"
+             , "bar"
+             , LocationInfo("40", "4", "40", "24")
+             ))
+          ; s-step(
+            | "test/src/testfail/testfail2.tes"
+            , "test-i2"
+            , LocationInfo("41", "6", "41", "22")
+            )
+          ; output := <fail>
+          ; s-var(
+            | "test/src/testfail/testfail2.tes"
+            , "test-i2"
+            , "output"
+            , LocationInfo("41", "6", "41", "22")
+            )
+
+  test-ii2 =
+    s-enter(
+    | "test/src/testfail/testfail2.tes"
+    , "test-ii2"
+    , LocationInfo("43", "2", "48", "3")
+    )
+    ; (s-step(
+       | "test/src/testfail/testfail2.tes"
+       , "test-ii2"
+       , LocationInfo("43", "13", "48", "3")
+       )
+       ; \ input -> output
+           where (bar := <create-term>
+                  ; s-var(
+                    | "test/src/testfail/testfail2.tes"
+                    , "test-ii2"
+                    , "bar"
+                    , LocationInfo("46", "4", "46", "24")
+                    ))
+                 ; output := <fail>
+                 ; s-var(
+                   | "test/src/testfail/testfail2.tes"
+                   , "test-ii2"
+                   , "output"
+                   , LocationInfo("47", "6", "47", "22")
+                   ) \
+       < s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-ii2"
+         , LocationInfo("43", "2", "48", "3")
+         )
+       + s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-ii2"
+         , LocationInfo("43", "2", "48", "3")
+         )
+         ; fail)
+
+  test-i4 :
+    input -> <r-exit(
+              | "test/src/testfail/testfail2.tes"
+              , "test-i4"
+              , LocationInfo("50", "2", "51", "18")
+              )> <fail>
+    where r-enter(
+          | "test/src/testfail/testfail2.tes"
+          , "test-i4"
+          , LocationInfo("50", "2", "51", "18")
+          )
+    where <s-var(
+           | "test/src/testfail/testfail2.tes"
+           , "test-i4"
+           , "input"
+           , LocationInfo("51", "3", "51", "8")
+           )> input
+
+  test-ii4 =
+    s-enter(
+    | "test/src/testfail/testfail2.tes"
+    , "test-ii4"
+    , LocationInfo("53", "2", "54", "22")
+    )
+    ; (s-step(
+       | "test/src/testfail/testfail2.tes"
+       , "test-ii4"
+       , LocationInfo("54", "3", "54", "22")
+       )
+       ; \ input -> <fail> \
+       < s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-ii4"
+         , LocationInfo("53", "2", "54", "22")
+         )
+       + s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "test-ii4"
+         , LocationInfo("53", "2", "54", "22")
+         )
+         ; fail)
+
+  test-i3 :
+    input -> <r-exit(
+              | "test/src/testfail/testfail2.tes"
+              , "test-i3"
+              , LocationInfo("56", "2", "57", "17")
+              )> input
+    where r-enter(
+          | "test/src/testfail/testfail2.tes"
+          , "test-i3"
+          , LocationInfo("56", "2", "57", "17")
+          )
+    where <s-var(
+           | "test/src/testfail/testfail2.tes"
+           , "test-i3"
+           , "input"
+           , LocationInfo("57", "3", "57", "8")
+           )> input
+
+
+strategies
+  create-input =
+    s-enter(
+    | "test/src/testfail/testfail2.tes"
+    , "create-input"
+    , LocationInfo("60", "2", "60", "25")
+    )
+    ; (s-step(
+       | "test/src/testfail/testfail2.tes"
+       , "create-input"
+       , LocationInfo("60", "17", "60", "25")
+       )
+       ; !["fda"]
+       < s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "create-input"
+         , LocationInfo("60", "2", "60", "25")
+         )
+       + s-exit(
+         | "test/src/testfail/testfail2.tes"
+         , "create-input"
+         , LocationInfo("60", "2", "60", "25")
+         )
+         ; fail)

@@ -1,0 +1,91 @@
+module test-prop
+
+imports
+  libstrategolib
+
+
+signature
+  sorts
+    Prop
+
+  constructors
+    False : Prop
+    True  : Prop
+    Atom  : String -> Prop
+    Not   : Prop -> Prop
+    And   : Prop * Prop -> Prop
+    Or    : Prop * Prop -> Prop
+    Impl  : Prop * Prop -> Prop
+    Eq    : Prop * Prop -> Prop
+
+
+strategies
+  main =
+  	debug ;
+    //io-wrap( // io-wrap does not work when -i is not set, it will wait for input from STDIN...
+    	debug 
+    	; eval
+    //)
+
+  eval =
+    create-example-input
+    ; innermost(E)
+
+
+	create-example-input = 
+		debug
+		; !And(True(), Or(False(), True()))
+		; debug
+
+rules
+
+  E :
+    Not(True()) -> False()
+
+  E :
+    Not(False()) -> True()
+
+  E :
+    And(True(), x) -> x
+
+  E :
+    And(x, True()) -> x
+
+  E :
+    And(False(), x) -> False()
+
+  E :
+    And(x, False()) -> False()
+
+  E :
+    Or(True(), x) -> True()
+
+  E :
+    Or(x, True()) -> True()
+
+  E :
+    Or(False(), x) -> x
+
+  E :
+    Or(x, False()) -> x
+
+  E :
+    Impl(True(), x) -> x
+
+  E :
+    Impl(x, True()) -> True()
+
+  E :
+    Impl(False(), x) -> True()
+
+  E :
+    Eq(False(), x) -> Not(x)
+
+  E :
+    Eq(x, False()) -> Not(x)
+
+  E :
+    Eq(True(), x) -> x
+
+  E :
+    Eq(x, True()) -> x

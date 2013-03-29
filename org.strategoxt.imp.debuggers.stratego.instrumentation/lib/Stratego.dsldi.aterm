@@ -1,0 +1,35 @@
+SEL(
+  InstrBlock(
+    [ Link(
+        Step()
+      , SortAndConstructor(Sort("Strategy"), Empty())
+      , StrategyRef("gen-step")
+      , StrategyRef("extract-step-info")
+      )
+    , Link(
+        Enter()
+      , SortAndConstructor(Sort("RuleDef"), Empty())
+      , StrategyRef("gen-rule-enter")
+      , StrategyRef("extract-rule-info")
+      )
+    , Link(
+        Exit()
+      , SortAndConstructor(Sort("RuleDef"), Empty())
+      , StrategyRef("gen-rule-exit")
+      , StrategyRef("extract-rule-info")
+      )
+    , Link(
+        Enter()
+      , SortAndConstructor(Sort("StrategyDef"), Empty())
+      , StrategyRef("gen-strategy-enter")
+      , StrategyRef("extract-strategy-info")
+      )
+    , Link(
+        Exit()
+      , SortAndConstructor(Sort("StrategyDef"), Empty())
+      , StrategyRef("gen-strategy-exit")
+      , StrategyRef("extract-strategy-info")
+      )
+    ]
+  )
+)

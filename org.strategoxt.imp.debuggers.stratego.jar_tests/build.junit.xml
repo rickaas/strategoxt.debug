@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project default="run.stratego.di">
+
+	<property name="lib.instrumentation" value="lib/instrumentation" />
+	<property name="eclipse.stratego.di.jar" value="lib/stratego/stratego-di.jar"/>
+	<property name="eclipse.libdsldi.jar" value="${lib.instrumentation}/libdsldi.jar"/>
+	<property name="eclipse.dsldi.java.jar" value="${lib.instrumentation}/dsldi-java.jar"/>
+	<property name="eclipse.dsldi.jar" value="${lib.instrumentation}/dsldi.jar"/>
+	<property name="eclipse.spoofaximp.strategojar" value="${lib.instrumentation}/strategoxt.jar"/>
+
+	<property name="lib" value="lib" />
+
+	<property name="git.base" location="/home/rlindeman/Documents/TU/strategoxt/git-stuff" />
+	<property name="input-dir" value="only-stratego-files" />
+	<property name="output-dir" value="str_scripts/generated/cli/strategoxt" />
+
+	<property name="testcases-dir" value="str_scripts/testcases/fragments/strategoxt/strategoxt-java-backend"/>
+	
+	<target name="run.stratego.di">
+		<!--<java classname="org.strategoxt.imp.debuggers.stratego.instrumentation.CommandLineCompiler">-->
+		<java classname="org.strategoxt.imp.debuggers.stratego.instrumentation.Main" failonerror="true" fork="true">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xss8m" />
+			<arg value="--input-dir" />
+			<arg value="${git.base}/${input-dir}" />
+			<!--<arg value="${testcases-dir}" />-->
+			<arg value="--output-dir" />
+			<arg value="${output-dir}" />
+			<arg value="--verbose" />
+			<arg value="1" />
+			<arg value="--statistics" />
+			<arg value="1" />
+			<arg value="--report-failed-files" />
+			<arg value="${output-dir}/failed.log" />
+			<arg value="--report-succeeded-files" />
+			<arg value="${output-dir}/succeeded.log" />
+		    <arg value="--report-runtime-properties" />
+			<arg value="${output-dir}/runtime-props.log" />
+			<arg value="--fake-run" />
+		</java>
+	</target>
+
+	<target name="run.stratego.di.cli">
+		<java classname="org.strategoxt.imp.debuggers.stratego.instrumentation.CommandLineCompiler" failonerror="true" fork="true">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+
+			<arg value="--input-dir"/>
+			<arg value="${git.base}/${input-dir}" />
+			<arg value="--output-dir"/>
+			<arg value="${output-dir}" />
+			<arg value="--verbose" />
+			<arg value="10" />
+		</java>
+	</target>
+
+	<target name="junit">
+	</target>
+
+</project>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="build.libs" default="update-libraries" basedir=".">
+
+    <property name="build.libraries" value="${env.build.libraries}" />
+
+    <target name="copy-strategoxt-jar">
+        <!-- the strategoxt.jar from the eclipse plugins directory -->
+        <!-- <copy file="${eclipse.spoofaximp.strategojar}" todir="${lib.dir}" failonerror="false"/> -->
+        <!-- the strategoxt.jar used by the instrumentation project -->
+    	<mkdir dir="${lib.dsldi.dir}" />
+        <copy file="${dsldi.home}/utils/strategoxt.jar" todir="${lib.dsldi.dir}" failonerror="false" overwrite="true" />
+    </target>
+
+    <target name="copy-dsldi-jars">
+        <echo message="updating dsldi..." />
+        <mkdir dir="${lib.dsldi.dir}" />
+        <copy todir="${lib.dsldi.dir}" preservelastmodified="true" overwrite="true">
+            <fileset dir="${dsldi.home}/dist" />
+        </copy>
+    </target>
+    <target name="build-dsldi-jars" if="build.libraries">
+        <ant antfile="${dsldi.home}/build.main.xml" target="all" dir="${dsldi.home}" />
+    </target>
+    <!--<target name="update-dsldi-jars" depends="build-dsldi-jars,copy-dsldi-jars">-->
+    <target name="update-dsldi-jars" depends="copy-dsldi-jars">
+        <description>Get all the required jars from the org.strategoxt.imp.debug.instrumentation project</description>
+    </target>
+
+    <target name="copy-spoofax.debug-jars">
+    	<mkdir dir="${lib.runtime.dir}" />
+        <copy todir="${lib.runtime.dir}" preservelastmodified="true" overwrite="true">
+            <fileset dir="${spoofax.debug.interfaces.home}/build/jar" />
+            <fileset dir="${spoofax.debug.interfaces.java.home}/build/jar" />
+        </copy>
+    </target>
+    <target name="build-spoofax.debug-jars" if="build.libraries">
+        <ant antfile="${spoofax.debug.interfaces.java.home}/build.main.xml" target="release" dir="${spoofax.debug.interfaces.java.home}" />
+    </target>
+    <!--<target name="update-spoofax.debug-jars" depends="build-spoofax.debug-jars,copy-spoofax.debug-jars">-->
+    <target name="update-spoofax.debug-jars" depends="copy-spoofax.debug-jars">
+        <description>Get all the required jars from the org.spoofax.debug.interfaces.java project</description>
+    </target>
+    
+    <target name="update-libraries" depends="update-spoofax.debug-jars, update-dsldi-jars, copy-strategoxt-jar" />
+</project>

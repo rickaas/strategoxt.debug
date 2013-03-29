@@ -1,0 +1,80 @@
+module instrument/util
+
+// some default imports
+imports
+  libstratego-lib
+  libstratego-sglr
+  libstratego-gpp
+  libstrc // for pp-stratego-string
+
+// sel imports
+imports
+  lib/libdsldi
+
+strategies
+    
+    get-a-b-c-d = 
+         ?term
+         //; stratego-term-location
+         ; get-term-origin-location-tuple // from libdsldi
+         // RL; the location info seems to be 0-based
+         ; ?tuple
+         ; make-one-based-linenumbers-location // convert to 1-based line numbers
+         // RL: but the toplevel term has a wrong line number, I don't know if that's a in the parser bug or not...
+         /*
+         ; if needs-location-correction then
+               !tuple; correct-location
+           else
+               !tuple
+           end
+         */
+             
+
+          
+    // stratego-term-location = ?term;
+    //       // origin-location  = prim("SSL_EXT_origin_location", <id>)
+    //       // try to use the primitive
+    //       (prim("SSL_EXT_origin_location", <id>)
+    //       // ; ?(a,b,c,d) // (0-based, 0-based, 0-based, 0-based)
+    //       < id // success
+    //       + (
+    //             err-msg(|"Could not extract origin information ")
+    //             ; fail
+    //           )
+    //       )
+          
+          
+strategies
+// pp-stratego-string is in strategoxt.jar in package: /org/strategoxt/strc/pp_stratego_string_0_0
+        write-stratego-as-dsl = ?(output-filename, dsl-ast)
+        //; result := <pp-stratego-string> dsl-ast // RL: fails for strj-version.str, probably due to the "override"-keyword
+        ; result := <di-pp-stratego-ast> dsl-ast
+        ; write-to-file(|output-filename, result)
+
+// RL: does not work
+//         // current term is program location
+//         parse-stratego-as-dsl = 
+//             //parse-stratego_sugar-file
+//             parse-stratego-file
+
+//  parse-stratego_sugar-file-copy =
+    parse-stratego-as-dsl = 
+        parse-file(
+            strsglr-perror, strsglr-report-parse-error
+            | <import-term(include/Stratego-Sugar.tbl)>
+    )
+    
+    // RL: Stratego-pretty.pp is copied from stratego-front/pp/Stratego-pretty.pp
+    di-pp-stratego-ast = ast2abox(|[<import-term(lib/Stratego-pretty.pp.af)>]); box2text-string(|100) <+ (err-msg(|"Failure during pretty-printing..."); fail)
+    
+  // from editor-common.generated.str
+  // pp-stratego_sugar-string =
+  //   ast2abox(|[<import-term(include/Stratego-Sugar.generated.pp.af)>,
+  //              <import-term(include/Stratego-Sugar.pp.af)>]);
+  //   box2text-string(|100)
+    
+  // my-pp-stratego_sugar-string =
+  //   ast2abox(|[<import-term(include/Stratego-Sugar.generated.pp.af)>,
+  //              <import-term(include/Stratego-Sugar.pp.af)>]);
+  //   box2text-string(|100)
+

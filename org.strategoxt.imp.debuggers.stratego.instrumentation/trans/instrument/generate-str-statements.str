@@ -1,0 +1,44 @@
+module instrument/generate-str-statements
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+
+// Create the debug statements
+// a call to the debug library looks like this: r-exit(| "foo.str", "execute", "37,3,40,38"))
+// r-exit(|...) is a CallT(SVar("r-exit"), ...) in ATerm format.
+// The first argument of CallT is the name of the rule/strategy,
+// the second argument is a list of strategies (in our case an empty list)
+// the third argument is a list of term (in our case the debug information) 
+strategies
+
+    // r-exit(| "foo.str", "execute", "37,3,40,38"))
+    create-r-exit-call(|filename, name, location) = 
+        !CallT(SVar("r-exit"), [], <create-f-n-l-list> [filename, name, location])
+
+    create-r-enter-call(|filename, name, location) = 
+        !CallT(SVar("r-enter"), [], <create-f-n-l-list> [filename, name, location])
+    
+    create-s-enter-call(|filename, name, location) = 
+        !CallT(SVar("s-enter"), [], <create-f-n-l-list> [filename, name, location])
+    
+    create-s-exit-call(|filename, name, location) = 
+        !CallT(SVar("s-exit"), [], <create-f-n-l-list> [filename, name, location])
+    
+    create-s-fail-call(|filename, name, location) = 
+        !CallT(SVar("s-fail"), [], <create-f-n-l-list> [filename, name, location])
+ 
+    create-fail = !Fail()
+
+    create-f-n-l-list :
+        strings* -> args*
+        where
+            args* := <map(create-str-arg)> strings*
+
+    create-str-arg:
+        string -> NoAnnoList(Str(string))

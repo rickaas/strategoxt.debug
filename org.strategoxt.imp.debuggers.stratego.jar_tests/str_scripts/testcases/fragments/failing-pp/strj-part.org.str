@@ -1,0 +1,11 @@
+module strj-part
+
+strategies
+  call-inside = 
+      foo := $[StringStuff [<output-dirname>]]
+//  cal-inside = 
+//      foo := $[StringStuff [<call-debug(|"asdf"); output-dirname>]]
+  foo =
+      foo := <output-dir-name>
+//  foo =
+//      foo := <call-debug(|"asdf"); output-dir-name>

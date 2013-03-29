@@ -1,0 +1,12 @@
+module tiny
+
+imports
+    libstrategolib
+    
+strategies
+    main = 
+    	foo
+    	; ![3, 9]
+    	; map(inc)
+    
+    foo = debug

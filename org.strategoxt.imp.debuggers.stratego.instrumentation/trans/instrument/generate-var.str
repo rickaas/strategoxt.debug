@@ -1,0 +1,37 @@
+module instrument/generate-var
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+imports instrument/generate-str-statements
+
+strategies
+
+    gen-var:
+        strategy -> instrumented-strategy
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, v-name)
+            ;?(filename, a, b, c, d, v-name)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; varName := $["[v-name]"]
+            ; var-event := <create-var-call(|program-filename, location, varName)>
+            ; instrumented-strategy := <insert-var-event(|var-event)> strategy
+
+strategies
+    
+    // TODO: support var-event*
+    // The statement (foo, bar) := !("A", "B") introduces variables foo and bar
+    insert-var-event(|var-event) :
+        s -> s'
+        where
+            s' := Seq(s, var-event)
+    
+        // create a s-var strategy call
+    create-var-call(|filename, location, var-name) =
+        !CallT(SVar("s-var"), [], [NoAnnoList(Str(filename)), NoAnnoList(Str(location)), NoAnnoList(Str(var-name)) ])

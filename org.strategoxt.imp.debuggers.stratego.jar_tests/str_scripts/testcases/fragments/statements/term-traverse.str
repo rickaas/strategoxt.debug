@@ -1,0 +1,23 @@
+module term-traverse
+
+imports
+  libstrategolib
+
+strategies
+
+	main = execute
+	
+	execute = !["foo", "bar", "cheese"]; k := <id>;  map(element-stuff); debug(!"")
+	
+	element-stuff = ?name
+	; rules
+	  ( GetName : _ -> name where (hello-var := "hello"; not(id; fail); <concat-strings> [hello-var, hello-var]; debug(!"concat: ")))
+	; otherstuff; ?stuff; !(stuff, name); match-tuple; debug(!"tuple: ")
+
+	otherstuff = !"stuff"; ?stuff; var := <GetName>; debug(!"name: "); !stuff
+	
+	match-tuple :
+		(item1, item2) -> (<?ik; var := ";aas"; !ik> item1', item2')
+		where
+			item1' := "item1"
+			; item2' := "item2"

@@ -1,0 +1,66 @@
+module instrument/generate-strategy
+
+imports
+    include/Stratego-Sugar
+    
+// sel imports
+imports
+  lib/libdsldi
+
+imports instrument/util
+imports instrument/generate-str-statements
+
+strategies
+    
+    // current term is a SDefNoArgs, SDef, SDefT.
+    // 
+    gen-strategy-enter:
+        strategy-def -> instrumented-strategy-def
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
+            ;?(filename, a, b, c, d, f-name)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; functionName := $["[f-name]"]
+            ; enter-event := <create-s-enter-call(|program-filename, functionName, location)>
+            ; instrumented-strategy-def := <insert-enter-event(|enter-event)> strategy-def
+
+    insert-enter-event(|enter-event):
+        SDefNoArgs(s-name, s) -> SDefNoArgs(s-name, Seq(enter-event, s))
+    insert-enter-event(|enter-event):
+        SDef(s-name, s-args, s) -> SDef(s-name, s-args, Seq(enter-event, s))
+    insert-enter-event(|enter-event):
+        SDefT(s-name, s-args, t-args, s) -> SDefT(s-name, s-args, t-args, Seq(enter-event, s))
+
+strategies
+    
+    gen-strategy-exit:
+        strategy-def -> instrumented-strategy-def
+        where
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
+            ;?(filename, a, b, c, d, f-name)
+            ; program-filename := $["[filename]"]
+            ; location := $["[a],[b],[c],[d]"]
+            ; functionName := $["[f-name]"]
+            ; exit-event := <create-s-exit-call(|program-filename, functionName, location)>
+            ; instrumented-strategy-def := <insert-exit-event(|exit-event)> strategy-def
+
+    insert-exit-event(|exit-event):
+        SDefNoArgs(s-name, s) -> SDefNoArgs(s-name, <wrap-s-exit(|exit-event)> s)
+    insert-exit-event(|exit-event):
+        SDef(s-name, s-args, s) -> SDef(s-name, s-args, <wrap-s-exit(|exit-event)> s)
+    insert-exit-event(|exit-event):
+        SDefT(s-name, s-args, t-args, s) -> SDefT(s-name, s-args, t-args, <wrap-s-exit(|exit-event)> s)
+
+    // current term s is a Strategy
+    // The output will be: s < s-exit + (s-exit; fail)
+    // if the strategy s fail, when can still call s-exit and throw a fail afterwards!
+    // TODO: when we want the debugger to catch 'fail' we should probably call a specific before re-throwing fail
+    wrap-s-exit(|exit-event):
+        s-body -> body-with-exit 
+            //GuardedLChoice(s-body, exit-event, Seq(exit-event, fail))
+        with
+            f := <create-fail>
+            ; s-exit-fail := Seq(exit-event, f)
+            ; body-with-exit := GuardedLChoice(s-body, exit-event, s-exit-fail) // s-body < s-exit + (s-exit; fail)
+              

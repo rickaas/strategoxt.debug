@@ -1,0 +1,129 @@
+Module(
+  "testfail"
+, [ Signature(
+      [ Constructors(
+          [ OpDecl(
+              "Var"
+            , FunType([ConstType(SortNoArgs("String"))], ConstType(SortNoArgs("Expression")))
+            )
+          , OpDecl(
+              "Number"
+            , FunType([ConstType(SortNoArgs("Int"))], ConstType(SortNoArgs("Expression")))
+            )
+          , OpDecl(
+              "Add"
+            , FunType(
+                [ConstType(SortNoArgs("Expression")), ConstType(SortNoArgs("Expression"))]
+              , ConstType(SortNoArgs("Expression"))
+              )
+            )
+          , OpDecl(
+              "Sub"
+            , FunType(
+                [ConstType(SortNoArgs("Expression")), ConstType(SortNoArgs("Expression"))]
+              , ConstType(SortNoArgs("Expression"))
+              )
+            )
+          , OpDecl(
+              "Print"
+            , FunType([ConstType(SortNoArgs("Expression"))], ConstType(SortNoArgs("Statement")))
+            )
+          , OpDecl(
+              "Assign"
+            , FunType(
+                [ConstType(SortNoArgs("String")), ConstType(SortNoArgs("Expression"))]
+              , ConstType(SortNoArgs("Statement"))
+              )
+            )
+          , OpDecl(
+              "Function"
+            , FunType(
+                [ConstType(SortNoArgs("String")), ConstType(Sort("List", [SortNoArgs("Statement")]))]
+              , ConstType(SortNoArgs("Definition"))
+              )
+            )
+          , OpDecl(
+              "Comment"
+            , FunType(
+                [ConstType(SortNoArgs("String")), ConstType(SortNoArgs("String"))]
+              , ConstType(SortNoArgs("Definition"))
+              )
+            )
+          , OpDecl(
+              "Program"
+            , FunType(
+                [ConstType(SortNoArgs("String")), ConstType(Sort("List", [SortNoArgs("Definition")]))]
+              , ConstType(SortNoArgs("Program"))
+              )
+            )
+          ]
+        )
+      ]
+    )
+  , Strategies(
+      [SDefNoArgs(
+         "main"
+       , Call(SVar("io-wrap"), [CallNoArgs(SVar("execute"))])
+       )]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "execute"
+        , Rule(
+            Var("input")
+          , Var("output")
+          , Seq(
+              Assign(Var("i'"), RootApp(CallNoArgs(SVar("create-input"))))
+            , Seq(
+                Assign(
+                  Var("output")
+                , RootApp(
+                    LChoice(
+                      CallNoArgs(SVar("test-i"))
+                    , LChoice(CallNoArgs(SVar("test-i2")), CallNoArgs(SVar("test-i3")))
+                    )
+                  )
+                )
+              , Call(SVar("debug"), [Build(NoAnnoList(Str("\"output\"")))])
+              )
+            )
+          )
+        )
+      , SDefNoArgs("test-i", CallNoArgs(SVar("is-empty")))
+      , RDefNoArgs(
+          "test-i2"
+        , Rule(
+            Var("input")
+          , Var("output")
+          , Seq(
+              Assign(Var("bar"), RootApp(CallNoArgs(SVar("create-term"))))
+            , Assign(Var("output"), RootApp(Fail()))
+            )
+          )
+        )
+      , SDefNoArgs(
+          "test-ii2"
+        , LRule(
+            Rule(
+              Var("input")
+            , Var("output")
+            , Seq(
+                Assign(Var("bar"), RootApp(CallNoArgs(SVar("create-term"))))
+              , Assign(Var("output"), RootApp(Fail()))
+              )
+            )
+          )
+        )
+      , RDefNoArgs("test-i4", RuleNoCond(Var("input"), RootApp(Fail())))
+      , SDefNoArgs("test-ii4", LRule(RuleNoCond(Var("input"), RootApp(Fail()))))
+      , RDefNoArgs("test-i3", RuleNoCond(Var("input"), Var("input")))
+      ]
+    )
+  , Strategies(
+      [SDefNoArgs(
+         "create-input"
+       , Build(NoAnnoList(List([NoAnnoList(Str("\"fda\""))])))
+       )]
+    )
+  ]
+)

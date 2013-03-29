@@ -1,0 +1,25 @@
+<project default="update-jars">
+	
+    <property name="lib.stratego.dir" location="lib/stratego" />
+    <property name="lib.runtime.dir" location="lib/runtime" />
+	
+    <loadproperties srcFile="config.properties" />
+	
+   <target name="copy-stratego-di-jars">
+        <mkdir dir="${lib.stratego.dir}"/>
+        <copy file="${stratego-di.project}/build/jar/stratego-di.jar" todir="${lib.stratego.dir}"/>
+        <copy file="${stratego-di.project}/build/jar/stratego-di-source.jar" todir="${lib.stratego.dir}"/>
+    </target>
+    <target name="build-stratego-di-jars" if="build.libraries">
+        <ant antfile="${stratego-di.project}/build.main.xml" dir="${stratego-di.project}"/>
+    </target>
+
+   <target name="copy-stratego-runtime-jars">
+        <mkdir dir="${lib.runtime.dir}"/>
+        <copy file="${stratego-debug-runtime.project}/build/jar/org.strategoxt.imp.debuggers.stratego.runtime.jar" todir="${lib.runtime.dir}" overwrite="true"/>
+        <copy file="${stratego-debug-runtime.project}/build/jar/org.strategoxt.imp.debuggers.stratego.runtime-source.jar" todir="${lib.runtime.dir}" overwrite="true"/>
+        <copy file="${stratego-debug-runtime.project}/build/str-lib/org.strategoxt.imp.debuggers.stratego.runtime.rtree" todir="${lib.runtime.dir}" overwrite="true"/>
+    </target>
+	
+	<target name="update-jars" depends="copy-stratego-di-jars, copy-stratego-runtime-jars" />
+</project>

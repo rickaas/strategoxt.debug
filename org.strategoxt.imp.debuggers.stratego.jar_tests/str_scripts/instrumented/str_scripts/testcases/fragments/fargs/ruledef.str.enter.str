@@ -1,0 +1,24 @@
+module ruledef
+
+rules
+
+  main:
+    input -> output
+    where
+        r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str","main","5,2,8,20")
+    with
+      output := input
+
+  main(s):
+    input -> output
+    where
+        r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str","main","10,2,13,20")
+    with
+      output := input
+
+  main(s|t):
+    input -> output
+    where
+        r-enter(|"str_scripts/testcases/fragments/fargs/ruledef.str","main","15,2,18,20")
+    with
+      output := input
