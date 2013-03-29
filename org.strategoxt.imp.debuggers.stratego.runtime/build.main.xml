@@ -13,15 +13,15 @@
 
 	<property name="jar.name" value="org.strategoxt.imp.debuggers.stratego.runtime" />
 	
+	<loadproperties srcFile="config.properties" />
+	
 	<property name="lib.dir" value="lib" />
-	<property name="debug.interfaces.java.project.location" value="../org.spoofax.debug.interfaces.java" />
-	<property name="debug.interfaces.project.location" value="../org.spoofax.debug.interfaces" />
+
 
     <path id="my_classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
-        <fileset dir="${debug.interfaces.java.project.location}/build/jar" includes="**/*.jar"/>
-        <fileset dir="${debug.interfaces.project.location}/build/jar" includes="**/*.jar"/>
-
+        <fileset dir="${spoofax.debug.interfaces.java.home}/build/jar" includes="**/*.jar"/>
+        <fileset dir="${spoofax.debug.interfaces.home}/build/jar" includes="**/*.jar"/>
     </path>
     
 	<target name="generate-java">
@@ -58,5 +58,10 @@
 		<move file="${jar.dir}/${jar.name}-source.tmp.jar" tofile="${jar.dir}/${jar.name}-source.jar" />
 	</target>
 	
-	<target name="release" depends="clean, jar, jar-source" />
+	<target name="release" depends="clean, get-strategoxt, jar, jar-source" />
+	
+	<target name="get-strategoxt">
+		<mkdir dir="${lib.dir}"/>
+		<copy file="${eclipse.spoofaximp.strategojar}" todir="${lib.dir}" failonerror="false"/>
+	</target>
 </project>
