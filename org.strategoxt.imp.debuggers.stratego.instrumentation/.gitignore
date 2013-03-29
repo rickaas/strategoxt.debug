@@ -2,3 +2,4 @@
 /utils
 *.jar
 /build
+*.rtree
