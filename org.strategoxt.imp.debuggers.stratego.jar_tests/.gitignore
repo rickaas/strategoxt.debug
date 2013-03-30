@@ -2,3 +2,4 @@
 *.rtree
 /lib
 /str_scripts/generated
+/.cache
