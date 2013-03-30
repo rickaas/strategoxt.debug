@@ -70,10 +70,10 @@ public class StrjVersionFileTest {
 		i.setCurrent(makeConfigTuple("--statistics", 1));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
-		i.setCurrent(makeConfigTuple("--report-failed-files", "failed.txt"));
+		i.setCurrent(makeConfigTuple("--report-failed-files", getGeneratedLocation()+"/failed.txt"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
-		i.setCurrent(makeConfigTuple("--report-succeeded-files", "succeeded.txt"));
+		i.setCurrent(makeConfigTuple("--report-succeeded-files", getGeneratedLocation()+"/succeeded.txt"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 	}
 	
