@@ -24,6 +24,7 @@ public class InstrumentUsingCLI {
 	public static final String STRATEGOXT = "/home/rlindeman/Documents/TU/strategoxt/git-stuff/only-stratego-files";
 	
 	@Test
+	// RL: This test requires -Xss8m
 	public void testStrategoSource() throws Exception {
 		String[] args = new String[] {
 				"--input-dir", STRATEGOXT,

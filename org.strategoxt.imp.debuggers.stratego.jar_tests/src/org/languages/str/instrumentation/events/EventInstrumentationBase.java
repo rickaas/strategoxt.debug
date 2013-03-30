@@ -132,6 +132,17 @@ public abstract class EventInstrumentationBase {
 		i.setCurrent(i.getFactory().makeString(postInstrumentationStrategy));
 		b = HybridInterpreterHelper.safeInvoke(i, "SET-POST-INSTRUMENTATION-NAME");
 		Assert.assertTrue(b);
+		
+		// ext-register-post-instrumentation-strategy(stratego-post-instrumentation|"stratego-post-instrumentation")
+		Assert.assertNotNull("Strategy does not exist: " + postInstrumentationStrategy, i.lookupUncifiedSVar(postInstrumentationStrategy));
+		// call ext-register-gen-strategy(gen-strategy|strategy-name)
+		// the strategy ignores the current term
+		i.getContext().getVarScope().add("t0", i.getFactory().makeString(postInstrumentationStrategy));
+		i.getContext().getVarScope().addSVar("s0", i.lookupUncifiedSVar(postInstrumentationStrategy));
+		b = HybridInterpreterHelper.safeInvoke(i, "ext_register_post_instrumentation_strategy_1_1");
+		Assert.assertTrue(b);
+		i.getContext().getVarScope().removeVar("t0");
+		i.getContext().getVarScope().removeSVar("s0");
 	}
 	
 	protected void addWriteFile(String languageID, String writeStrategy)
@@ -141,6 +152,17 @@ public abstract class EventInstrumentationBase {
 		i.setCurrent(writeFileDefinition);
 		b = HybridInterpreterHelper.safeInvoke(i, "add-dsl-specific-write-file");
 		Assert.assertTrue(b);
+		
+		// ext-register-write-strategy(write-stratego-as-dsl|"write-stratego-as-dsl")
+		Assert.assertNotNull("Strategy does not exist: " + writeStrategy, i.lookupUncifiedSVar(writeStrategy));
+		// call ext-register-gen-strategy(gen-strategy|strategy-name)
+		// the strategy ignores the current term
+		i.getContext().getVarScope().add("t0", i.getFactory().makeString(writeStrategy));
+		i.getContext().getVarScope().addSVar("s0", i.lookupUncifiedSVar(writeStrategy));
+		b = HybridInterpreterHelper.safeInvoke(i, "ext_register_write_strategy_1_1");
+		Assert.assertTrue(b);
+		i.getContext().getVarScope().removeVar("t0");
+		i.getContext().getVarScope().removeSVar("s0");
 	}
 	
 	/**

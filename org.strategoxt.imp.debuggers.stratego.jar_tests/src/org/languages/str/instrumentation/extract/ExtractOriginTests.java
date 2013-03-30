@@ -92,7 +92,7 @@ public class ExtractOriginTests {
 		boolean b = HybridInterpreterHelper.safeInvoke(i, "origin-location");
 		Assert.assertTrue(b);
 		Assert.assertNotNull(i.current());
-		Assert.assertEquals("(0,0,8,14)", i.current().toString());
+		Assert.assertEquals("(0,0,8,14)", i.current().toString()); // FIXME: result should indeed be (0,0,8,14)
 		
 		i.setCurrent(tinyScript.getModule());
 		b = HybridInterpreterHelper.safeInvoke(i, "origin-location");
