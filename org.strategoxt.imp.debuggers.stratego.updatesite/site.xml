@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.strategoxt.imp.debuggers.stratego.feature_0.0.1.qualifier.jar" id="org.strategoxt.imp.debuggers.stratego.feature" version="0.0.1.qualifier">
+      <category name="stratego_debugger"/>
+   </feature>
+   <category-def name="stratego_debugger" label="Stratego Debugger"/>
+</site>
