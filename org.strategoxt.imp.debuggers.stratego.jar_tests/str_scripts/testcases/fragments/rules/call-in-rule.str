@@ -1,0 +1,30 @@
+module call-in-rule
+
+rules
+
+  rule1(rec) :
+    Foo(cs) -> <rec> cs
+  rule1(rec) :
+    Bar(cs) -> <rec; fail> cs
+    
+  rule1(rec) :
+    Baz(cs) -> <rec> cs
+  rule1(rec) :
+    Baz(cs) -> <rec> cs
+
+
+    call-rule1 = id 
+        ; debug(!"STEP 1")
+        ; !Foo("asdf"); rule1(debug(!"RULE1"))
+        ; debug(!"STEP 2")
+        ; !Bar("asdf"); rule1(debug(!"RULE1"))
+        ; debug(!"STEP 3")
+        ; !Baz("asdf"); rule1(debug(!"RULE1"))
+
+  undo-dollar-for-capital(rec) :
+    Bar(cs) -> <step; rec> cs
+//   undo-dollar-for-capital(rec) :
+// [ '$' | cs ] -> <r-exit(| "file.str", "undo-dollar-for-capital", "57,2,58,25")> <s-step(| "file.str", "58,19,58,21")
+//                                                                                                                            ; rec> cs
+// r-enter(| "file.str", "undo-dollar-for-capital", "57,2,58,25")
+// <+ r-exit(| "file.str", "undo-dollar-for-capital", "57,2,58,25")

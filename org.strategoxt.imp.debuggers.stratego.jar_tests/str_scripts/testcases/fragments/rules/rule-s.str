@@ -1,0 +1,32 @@
+module rule-s
+
+rules
+    
+  main:
+    input -> <s> input
+    
+  main(s):
+    input -> <s> input
+    
+  main(s|t):
+    input -> <s> input
+
+// ===
+
+  main:
+    input -> <s; s> input
+    
+  main(s):
+    input -> <s; s> input
+    
+  main(s|t):
+    input -> <s; s> input
+
+  main(s):
+    input -> <s> <s> input
+// ===
+
+  main(s|t):
+    input -> <s1> output
+    where
+        output := <z> input

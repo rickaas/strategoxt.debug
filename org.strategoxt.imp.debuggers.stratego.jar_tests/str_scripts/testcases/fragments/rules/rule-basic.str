@@ -1,0 +1,18 @@
+module rule-basic
+
+rules
+  main:
+    input -> input
+    
+  // main:
+  //   input -> <s> input
+  //   
+  main:
+      input -> input
+      where s1(|"asdf")
+    
+  // main(s):
+  //   input -> input
+  //   
+  // main(s|t):
+  //   input -> input

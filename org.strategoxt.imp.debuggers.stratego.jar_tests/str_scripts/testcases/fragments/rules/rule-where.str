@@ -1,0 +1,41 @@
+module rule-where
+    
+rules
+    
+  main:
+    input -> output
+    where
+      output := input
+    where
+        s
+
+  main(s):
+    input -> output
+    where
+      output := input
+    where
+        s
+
+  main(s|t):
+    input -> output
+    where
+      output := input
+    where
+        s
+
+// ===
+
+  main:
+    input -> output
+    where
+      output := input
+
+  main(s):
+    input -> output
+    where
+      output := input
+
+  main(s|t):
+    input -> output
+    where
+      output := input

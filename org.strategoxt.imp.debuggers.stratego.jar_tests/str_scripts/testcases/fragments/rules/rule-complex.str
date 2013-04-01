@@ -1,0 +1,17 @@
+module rule-complex
+
+rules
+    
+  main(s|t):
+    input -> <s1; s2; s3 <+ s3 > input
+    
+  main(s|t):
+    input -> <s1 <+ s2> input
+    
+  main(s|t):
+    input -> <s1; s2; s3 <+ s3 > output
+    where output := input
+    
+  main(s|t):
+    input -> <s1 <+ s2> output
+    where output := input

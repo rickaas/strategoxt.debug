@@ -1,0 +1,38 @@
+module rule-with
+
+rules
+
+  main:
+    input -> output
+    with
+      output := input
+
+  main(s):
+    input -> output
+    with
+      output := input
+
+  main(s|t):
+    input -> output
+    with
+      output := input
+
+// ===
+
+  main:
+    input -> output
+    with
+      output := input
+    with s
+
+  main(s):
+    input -> output
+    with
+      output := input
+    with s
+
+  main(s|t):
+    input -> output
+    with
+      output := input
+    with s
