@@ -1,5 +1,6 @@
 package org.languages.str.instrumentation.compilerwrapper;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.strategoxt.imp.debuggers.stratego.instrumentation.CommandLineCompiler;
 
@@ -7,7 +8,7 @@ import util.StrTestConstants;
 
 public class InstrumentUsingCLI {
 
-	//@Test
+	@Ignore
 	public void testName() throws Exception {
 		String[] args = new String[] {
 				"--input-dir", "str_scripts/testcases",
@@ -23,7 +24,7 @@ public class InstrumentUsingCLI {
 	
 	public static final String STRATEGOXT = "/home/rlindeman/Documents/TU/strategoxt/git-stuff/only-stratego-files";
 	
-	@Test
+	@Ignore
 	// RL: This test requires -Xss8m
 	public void testStrategoSource() throws Exception {
 		String[] args = new String[] {
