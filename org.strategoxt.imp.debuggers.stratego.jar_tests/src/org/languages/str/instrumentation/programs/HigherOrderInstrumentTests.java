@@ -32,5 +32,7 @@ public class HigherOrderInstrumentTests extends ProgramInstrumentationBase {
 		// extract filenames, returns a list of strings
 		Assert.assertEquals(1, getFilenamesWithSuccess().size());
 		Assert.assertEquals(0, getFilenamesWithFailure().size());
+		
+		Assert.fail("Running this program fails due to higher-order strategies");
 	}
 }
