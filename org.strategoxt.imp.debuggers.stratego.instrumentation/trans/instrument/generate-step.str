@@ -10,12 +10,36 @@ imports
 imports instrument/util
 imports instrument/generate-str-statements
 
-strategies
+imports lib/stratego_sugar // for "position-of-term" ?
 
+strategies
+/**
+ * Strategies can be passed as arguments
+ E.g. : main = foo(stuff)
+ foo(s1) = s1(debug | "asdf")
+ stuff(s|t) = where(debug(!"(s|t)")); id
+ 
+ * Strategy stuff takes a strategy and a term argument
+ * If we instrument the foo(stuff) as foo(my-event; stuff) then (my-event; stuff) is most likely lifted
+ * In this case we get a failure because the lifted strategy isn't aware of the arguments it will be given.
+ * So how do we fix this? Below are some ideas...
+ * 1. Some higher order strategies (e.g. unescape) contain type information about the strategy-arguments.
+ * We have to detect if the current strategy is used as a strategy-argument in another strategy call.
+ * We have to extract the parent and then try to find the corresponding strategy signature with the type information. 
+ * This requires us to store the signatures of all strategies. This will most likely lead to performance issues.
+ * 2. We always skip s-step events in strategy-call arguments when the argument is a single strategy.
+ * When chained strategies are used as argument, e.g. s1(s2;s3|t1), we can safely add s-step events.
+ * 3. We lift the arguments to a new anonymous strategy, but we still need to determine the number of arguments.
+ * 4. Use annotations to blacklist strategies that accept higher order arguments
+ */
     gen-step:
         strategy -> instrumented-strategy
         where
-            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
+            id; GET-DSL-PROGRAM-SOURCE
+            ; lib-position-of-term(?strategy) // find the position of the current term in the source ast
+            // determine if strategy is used as an argument (the parent of the current ATerm is a strategy call)
+            // and try to find the signature of the parent strategy call
+            ; debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
             ;?(filename, a, b, c, d)
             ; program-filename := $["[filename]"]
             ; location := $["[a],[b],[c],[d]"]
