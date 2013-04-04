@@ -47,22 +47,18 @@ public class CompilerPathsImpl implements ICompilerPaths {
 	/**
 	 * .working/$module-name/$mode/stratego
 	 */
-	@Override
 	public File getStrategoDirectory() {
 		return sd;
 	}
 
-	@Override
 	public File getJavaDirectory() {
 		return jd;
 	}
 
-	@Override
 	public File getBinDirectory() {
 		return bd;
 	}
 	
-	@Override
 	public File getLogsDirectory() {
 		return logs;
 	}

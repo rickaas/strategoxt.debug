@@ -33,7 +33,6 @@ public class CommandLineCompiler {
 		
 		IHybridInterpreterProvider provider = new IHybridInterpreterProvider() {
 			
-			@Override
 			public HybridInterpreter get() {
 				return createHybridInterpreter(jars);
 			}

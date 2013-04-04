@@ -17,17 +17,14 @@ public class CompilerInputPathsImpl implements ICompilerInputPaths {
 		this.td = td;
 	}
 
-	@Override
 	public File getStrategoProgramBaseDirectory() {
 		return spbd;
 	}
 
-	@Override
 	public File getStrategoSourceFile() {
 		return ssf;
 	}
 
-	@Override
 	public File getTempDirectory() {
 		return td;
 	}
