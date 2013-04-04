@@ -1,0 +1,10 @@
+module slit
+
+imports libstrategolib
+
+strategies
+    
+    foo = 
+        val := "VAL"
+        ; lit := $[string_[val]_string]
+        ; debug; ((debug; debug); debug)
