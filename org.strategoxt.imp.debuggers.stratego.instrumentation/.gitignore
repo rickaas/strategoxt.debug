@@ -3,3 +3,5 @@
 *.jar
 /build
 *.rtree
+.cache
+bin
