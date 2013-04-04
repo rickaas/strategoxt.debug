@@ -35,11 +35,11 @@ strategies
     gen-step:
         strategy -> instrumented-strategy
         where
-            id; GET-DSL-PROGRAM-SOURCE
-            ; lib-position-of-term(?strategy) // find the position of the current term in the source ast
+            //id; GET-DSL-PROGRAM-SOURCE
+            //; lib-position-of-term(?strategy); // find the position of the current term in the source ast
             // determine if strategy is used as an argument (the parent of the current ATerm is a strategy call)
             // and try to find the signature of the parent strategy call
-            ; debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
+            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
             ;?(filename, a, b, c, d)
             ; program-filename := $["[filename]"]
             ; location := $["[a],[b],[c],[d]"]
