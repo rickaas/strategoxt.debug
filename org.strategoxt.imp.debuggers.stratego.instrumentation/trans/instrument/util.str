@@ -65,7 +65,11 @@ strategies
     )
     
     // RL: Stratego-pretty.pp is copied from stratego-front/pp/Stratego-pretty.pp
-    di-pp-stratego-ast = ast2abox(|[<import-term(lib/Stratego-pretty.pp.af)>]); box2text-string(|100) <+ (err-msg(|"Failure during pretty-printing..."); fail)
+    // This one fails with StringLiterals
+    // di-pp-stratego-ast = ast2abox(|[<import-term(lib/Stratego-pretty.pp.af)>]); box2text-string(|100) <+ (err-msg(|"Failure during pretty-printing..."); fail)
+    
+    // copy fragment from strc/pp/pp-stratego
+    di-pp-stratego-ast = pp-stratego-string
     
   // from editor-common.generated.str
   // pp-stratego_sugar-string =
