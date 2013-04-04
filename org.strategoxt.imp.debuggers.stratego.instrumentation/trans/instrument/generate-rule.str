@@ -35,7 +35,7 @@ strategies
     wrap-r-enter(|enter-event) :
         RuleNoCond(match-term, build-term) -> Rule(match-term, build-term, cond* )
         where 
-        cond* := enter-event
+        cond* := [WhereClause(enter-event)] // pp only accepts a list containing WhereClause or WithClause
           
           
     wrap-r-enter(|enter-event):
@@ -132,7 +132,7 @@ strategies
         // TODO: fire a specific event to indicate that a where clause failed
         // fail-event-call := <create-s-fail-call(|filename, r-name, a)>
         // ; exit-event-call := <create-r-exit-call(|filename, r-name, a)>
-        // ; fail-call := <create-fail>
-        // RL: just fire the exit-event
-        !exit-event
-        // ; !Seq(Seq(fail-event-call, exit-event-call), fail-call)
+        // RL: just fire the exit-event followed by a fail
+        fail-call := <create-fail>
+        ; !Seq(exit-event, fail-call) // exit-event and throw a fail
+        // ; !Seq(Seq(fail-event-call, exit-event-call), fail-call) // exit-event and a fail-event
