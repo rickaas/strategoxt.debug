@@ -1,0 +1,12 @@
+module foo
+
+strategies
+    
+    /**
+     * LaLaLa
+     */
+     bar = cheese
+     
+     
+     
+     // more comments

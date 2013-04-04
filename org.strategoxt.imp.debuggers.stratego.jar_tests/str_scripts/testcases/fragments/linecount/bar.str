@@ -1,0 +1,6 @@
+module bar
+
+strategies
+    
+    baz = id
+    

@@ -99,7 +99,7 @@ public abstract class ProgramInstrumentationBase {
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		// <set-config> ("--output-dir",)
-		String output = getGeneratedLocation() + ".alng";
+		String output = getGeneratedLocation() + ".str";
 		i.setCurrent(makeConfigTuple("--output-dir", output));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 
@@ -113,7 +113,7 @@ public abstract class ProgramInstrumentationBase {
 		//i.setCurrent(i.getFactory().makeInt(10));
 		// verbose-level : Debug()     -> 4
 		// Debug
-		i.setCurrent(i.getFactory().makeInt(4));
+		i.setCurrent(i.getFactory().makeInt(10));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-verbosity"));
 
 		i.setCurrent(makeConfigTuple("--statistics", 1));

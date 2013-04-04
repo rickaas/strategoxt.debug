@@ -1,0 +1,26 @@
+module optimize-me
+
+imports
+libstrategolib
+
+imports org.strategoxt.imp.debuggers.stratego.runtime
+
+strategies
+
+  main = !"$D$O$L"; debug; undo-dollars-for-capitals; debug
+
+  undo-dollars-for-capitals =
+    s-enter(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollars-for-capitals", "54,2,55,34")
+    ; s-step(| "strategoxt-java-backend/trans/backend-simplify.str", "55,4,55,34")
+      ; escape(undo-dollar-for-capital)
+    < s-exit(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollars-for-capitals", "54,2,55,34")
+    + s-exit(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollars-for-capitals", "54,2,55,34")
+      ; fail
+
+  undo-dollar-for-capital(rec) :
+    [ '$' | cs ] -> <r-exit(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollar-for-capital", "57,2,58,25")> 
+    <s-step(| "strategoxt-java-backend/trans/backend-simplify.str", "58,19,58,21")
+                                                                                                                               ; rec> cs
+    where r-enter(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollar-for-capital", "57,2,58,25")
+          <+ r-exit(| "strategoxt-java-backend/trans/backend-simplify.str", "undo-dollar-for-capital", "57,2,58,25")
+             ; fail

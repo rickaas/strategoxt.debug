@@ -1,0 +1,12 @@
+module foo
+
+strategies
+
+/**
+*
+*
+*
+Long comment
+
+*/
+none = id
