@@ -14,7 +14,6 @@ AC_PROG_LIBTOOL
 ### OUTPUT #############################
 AC_CONFIG_FILES([
   Makefile
-#  syn/Makefile
   lib/Makefile
   tools/Makefile
 ])
