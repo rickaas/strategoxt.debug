@@ -27,10 +27,10 @@
 	
 	<path id="compile-java.classpath">
 	    <pathelement location="utils/dsldi-java.jar"/>
-		<pathelement location="utils/dsldi.jar"/>
+	<!--	<pathelement location="utils/dsldi.jar"/> -->
 		<pathelement location="utils/libdsldi.jar"/>
 	   	<pathelement location="utils/strategoxt.jar"/>
-		<pathelement location="utils/stratego_sugar.jar"/>
+		<pathelement location="utils/stratego_sugar.jar"/> <!-- all classes are in the trans-package, we will most likely get conflicts -->
 	</path>
 	
     <property name="build.stratego.args" value="
