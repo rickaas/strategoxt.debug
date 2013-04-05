@@ -8,3 +8,6 @@ strategies
         val := "VAL"
         ; lit := $[string_[val]_string]
         ; debug; ((debug; debug); debug)
+          
+// Next line seems to work for me
+// parse-stratego -i strj-part.str | pp-aterm | pp-stratego --abstract
