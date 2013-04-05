@@ -39,12 +39,10 @@ strategies
           
         ; <add-dsl-specific-parse-file> ("Stratego", "parse-stratego-as-dsl")
         ; ext-register-parse-strategy(parse-stratego-as-dsl|"parse-stratego-as-dsl")
-        
-        ; <log-info-msg(|"Initializing Stratego debug instrumentation complete")> ""
-          
+
         ; init-dsldi
-          
         ; <set-config> ("--file-extension", "str")
+        ; <log-info-msg(|"Initializing Stratego debug instrumentation complete")> ""
 
     override filter-dirs = 
         ?paths*
