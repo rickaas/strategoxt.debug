@@ -69,7 +69,30 @@ strategies
     // di-pp-stratego-ast = ast2abox(|[<import-term(lib/Stratego-pretty.pp.af)>]); box2text-string(|100) <+ (err-msg(|"Failure during pretty-printing..."); fail)
     
     // copy fragment from strc/pp/pp-stratego
-    di-pp-stratego-ast = pp-stratego-string
+    di-pp-stratego-ast = my-pp-stratego-string
+    //di-pp-stratego-ast = pp-stratego-string
+    
+    // from pp-stratego.str
+    my-pp-stratego-string = my-pp-stratego-box; box2text-string(|80)
+    my-pp-stratego-box = 
+    Stratego-Ensugar
+    ; debug
+    //; try(where(<get-config> "--annotations")
+    //      ; xtc-transform(!"annos-to-term"))
+    ; parenthesize-Stratego
+    ; topdown(try(\ Parenthetical(s) -> ParenStrat(s) \ ))
+    //; try(where(<get-config> "--annotations"); annos-as-comment)
+    ; debug
+    ; topdown(try(my-stratego-to-abox)) // HACK: my machine is probably not up to date
+    ; stratego2abox
+    ; debug
+
+
+
+    // HACK: missing entry for Override()
+    // RL: is mymachine up-to-date?
+    my-stratego-to-abox :
+    	Override() -> FBOX(KW(), S("override"))
     
   // from editor-common.generated.str
   // pp-stratego_sugar-string =
