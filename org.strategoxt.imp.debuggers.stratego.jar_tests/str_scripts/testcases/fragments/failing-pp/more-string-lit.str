@@ -1,0 +1,10 @@
+module more-string-lit
+
+strategies
+  editor-resolve:
+    (node, position, ast, path, project-path) -> target
+    where
+      index-setup(|<language>, [project-path], $[[project-path]/[path]]);
+      index-transaction(
+        target := <index-lookup> node
+      )

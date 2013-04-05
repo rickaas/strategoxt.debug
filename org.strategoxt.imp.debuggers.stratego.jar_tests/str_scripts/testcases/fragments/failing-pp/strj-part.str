@@ -2,3 +2,6 @@ module strj-part
 strategies
   foo =
     foo := $[StringStuff [<output-dirname>]]
+
+// Next line seems to work for me
+// parse-stratego -i strj-part.str | pp-aterm | pp-stratego --abstract

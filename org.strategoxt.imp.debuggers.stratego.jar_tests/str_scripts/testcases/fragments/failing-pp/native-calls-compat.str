@@ -1,0 +1,18 @@
+/**
+ * Some degree native calling compatibility.
+ *
+ * @author Lennart Kats <lennart add lclnet.nl>
+ */
+module native-calls-compat
+
+imports
+  libstratego-lib
+
+strategies
+
+
+  override fork(child) =
+    fatal-err(|"Forking of applications is not supported on Java at this time")
+
+  /*override*/ fork(child, parent) =
+    fatal-err(|"Forking of applications is not supported on Java at this time")
