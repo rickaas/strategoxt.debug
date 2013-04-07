@@ -1,0 +1,303 @@
+V(
+  [SOpt(VS(), "1")]
+, [ H(
+      []
+    , [FBOX(KW(), S("module")), S("native-calls-compat")]
+    )
+  , V(
+      [SOpt(VS(), "2")]
+    , [ V(
+          [SOpt(IS(), "2")]
+        , [ FBOX(KW(), S("imports"))
+          , V([SOpt(VS(), "0")], [S("org.strategoxt.imp.debuggers.stratego.runtime")])
+          ]
+        )
+      , V(
+          [SOpt(IS(), "2")]
+        , [ FBOX(KW(), S("imports"))
+          , V([SOpt(VS(), "0")], [S("libstratego-lib")])
+          ]
+        )
+      , V(
+          [SOpt(IS(), "2")]
+        , [ FBOX(KW(), S("strategies"))
+          , V(
+              [SOpt(VS(), "1")]
+            , [ H(
+                  []
+                , [ FBOX(KW(), S("override"))
+                  , V(
+                      [SOpt(IS(), "2")]
+                    , [ H(
+                          []
+                        , [ H(
+                              [SOpt(HS(), "0")]
+                            , [ S("fork")
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [S("("), S("child"), S(")")]
+                                )
+                              ]
+                            )
+                          , S("=")
+                          ]
+                        )
+                      , V(
+                          []
+                        , [ V(
+                              [SOpt(IS(), "0")]
+                            , [ H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("s-enter")
+                                  , S("(")
+                                  , S("|")
+                                  , S("\"native-calls-compat.str\"")
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"fork\"")]
+                                    )
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"14,11,15,78\"")]
+                                    )
+                                  , S(")")
+                                  ]
+                                )
+                              , H(
+                                  []
+                                , [ S(";")
+                                  , H(
+                                      [SOpt(HS(), "0")]
+                                    , [ S("s-step")
+                                      , S("(")
+                                      , S("|")
+                                      , S("\"native-calls-compat.str\"")
+                                      , H(
+                                          [SOpt(HS(), "1")]
+                                        , [S(","), S("\"15,4,15,78\"")]
+                                        )
+                                      , S(")")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              , H(
+                                  []
+                                , [ S(";")
+                                  , H(
+                                      [SOpt(HS(), "0")]
+                                    , [ S("fatal-err")
+                                      , S("(")
+                                      , S("|")
+                                      , S("\"Forking of applications is not supported on Java at this time\"")
+                                      , S(")")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          , H(
+                              []
+                            , [ S("<")
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("s-exit")
+                                  , S("(")
+                                  , S("|")
+                                  , S("\"native-calls-compat.str\"")
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"fork\"")]
+                                    )
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"14,11,15,78\"")]
+                                    )
+                                  , S(")")
+                                  ]
+                                )
+                              ]
+                            )
+                          , H(
+                              []
+                            , [ S("+")
+                              , V(
+                                  [SOpt(IS(), "0")]
+                                , [ H(
+                                      [SOpt(HS(), "0")]
+                                    , [ S("s-exit")
+                                      , S("(")
+                                      , S("|")
+                                      , S("\"native-calls-compat.str\"")
+                                      , H(
+                                          [SOpt(HS(), "1")]
+                                        , [S(","), S("\"fork\"")]
+                                        )
+                                      , H(
+                                          [SOpt(HS(), "1")]
+                                        , [S(","), S("\"14,11,15,78\"")]
+                                        )
+                                      , S(")")
+                                      ]
+                                    )
+                                  , H(
+                                      []
+                                    , [S(";"), FBOX(KW(), S("fail"))]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              , V(
+                  [SOpt(IS(), "2")]
+                , [ H(
+                      []
+                    , [ H(
+                          [SOpt(HS(), "0")]
+                        , [ S("fork")
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [ S("(")
+                              , H(
+                                  [SOpt(HS(), "1")]
+                                , [ H(
+                                      [SOpt(HS(), "0")]
+                                    , [S("child"), S(",")]
+                                    )
+                                  , S("parent")
+                                  ]
+                                )
+                              , S(")")
+                              ]
+                            )
+                          ]
+                        )
+                      , S("=")
+                      ]
+                    )
+                  , V(
+                      []
+                    , [ V(
+                          [SOpt(IS(), "0")]
+                        , [ H(
+                              [SOpt(HS(), "0")]
+                            , [ S("s-enter")
+                              , S("(")
+                              , S("|")
+                              , S("\"native-calls-compat.str\"")
+                              , H(
+                                  [SOpt(HS(), "1")]
+                                , [S(","), S("\"fork\"")]
+                                )
+                              , H(
+                                  [SOpt(HS(), "1")]
+                                , [S(","), S("\"17,15,18,78\"")]
+                                )
+                              , S(")")
+                              ]
+                            )
+                          , H(
+                              []
+                            , [ S(";")
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("s-step")
+                                  , S("(")
+                                  , S("|")
+                                  , S("\"native-calls-compat.str\"")
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"18,4,18,78\"")]
+                                    )
+                                  , S(")")
+                                  ]
+                                )
+                              ]
+                            )
+                          , H(
+                              []
+                            , [ S(";")
+                              , H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("fatal-err")
+                                  , S("(")
+                                  , S("|")
+                                  , S("\"Forking of applications is not supported on Java at this time\"")
+                                  , S(")")
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      , H(
+                          []
+                        , [ S("<")
+                          , H(
+                              [SOpt(HS(), "0")]
+                            , [ S("s-exit")
+                              , S("(")
+                              , S("|")
+                              , S("\"native-calls-compat.str\"")
+                              , H(
+                                  [SOpt(HS(), "1")]
+                                , [S(","), S("\"fork\"")]
+                                )
+                              , H(
+                                  [SOpt(HS(), "1")]
+                                , [S(","), S("\"17,15,18,78\"")]
+                                )
+                              , S(")")
+                              ]
+                            )
+                          ]
+                        )
+                      , H(
+                          []
+                        , [ S("+")
+                          , V(
+                              [SOpt(IS(), "0")]
+                            , [ H(
+                                  [SOpt(HS(), "0")]
+                                , [ S("s-exit")
+                                  , S("(")
+                                  , S("|")
+                                  , S("\"native-calls-compat.str\"")
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"fork\"")]
+                                    )
+                                  , H(
+                                      [SOpt(HS(), "1")]
+                                    , [S(","), S("\"17,15,18,78\"")]
+                                    )
+                                  , S(")")
+                                  ]
+                                )
+                              , H(
+                                  []
+                                , [S(";"), FBOX(KW(), S("fail"))]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  ]
+)

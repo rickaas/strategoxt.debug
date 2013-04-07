@@ -1,0 +1,2534 @@
+Module(
+  "entitylang"
+, [ Imports([Import("org.strategoxt.imp.debuggers.stratego.runtime")])
+  , Imports(
+      [ Import("libstratego-lib")
+      , Import("libstratego-gpp")
+      , Import("libstratego-aterm")
+      , Import("include/EntityLang")
+      , Import("lib/editor-common.generated")
+      , Import("lib/index-library.generated")
+      , Import("lib/analysis-library.generated")
+      , Import("lib/analysis-library-internal.generated")
+      , Import("lib/compilation-library.generated")
+      , Import("lib/nbl-library.generated")
+      , Import("names")
+      , Import("check")
+      , Import("generate")
+      , Import("refactor")
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "analyze"
+        , Rule(
+            NoAnnoList(
+              Tuple([Var("ast"), Var("path"), Var("project-path")])
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"analyze\"")), NoAnnoList(Str("\"23,2,33,73\""))]
+              )
+            , NoAnnoList(
+                Tuple(
+                  [ Var("ast''")
+                  , Var("errors")
+                  , Var("warnings")
+                  , Var("notes")
+                  , Var("filesToAnalyze'")
+                  ]
+                )
+              )
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"analyze\"")), NoAnnoList(Str("\"23,2,33,73\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"analyze\"")), NoAnnoList(Str("\"23,2,33,73\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"26,6,33,73\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"26,6,26,40\""))]
+                        )
+                      , Assign(
+                          Var("ast'")
+                        , App(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"26,34,26,35\""))]
+                              )
+                            , Id()
+                            )
+                          , Var("ast")
+                          )
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"27,6,33,73\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"27,6,27,85\""))]
+                            )
+                          , Assign(
+                              NoAnnoList(Tuple([Var("ast''"), Var("filesToAnalyze")]))
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"27,34,27,57\""))]
+                                  )
+                                , CallT(
+                                    SVar("analyze-top")
+                                  , []
+                                  , [ RootApp(
+                                        Seq(
+                                          CallT(
+                                            SVar("s-step")
+                                          , []
+                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"27,48,27,55\""))]
+                                          )
+                                        , CallNoArgs(SVar("language"))
+                                        )
+                                      )
+                                    ]
+                                  )
+                                )
+                              , NoAnnoList(
+                                  Tuple([Var("ast'"), Var("path"), Var("project-path")])
+                                )
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"28,6,33,73\""))]
+                            )
+                          , Seq(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"28,6,32,6\""))]
+                                )
+                              , Call(
+                                  SVar("index-transaction")
+                                , [ Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"29,7,31,73\""))]
+                                      )
+                                    , Seq(
+                                        Seq(
+                                          CallT(
+                                            SVar("s-step")
+                                          , []
+                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"29,7,29,74\""))]
+                                          )
+                                        , Assign(
+                                            Var("errors")
+                                          , App(
+                                              Seq(
+                                                CallT(
+                                                  SVar("s-step")
+                                                , []
+                                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"29,33,29,67\""))]
+                                                )
+                                              , Call(
+                                                  SVar("collect-all")
+                                                , [ Seq(
+                                                      CallT(
+                                                        SVar("s-step")
+                                                      , []
+                                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"29,45,29,60\""))]
+                                                      )
+                                                    , CallNoArgs(SVar("constraint-error"))
+                                                    )
+                                                  , Seq(
+                                                      CallT(
+                                                        SVar("s-step")
+                                                      , []
+                                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"29,63,29,66\""))]
+                                                      )
+                                                    , CallNoArgs(SVar("conc"))
+                                                    )
+                                                  ]
+                                                )
+                                              )
+                                            , Var("ast''")
+                                            )
+                                          )
+                                        )
+                                      , Seq(
+                                          CallT(
+                                            SVar("s-step")
+                                          , []
+                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"30,7,31,73\""))]
+                                          )
+                                        , Seq(
+                                            Seq(
+                                              CallT(
+                                                SVar("s-step")
+                                              , []
+                                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"30,7,30,76\""))]
+                                              )
+                                            , Assign(
+                                                Var("warnings")
+                                              , App(
+                                                  Seq(
+                                                    CallT(
+                                                      SVar("s-step")
+                                                    , []
+                                                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"30,33,30,69\""))]
+                                                    )
+                                                  , Call(
+                                                      SVar("collect-all")
+                                                    , [ Seq(
+                                                          CallT(
+                                                            SVar("s-step")
+                                                          , []
+                                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"30,45,30,62\""))]
+                                                          )
+                                                        , CallNoArgs(SVar("constraint-warning"))
+                                                        )
+                                                      , Seq(
+                                                          CallT(
+                                                            SVar("s-step")
+                                                          , []
+                                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"30,65,30,68\""))]
+                                                          )
+                                                        , CallNoArgs(SVar("conc"))
+                                                        )
+                                                      ]
+                                                    )
+                                                  )
+                                                , Var("ast''")
+                                                )
+                                              )
+                                            )
+                                          , Seq(
+                                              CallT(
+                                                SVar("s-step")
+                                              , []
+                                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"31,7,31,73\""))]
+                                              )
+                                            , Assign(
+                                                Var("notes")
+                                              , App(
+                                                  Seq(
+                                                    CallT(
+                                                      SVar("s-step")
+                                                    , []
+                                                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"31,33,31,66\""))]
+                                                    )
+                                                  , Call(
+                                                      SVar("collect-all")
+                                                    , [ Seq(
+                                                          CallT(
+                                                            SVar("s-step")
+                                                          , []
+                                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"31,45,31,59\""))]
+                                                          )
+                                                        , CallNoArgs(SVar("constraint-note"))
+                                                        )
+                                                      , Seq(
+                                                          CallT(
+                                                            SVar("s-step")
+                                                          , []
+                                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"31,62,31,65\""))]
+                                                          )
+                                                        , CallNoArgs(SVar("conc"))
+                                                        )
+                                                      ]
+                                                    )
+                                                  )
+                                                , Var("ast''")
+                                                )
+                                              )
+                                            )
+                                          )
+                                        )
+                                      )
+                                    )
+                                  ]
+                                )
+                              )
+                            , Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"33,6,33,73\""))]
+                                )
+                              , Assign(
+                                  Var("filesToAnalyze'")
+                                , App(
+                                    Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"33,34,33,57\""))]
+                                      )
+                                    , CallNoArgs(SVar("index-filepairs-to-files"))
+                                    )
+                                  , Var("filesToAnalyze")
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"analyze\"")), NoAnnoList(Str("\"23,2,33,73\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-analyze"
+        , Rule(
+            NoAnnoList(
+              Tuple([Var("ast"), Var("path"), Var("project-path")])
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"36,2,41,68\""))]
+              )
+            , NoAnnoList(
+                Tuple(
+                  [Var("ast'"), Var("errors"), Var("warnings"), Var("notes")]
+                )
+              )
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"36,2,41,68\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"36,2,41,68\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"39,6,41,68\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"39,6,39,16\""))]
+                        )
+                      , CallNoArgs(SVar("editor-init"))
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"40,6,41,68\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"40,6,40,91\""))]
+                            )
+                          , Assign(
+                              NoAnnoList(
+                                Tuple(
+                                  [ Var("ast'")
+                                  , Var("errors")
+                                  , Var("warnings")
+                                  , Var("notes")
+                                  , Var("filesToAnalyze")
+                                  ]
+                                )
+                              )
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"40,58,40,64\""))]
+                                  )
+                                , CallNoArgs(SVar("analyze"))
+                                )
+                              , NoAnnoList(
+                                  Tuple([Var("ast"), Var("path"), Var("project-path")])
+                                )
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"41,6,41,68\""))]
+                            )
+                          , BA(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"41,7,41,32\""))]
+                                )
+                              , Call(
+                                  SVar("try")
+                                , [ Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"41,11,41,31\""))]
+                                      )
+                                    , CallNoArgs(SVar("editor-queue-analysis"))
+                                    )
+                                  ]
+                                )
+                              )
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"41,36,41,52\""))]
+                                  )
+                                , Call(
+                                    SVar("remove-all")
+                                  , [ Seq(
+                                        CallT(
+                                          SVar("s-step")
+                                        , []
+                                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"41,47,41,51\""))]
+                                        )
+                                      , Match(Var("path"))
+                                      )
+                                    ]
+                                  )
+                                )
+                              , Var("filesToAnalyze")
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"36,2,41,68\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-analyze"
+        , Rule(
+            Var("files")
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WhereClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"47,6,47,18\""))]
+                    )
+                  , Not(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"47,10,47,17\""))]
+                        )
+                      , CallNoArgs(SVar("is-tuple"))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"49,5,50,31\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"49,5,49,51\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"49,19,49,26\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(
+                              List(
+                                [ RootApp(
+                                    Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"49,32,49,43\""))]
+                                      )
+                                    , CallNoArgs(SVar("project-path"))
+                                    )
+                                  )
+                                ]
+                              )
+                            )
+                          , NoAnnoList(Str("\".\""))
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"50,6,50,31\""))]
+                        )
+                      , CallNoArgs(SVar("disable-commit-and-compile"))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"52,6,52,26\""))]
+                    )
+                  , CallNoArgs(SVar("editor-queue-analysis"))
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"55,6,56,44\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"55,6,55,43\""))]
+                        )
+                      , BA(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"55,7,55,31\""))]
+                            )
+                          , CallNoArgs(SVar("enable-commit-and-compile"))
+                          )
+                        , RootApp(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"55,35,55,42\""))]
+                              )
+                            , CallNoArgs(SVar("language"))
+                            )
+                          )
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"56,6,56,44\""))]
+                        )
+                      , BA(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"56,7,56,32\""))]
+                            )
+                          , CallNoArgs(SVar("trigger-commit-and-compile"))
+                          )
+                        , RootApp(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"56,36,56,43\""))]
+                              )
+                            , CallNoArgs(SVar("language"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-analyze\"")), NoAnnoList(Str("\"44,2,56,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-save"
+        , Rule(
+            NoAnnoList(Tuple([Wld(), Wld(), Wld(), Wld(), Wld()]))
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-save\"")), NoAnnoList(Str("\"59,2,63,44\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-save\"")), NoAnnoList(Str("\"59,2,63,44\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-save\"")), NoAnnoList(Str("\"59,2,63,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"62,6,63,44\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"62,6,62,52\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"62,20,62,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(
+                              List(
+                                [ RootApp(
+                                    Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"62,33,62,44\""))]
+                                      )
+                                    , CallNoArgs(SVar("project-path"))
+                                    )
+                                  )
+                                ]
+                              )
+                            )
+                          , NoAnnoList(Str("\".\""))
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"63,6,63,44\""))]
+                        )
+                      , BA(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"63,7,63,32\""))]
+                            )
+                          , CallNoArgs(SVar("trigger-commit-and-compile"))
+                          )
+                        , RootApp(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"63,36,63,43\""))]
+                              )
+                            , CallNoArgs(SVar("language"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-save\"")), NoAnnoList(Str("\"59,2,63,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "editor-resolve"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("node")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-resolve\"")), NoAnnoList(Str("\"68,2,74,6\""))]
+              )
+            , Var("target")
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-resolve\"")), NoAnnoList(Str("\"68,2,74,6\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-resolve\"")), NoAnnoList(Str("\"68,2,74,6\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WhereClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"71,6,74,6\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"71,6,71,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"71,20,71,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"72,6,74,6\""))]
+                        )
+                      , Call(
+                          SVar("index-transaction")
+                        , [ Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"73,8,73,36\""))]
+                              )
+                            , Assign(
+                                Var("target")
+                              , App(
+                                  Seq(
+                                    CallT(
+                                      SVar("s-step")
+                                    , []
+                                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"73,19,73,30\""))]
+                                    )
+                                  , CallNoArgs(SVar("index-lookup"))
+                                  )
+                                , Var("node")
+                                )
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-resolve\"")), NoAnnoList(Str("\"68,2,74,6\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-hover"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("target")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-hover\"")), NoAnnoList(Str("\"78,2,81,75\""))]
+              )
+            , NoAnnoList(StringQuotation1("                                                     ", [StringEscape1("                                                     ", Var("uriString"))]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-hover\"")), NoAnnoList(Str("\"78,2,81,75\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-hover\"")), NoAnnoList(Str("\"78,2,81,75\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WhereClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"81,6,81,75\""))]
+                    )
+                  , Assign(
+                      Var("uriString")
+                    , App(
+                        Seq(
+                          CallT(
+                            SVar("s-step")
+                          , []
+                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"81,20,81,38\""))]
+                          )
+                        , CallNoArgs(SVar("index-uri-to-string"))
+                        )
+                      , App(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"81,42,81,50\""))]
+                            )
+                          , CallNoArgs(SVar("index-uri"))
+                          )
+                        , App(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"81,54,81,67\""))]
+                              )
+                            , CallNoArgs(SVar("index-find-key"))
+                            )
+                          , Var("target")
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-hover\"")), NoAnnoList(Str("\"78,2,81,75\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-complete"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("node")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-complete\"")), NoAnnoList(Str("\"85,2,93,61\""))]
+              )
+            , Var("proposals'")
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-complete\"")), NoAnnoList(Str("\"85,2,93,61\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-complete\"")), NoAnnoList(Str("\"85,2,93,61\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WhereClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"88,6,93,61\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"88,6,88,64\""))]
+                        )
+                      , Assign(
+                          Var("node'")
+                        , App(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"88,16,88,58\""))]
+                              )
+                            , Prim(
+                                "\"SSL_EXT_clone_and_set_parents\""
+                              , [ RootApp(
+                                    Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"88,55,88,56\""))]
+                                      )
+                                    , Id()
+                                    )
+                                  )
+                                ]
+                              )
+                            )
+                          , Var("node")
+                          )
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"89,6,93,61\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"89,6,89,65\""))]
+                            )
+                          , Assign(
+                              As(
+                                Var("item")
+                              , NoAnnoList(Op("COMPLETION", [Var("name")]))
+                              )
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"89,32,89,58\""))]
+                                  )
+                                , Call(
+                                    SVar("collect-one")
+                                  , [ Seq(
+                                        CallT(
+                                          SVar("s-step")
+                                        , []
+                                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"89,44,89,57\""))]
+                                        )
+                                      , Match(NoAnnoList(Op("COMPLETION", [Wld()])))
+                                      )
+                                    ]
+                                  )
+                                )
+                              , Var("node'")
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"90,6,93,61\""))]
+                            )
+                          , Seq(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"90,6,92,6\""))]
+                                )
+                              , Call(
+                                  SVar("index-transaction")
+                                , [ Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"91,8,91,59\""))]
+                                      )
+                                    , AM(
+                                        Seq(
+                                          CallT(
+                                            SVar("s-step")
+                                          , []
+                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"91,9,91,45\""))]
+                                          )
+                                        , LChoice(
+                                            Seq(
+                                              CallT(
+                                                SVar("s-step")
+                                              , []
+                                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"91,9,91,38\""))]
+                                              )
+                                            , BA(
+                                                Seq(
+                                                  CallT(
+                                                    SVar("s-step")
+                                                  , []
+                                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"91,10,91,32\""))]
+                                                  )
+                                                , CallT(SVar("index-lookup-all"), [], [Var("name")])
+                                                )
+                                              , Var("item")
+                                              )
+                                            )
+                                          , Seq(
+                                              CallT(
+                                                SVar("s-step")
+                                              , []
+                                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"91,43,91,45\""))]
+                                              )
+                                            , Build(NoAnnoList(List([])))
+                                            )
+                                          )
+                                        )
+                                      , Var("proposals")
+                                      )
+                                    )
+                                  ]
+                                )
+                              )
+                            , Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"93,6,93,61\""))]
+                                )
+                              , Assign(
+                                  Var("proposals'")
+                                , App(
+                                    Seq(
+                                      CallT(
+                                        SVar("s-step")
+                                      , []
+                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"93,21,93,50\""))]
+                                      )
+                                    , Call(
+                                        SVar("map")
+                                      , [ Seq(
+                                            CallT(
+                                              SVar("s-step")
+                                            , []
+                                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"93,25,93,49\""))]
+                                            )
+                                          , Seq(
+                                              Seq(
+                                                CallT(
+                                                  SVar("s-step")
+                                                , []
+                                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"93,25,93,33\""))]
+                                                )
+                                              , CallNoArgs(SVar("index-uri"))
+                                              )
+                                            , Seq(
+                                                CallT(
+                                                  SVar("s-step")
+                                                , []
+                                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"93,36,93,49\""))]
+                                                )
+                                              , CallNoArgs(SVar("index-uri-name"))
+                                              )
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    )
+                                  , Var("proposals")
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-complete\"")), NoAnnoList(Str("\"85,2,93,61\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ RDefNoArgs(
+          "debug-generate-aterm"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-aterm\"")), NoAnnoList(Str("\"98,2,102,25\""))]
+              )
+            , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-aterm\"")), NoAnnoList(Str("\"98,2,102,25\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-aterm\"")), NoAnnoList(Str("\"98,2,102,25\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"101,6,102,25\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"101,6,101,53\""))]
+                        )
+                      , Assign(
+                          Var("filename")
+                        , App(
+                            Seq(
+                              CallT(
+                                SVar("s-step")
+                              , []
+                              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"101,19,101,47\""))]
+                              )
+                            , CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"aterm\""))])
+                            )
+                          , Var("path")
+                          )
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"102,6,102,25\""))]
+                        )
+                      , Assign(Var("result"), Var("selected"))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-aterm\"")), NoAnnoList(Str("\"98,2,102,25\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-generate-deffed"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-deffed\"")), NoAnnoList(Str("\"105,2,110,40\""))]
+              )
+            , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-deffed\"")), NoAnnoList(Str("\"105,2,110,40\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-deffed\"")), NoAnnoList(Str("\"105,2,110,40\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"108,6,110,40\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"108,6,108,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"108,20,108,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"109,6,110,40\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"109,6,109,53\""))]
+                            )
+                          , Assign(
+                              Var("filename")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"109,19,109,47\""))]
+                                  )
+                                , CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"aterm\""))])
+                                )
+                              , Var("path")
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"110,6,110,40\""))]
+                            )
+                          , Assign(
+                              Var("result")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"110,19,110,30\""))]
+                                  )
+                                , CallNoArgs(SVar("analyze-defs"))
+                                )
+                              , Var("selected")
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-deffed\"")), NoAnnoList(Str("\"105,2,110,40\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-generate-analyzed"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-analyzed\"")), NoAnnoList(Str("\"113,2,118,74\""))]
+              )
+            , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-analyzed\"")), NoAnnoList(Str("\"113,2,118,74\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-analyzed\"")), NoAnnoList(Str("\"113,2,118,74\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"116,6,118,74\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"116,6,116,16\""))]
+                        )
+                      , CallNoArgs(SVar("editor-init"))
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"117,6,118,74\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"117,6,117,62\""))]
+                            )
+                          , Assign(
+                              Var("filename")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"117,19,117,56\""))]
+                                  )
+                                , CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"analyzed.aterm\""))])
+                                )
+                              , Var("path")
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"118,6,118,74\""))]
+                            )
+                          , Assign(
+                              Var("result")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"118,19,118,42\""))]
+                                  )
+                                , CallT(
+                                    SVar("analyze-top")
+                                  , []
+                                  , [ RootApp(
+                                        Seq(
+                                          CallT(
+                                            SVar("s-step")
+                                          , []
+                                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"118,33,118,40\""))]
+                                          )
+                                        , CallNoArgs(SVar("language"))
+                                        )
+                                      )
+                                    ]
+                                  )
+                                )
+                              , NoAnnoList(
+                                  Tuple([Var("selected"), Var("path"), Var("project-path")])
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-generate-analyzed\"")), NoAnnoList(Str("\"113,2,118,74\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-index-show-current-file"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-current-file\"")), NoAnnoList(Str("\"121,2,126,45\""))]
+              )
+            , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-current-file\"")), NoAnnoList(Str("\"121,2,126,45\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-current-file\"")), NoAnnoList(Str("\"121,2,126,45\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"124,6,126,45\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"124,6,124,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"124,20,124,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"125,6,126,45\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"125,6,125,71\""))]
+                            )
+                          , Assign(
+                              Var("filename")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"125,19,125,65\""))]
+                                  )
+                                , CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"index.currentfile.aterm\""))])
+                                )
+                              , Var("path")
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"126,6,126,45\""))]
+                            )
+                          , Assign(
+                              Var("result")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"126,19,126,39\""))]
+                                  )
+                                , CallNoArgs(SVar("index-get-all-in-file"))
+                                )
+                              , Var("path")
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-current-file\"")), NoAnnoList(Str("\"121,2,126,45\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-index-show-all-files"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-all-files\"")), NoAnnoList(Str("\"129,2,134,104\""))]
+              )
+            , NoAnnoList(Tuple([Var("filename"), Var("result")]))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-all-files\"")), NoAnnoList(Str("\"129,2,134,104\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-all-files\"")), NoAnnoList(Str("\"129,2,134,104\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"132,6,134,104\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"132,6,132,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"132,20,132,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"133,6,134,104\""))]
+                        )
+                      , Seq(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"133,6,133,68\""))]
+                            )
+                          , Assign(
+                              Var("filename")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"133,19,133,62\""))]
+                                  )
+                                , CallT(SVar("guarantee-extension"), [], [NoAnnoList(Str("\"index.allfiles.aterm\""))])
+                                )
+                              , Var("path")
+                              )
+                            )
+                          )
+                        , Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"134,6,134,104\""))]
+                            )
+                          , Assign(
+                              Var("result")
+                            , App(
+                                Seq(
+                                  CallT(
+                                    SVar("s-step")
+                                  , []
+                                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"134,19,134,81\""))]
+                                  )
+                                , Call(
+                                    SVar("map")
+                                  , [ Seq(
+                                        CallT(
+                                          SVar("s-step")
+                                        , []
+                                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"134,23,134,80\""))]
+                                        )
+                                      , LRule(
+                                          RuleNoCond(
+                                            Var("filename")
+                                          , NoAnnoList(
+                                              Tuple(
+                                                [ Var("filename")
+                                                , App(
+                                                    Seq(
+                                                      CallT(
+                                                        SVar("s-step")
+                                                      , []
+                                                      , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"134,48,134,68\""))]
+                                                      )
+                                                    , CallNoArgs(SVar("index-get-all-in-file"))
+                                                    )
+                                                  , Var("filename")
+                                                  )
+                                                ]
+                                              )
+                                            )
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  )
+                                )
+                              , RootApp(
+                                  Seq(
+                                    CallT(
+                                      SVar("s-step")
+                                    , []
+                                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"134,85,134,103\""))]
+                                    )
+                                  , CallNoArgs(SVar("index-get-all-files"))
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-show-all-files\"")), NoAnnoList(Str("\"129,2,134,104\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-index-clear-current"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear-current\"")), NoAnnoList(Str("\"137,2,141,48\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear-current\"")), NoAnnoList(Str("\"137,2,141,48\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear-current\"")), NoAnnoList(Str("\"137,2,141,48\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"140,6,141,48\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"140,6,140,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"140,20,140,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"141,6,141,48\""))]
+                        )
+                      , BA(
+                          Seq(
+                            CallT(
+                              SVar("s-step")
+                            , []
+                            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"141,7,141,22\""))]
+                            )
+                          , CallNoArgs(SVar("index-clear-file"))
+                          )
+                        , NoAnnoList(
+                            StringQuotation1(
+                              "                           "
+                            , [ StringEscape1("                           ", Var("project-path"))
+                              , QStr("/")
+                              , StringEscape1("                                          ", Var("path"))
+                              ]
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear-current\"")), NoAnnoList(Str("\"137,2,141,48\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-index-clear"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear\"")), NoAnnoList(Str("\"144,2,148,16\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear\"")), NoAnnoList(Str("\"144,2,148,16\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear\"")), NoAnnoList(Str("\"144,2,148,16\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"147,6,148,16\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"147,6,147,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"147,20,147,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"148,6,148,16\""))]
+                        )
+                      , CallNoArgs(SVar("index-clear"))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-clear\"")), NoAnnoList(Str("\"144,2,148,16\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "debug-index-reload"
+        , Rule(
+            NoAnnoList(
+              Tuple(
+                [ Var("selected")
+                , Var("position")
+                , Var("ast")
+                , Var("path")
+                , Var("project-path")
+                ]
+              )
+            )
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-reload\"")), NoAnnoList(Str("\"151,2,155,17\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-reload\"")), NoAnnoList(Str("\"151,2,155,17\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-reload\"")), NoAnnoList(Str("\"151,2,155,17\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"154,6,155,17\""))]
+                    )
+                  , Seq(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"154,6,154,71\""))]
+                        )
+                      , CallT(
+                          SVar("index-setup")
+                        , []
+                        , [ RootApp(
+                              Seq(
+                                CallT(
+                                  SVar("s-step")
+                                , []
+                                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"154,20,154,27\""))]
+                                )
+                              , CallNoArgs(SVar("language"))
+                              )
+                            )
+                          , NoAnnoList(List([Var("project-path")]))
+                          , NoAnnoList(
+                              StringQuotation1(
+                                "                                                 "
+                              , [ StringEscape1("                                                 ", Var("project-path"))
+                                , QStr("/")
+                                , StringEscape1("                                                                ", Var("path"))
+                                ]
+                              )
+                            )
+                          ]
+                        )
+                      )
+                    , Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"155,6,155,17\""))]
+                        )
+                      , CallNoArgs(SVar("index-reload"))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"debug-index-reload\"")), NoAnnoList(Str("\"151,2,155,17\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  , Rules(
+      [ SDefNoArgs(
+          "editor-queue-analysis"
+        , GuardedLChoice(
+            Seq(
+              CallT(
+                SVar("s-enter")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-queue-analysis\"")), NoAnnoList(Str("\"160,2,161,76\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-step")
+                , []
+                , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"161,4,161,76\""))]
+                )
+              , Seq(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"161,4,161,11\""))]
+                    )
+                  , Not(
+                      Seq(
+                        CallT(
+                          SVar("s-step")
+                        , []
+                        , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"161,8,161,10\""))]
+                        )
+                      , Match(NoAnnoList(List([])))
+                      )
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"161,14,161,76\""))]
+                    )
+                  , CallT(
+                      SVar("queue-strategy")
+                    , []
+                    , [NoAnnoList(Str("\"editor-sequential-analyze\"")), NoAnnoList(Str("\"Analyzing files\""))]
+                    )
+                  )
+                )
+              )
+            )
+          , CallT(
+              SVar("s-exit")
+            , []
+            , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-queue-analysis\"")), NoAnnoList(Str("\"160,2,161,76\""))]
+            )
+          , Seq(
+              CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-queue-analysis\"")), NoAnnoList(Str("\"160,2,161,76\""))]
+              )
+            , Fail()
+            )
+          )
+        )
+      , RDefNoArgs(
+          "editor-parallel-analyze"
+        , Rule(
+            Var("files")
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-parallel-analyze\"")), NoAnnoList(Str("\"164,2,167,42\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-parallel-analyze\"")), NoAnnoList(Str("\"164,2,167,42\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-parallel-analyze\"")), NoAnnoList(Str("\"164,2,167,42\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"167,6,167,42\""))]
+                    )
+                  , Call(
+                      SVar("index-parallel-analyze-files")
+                    , [ Seq(
+                          CallT(
+                            SVar("s-step")
+                          , []
+                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"167,35,167,41\""))]
+                          )
+                        , CallNoArgs(SVar("analyze"))
+                        )
+                      ]
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-parallel-analyze\"")), NoAnnoList(Str("\"164,2,167,42\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      , RDefNoArgs(
+          "editor-sequential-analyze"
+        , Rule(
+            Var("files")
+          , App(
+              CallT(
+                SVar("r-exit")
+              , []
+              , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-sequential-analyze\"")), NoAnnoList(Str("\"170,2,173,44\""))]
+              )
+            , NoAnnoList(Op("None", []))
+            )
+          , [ WhereClause(
+                LChoice(
+                  CallT(
+                    SVar("r-enter")
+                  , []
+                  , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-sequential-analyze\"")), NoAnnoList(Str("\"170,2,173,44\""))]
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-sequential-analyze\"")), NoAnnoList(Str("\"170,2,173,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            , WithClause(
+                LChoice(
+                  Seq(
+                    CallT(
+                      SVar("s-step")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"173,6,173,44\""))]
+                    )
+                  , Call(
+                      SVar("index-sequential-analyze-files")
+                    , [ Seq(
+                          CallT(
+                            SVar("s-step")
+                          , []
+                          , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"173,37,173,43\""))]
+                          )
+                        , CallNoArgs(SVar("analyze"))
+                        )
+                      ]
+                    )
+                  )
+                , Seq(
+                    CallT(
+                      SVar("r-exit")
+                    , []
+                    , [NoAnnoList(Str("\"entitylang.str\"")), NoAnnoList(Str("\"editor-sequential-analyze\"")), NoAnnoList(Str("\"170,2,173,44\""))]
+                    )
+                  , Fail()
+                  )
+                )
+              )
+            ]
+          )
+        )
+      ]
+    )
+  ]
+)

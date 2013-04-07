@@ -1,0 +1,80 @@
+Module(
+  "native-calls-compat"
+, [ Imports([Import("org.strategoxt.imp.debuggers.stratego.runtime")])
+  , Imports([Import("libstratego-lib")])
+  , Strategies(
+      [ AnnoDef(
+          [Override()]
+        , SDef(
+            "fork"
+          , [DefaultVarDec("child")]
+          , GuardedLChoice(
+              Seq(
+                CallT(
+                  SVar("s-enter")
+                , []
+                , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"14,11,15,78\""))]
+                )
+              , Seq(
+                  CallT(
+                    SVar("s-step")
+                  , []
+                  , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"15,4,15,78\""))]
+                  )
+                , CallT(SVar("fatal-err"), [], [NoAnnoList(Str("\"Forking of applications is not supported on Java at this time\""))])
+                )
+              )
+            , CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"14,11,15,78\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-exit")
+                , []
+                , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"14,11,15,78\""))]
+                )
+              , Fail()
+              )
+            )
+          )
+        )
+      , SDef(
+          "fork"
+        , [DefaultVarDec("child"), DefaultVarDec("parent")]
+        , GuardedLChoice(
+            Seq(
+              CallT(
+                SVar("s-enter")
+              , []
+              , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"17,15,18,78\""))]
+              )
+            , Seq(
+                CallT(
+                  SVar("s-step")
+                , []
+                , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"18,4,18,78\""))]
+                )
+              , CallT(SVar("fatal-err"), [], [NoAnnoList(Str("\"Forking of applications is not supported on Java at this time\""))])
+              )
+            )
+          , CallT(
+              SVar("s-exit")
+            , []
+            , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"17,15,18,78\""))]
+            )
+          , Seq(
+              CallT(
+                SVar("s-exit")
+              , []
+              , [NoAnnoList(Str("\"native-calls-compat.str\"")), NoAnnoList(Str("\"fork\"")), NoAnnoList(Str("\"17,15,18,78\""))]
+              )
+            , Fail()
+            )
+          )
+        )
+      ]
+    )
+  ]
+)
