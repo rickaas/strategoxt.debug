@@ -120,11 +120,21 @@ public abstract class ProgramInstrumentationBase {
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 	}
 	
+	protected IStrategoTerm makeConfigTuple(String key, String[] values) {
+		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeList(makeStringList(values)));
+	}
 	protected IStrategoTerm makeConfigTuple(String key, String value) {
 		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeString(value));
 	}
 	protected IStrategoTerm makeConfigTuple(String key, int value) {
 		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeInt(value));
+	}
+	private IStrategoTerm[] makeStringList(String[] values) {
+		IStrategoTerm[] terms = new IStrategoTerm[values.length];
+		for(int index = 0; index < values.length; index++) {
+			terms[index] = i.getFactory().makeString(values[index]);
+		}
+		return terms;
 	}
 
 }
