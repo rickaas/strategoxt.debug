@@ -11,44 +11,44 @@ overlays
    * According to a benchmark with libstrc:
    *   2000 = good, 2500 = good, 3000~5000 = still good, 10.000 = bad
    */
-  LARGE_STRATEGY_SIZE = 2500
+//  LARGE_STRATEGY_SIZE = 2500
 
 strategies
-
-  split-large-strategies =
-    Specification([Signature([Constructors(id)]), Strategies(map(try(split-large-def)))])
-  
-  split-large-def :
-    SDefT(x, s*, t*, s) -> SDefT(x, s*, t*, s')
-    with
-      s' := <split-large-strategy(|x)> s
-  
-  split-large-strategy(|x) =
-    bottomup-at-large-terms(
-      (?Seq(_, _) + ?GuardedLChoice(_, _, _))
-    ; split-large-strategy-apply(|x)
-    )
-
-  bottomup-at-large-terms(s) =
-    bottomup-at-large-terms'(s) => (<id>, _)
-  
-  bottomup-at-large-terms'(s) :
-    t -> (t'', size')
-    with
-      t'-and-sizes := <all(bottomup-at-large-terms'(s))>
-    ; t'           := <all(Fst)> t'-and-sizes
-    ; size         := <crush(!1, add, Snd)> t'-and-sizes
-    with
-      ?SDefT(_, _, _, _) // don't count definitions
-    ; t''   := t'
-    ; size' := 0
-    <+
-      <gt> (size, LARGE_STRATEGY_SIZE())
-    ; t''   := <s> t'
-    ; size' := 0
-    <+
-      t''   := t'
-    ; size' := size
+// 
+//   split-large-strategies =
+//     Specification([Signature([Constructors(id)]), Strategies(map(try(split-large-def)))])
+//   
+//   split-large-def :
+//     SDefT(x, s*, t*, s) -> SDefT(x, s*, t*, s')
+//     with
+//       s' := <split-large-strategy(|x)> s
+//   
+//   split-large-strategy(|x) =
+//     bottomup-at-large-terms(
+//       (?Seq(_, _) + ?GuardedLChoice(_, _, _))
+//     ; split-large-strategy-apply(|x)
+//     )
+// 
+//   bottomup-at-large-terms(s) =
+//     bottomup-at-large-terms'(s) => (<id>, _)
+//   
+//   bottomup-at-large-terms'(s) :
+//     t -> (t'', size')
+//     with
+//       t'-and-sizes := <all(bottomup-at-large-terms'(s))>
+//     ; t'           := <all(Fst)> t'-and-sizes
+//     ; size         := <crush(!1, add, Snd)> t'-and-sizes
+//     with
+//       ?SDefT(_, _, _, _) // don't count definitions
+//     ; t''   := t'
+//     ; size' := 0
+//     <+
+//       <gt> (size, LARGE_STRATEGY_SIZE())
+//     ; t''   := <s> t'
+//     ; size' := 0
+//     <+
+//       t''   := t'
+//     ; size' := size
   
   split-large-strategy-apply(|x) :
     |[ s ]| ->
