@@ -25,7 +25,7 @@ failed="--report-failed-files $BASEDIR/failed-files.log"
 succeeded="--report-succeeded-files $BASEDIR/succeeded-files.log"
 runtimeprops="" #"--report-runtime-properties $BASEDIR/runtimeprops.log"
 
-include_opts="-I ../../java-front/syntax"
+include_opts="-I $prefix/../../java-front/syntax-embedding"
 di_opts="--verbose 1 --statistics 1 $failed $succeeded $runtimeprops $include_opts"
 
 di_input_file="--input-file ${INSTR_FILE}"
