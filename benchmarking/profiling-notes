@@ -1,0 +1,322 @@
+normal strategoxt-java-backend compilation on clean checkout
+
+1st run
+4 minutes, 7 seconds
+
+2nd run
+BC:      14
+Make:    212
+Install: 20
+Total:   246
+4 minutes and 6 seconds elapsed.
+
+3rd
+BC:      16
+Make:    208
+Install: 27
+Total:   251
+4 minutes and 11 seconds elapsed.
+
+4th
+BC:      17
+Make:    212
+Install: 26
+Total:   255
+4 minutes and 15 seconds elapsed.
+
+5th
+BC:      22
+Make:    183
+Install: 20
+Total:   225
+3 minutes and 45 seconds elapsed.
+
+6th
+BC:      15
+Make:    177
+Install: 20
+Total:   212
+3 minutes and 32 seconds elapsed.
+
+7th
+BC:      15
+Make:    142
+Install: 19
+Total:   176
+2 minutes and 56 seconds elapsed.
+
+
+instrumentation strategoxt:
+
+[ Main | info ] Instrumenting 1287/1287 : 
+       "asfix-tools/test/asfix-abstractions-test.str"
+[ Main | info ] Total Instrumentation duration : [user/system] = [137.51s/0.00s]
+[ Main | info ] Instrumentation summary:
+[ Main | info ] instrumented file count: 
+       1133
+[ Main | info ] instrumentation failed count: 
+       154
+[ Main | info ] Creating report with failed files:
+       "failed-files.log"
+[ Main | info ] Creating report with succeeded files...
+       "succeeded-files.log"
+Main (140.24 secs)
+
+
+
+compile time instrumented strategoxt:
+
+
+
+Count stratego files
+find . -type f -name "*.str" | wc -l
+strategoxt:    1287
+strategoxt-di: 1290 # copied .str file that contains debug-events to let the c code compile
+
+Count all lines (including blank and comments) in stratego files
+wc -l `find . -type f -name "*.str"`
+strategoxt:    110310 total
+strategoxt-di: 190700 total
+
+real lines (no blanks, no comments and pretty printed)
+find strategoxt -type f -name "*.str" -exec ./linecount.sh {} \; > lines.txt
+paste -sd+ lines.txt | bc
+wc -l lines.txt
+strategoxt:     55863
+strategoxt-di: 128564
+
+Stratego file size
+find . -name '*.str' -exec ls -l {} \; | awk '{ Total += $5} END { print Total }'
+strategoxt:     2764116
+strategoxt-di: 15225462
+
+Count rtree files
+find . -type f -name "*.rtree" | wc -l
+strategoxt:    73
+strategoxt-di: 74
+rtree file size
+find . -name '*.rtree' -exec ls -l {} \; | awk '{ Total += $5} END { print Total }'
+strategoxt:    599214
+strategoxt-di: 672485
+
+Count java files
+find . -type f -name "*.java" | wc -l
+strategoxt:    12895
+strategoxt-di: 13060
+Java file size
+find . -name '*.java' -exec ls -l {} \; | awk '{ Total += $5} END { print Total }'
+strategoxt:    29216494
+strategoxt-di: 30966865
+
+Count class files
+find . -type f -name "*.class" | wc -l
+strategoxt:    12900
+strategoxt-di: 13065
+Java file size
+find . -name '*.class' -exec ls -l {} \; | awk '{ Total += $5} END { print Total }'
+strategoxt:    21355714
+strategoxt-di: 30966865
+
+du -sh strategoxt-java-backend/java/strategoxt.jar
+strategoxt:    13232  13M
+strategoxt-di: 14632  15M
+
+http://serverfault.com/questions/367185/calculating-total-file-size-by-extension-in-shell
+
+stratego
+all file sizes:
+.0 670981
+.1 781660
+.10 20076
+.11 17197
+.12 10549
+.13 15776
+.14 8058
+.15 11471
+.16 22772
+.17 17939
+.18 2634
+.2 668587
+.4 14853
+.5 9791
+.abox 397
+.ac 17771
+.af 8695
+.ALLCLASSES 0
+.am 171927
+.aterm 818
+.atil 109
+.c 2252543
+.cache 2090305
+.class 21355714
+.classpath 603
+.correct 14248
+.css 1417
+.ctree 167471
+.def 146846
+.dep 20978
+.ent 22
+.exp 28
+.expected 8453
+.grm 1241
+.guess 45612
+.h 195412
+.html 482
+.idx 1829752
+.in 211369
+.jar 14824067
+.java 29216494
+.la 1608
+.lai 1593
+.launch 2507
+.list 2
+.lo 320
+.log 53788
+.m4 360962
+.meta 5570
+.MF 2331
+.new 25299
+.o 1462212
+.pack 245706196
+.pc 255
+.Plo 8560
+.Po 8760
+.pp 100010
+.prefs 5889
+.project 1186
+.properties 189
+.r 965
+.regular 972
+.res 2916
+.rnc 468
+.rtg 4485
+.rtree 599214
+.sample 14735
+.sdf 142459
+.sh 252161
+.sil 3174
+.so 143124
+.spec 1291
+.status 66967
+.str 2764116
+.stratego 2370
+.strxml 14724
+.sub 34069
+.tbl 4715223
+.templ 2522
+.test 25
+.testsuite 21885
+.til 1554
+.tree 36621
+.trm 18875
+.txt 429
+.xhtml 503
+.xml 30621
+.xsl 2164
+.xt 8023
+
+
+
+strategoxt-di
+all file sizes:
+.0 670981
+.1 781660
+.10 20076
+.11 17197
+.12 10549
+.13 15776
+.14 8058
+.15 11471
+.16 22772
+.17 17939
+.18 2634
+.2 668587
+.4 14853
+.5 9791
+.abox 397
+.ac 17771
+.af 8695
+.ALLCLASSES 0
+.am 171951
+.aterm 818
+.atil 109
+.c 2457210
+.cache 2121585
+.class 22147833
+.classpath 603
+.correct 14248
+.css 1417
+.ctree 250258
+.def 146846
+.dep 21849
+.ent 22
+.exp 28
+.expected 8453
+.grm 1241
+.guess 45612
+.h 195412
+.html 482
+.idx 1831600
+.in 211393
+.jar 17367812
+.java 30966865
+.la 1611
+.lai 1596
+.launch 2507
+.list 2
+.lo 320
+.log 54072
+.m4 360962
+.meta 5570
+.MF 2331
+.new 25299
+.o 1749172
+.pack 247780679
+.pc 258
+.Plo 8560
+.Po 8760
+.pp 100010
+.prefs 5889
+.project 1186
+.properties 189
+.r 965
+.regular 972
+.res 2916
+.rnc 468
+.rtg 4485
+.rtree 672485
+.sample 14735
+.sdf 142459
+.sh 252161
+.sil 3174
+.so 143136
+.spec 1291
+.status 67291
+.str 15225462 
+.stratego 2370
+.strxml 14724
+.sub 34069
+.tbl 4715223
+.templ 2522
+.test 25
+.testsuite 21885
+.til 1554
+.tree 36621
+.trm 18875
+.txt 429
+.xhtml 503
+.xml 30621
+.xsl 2164
+.xt 8023
+
+
+str-di-1_java.hprof.txt
+[ Main | info ] Total Instrumentation duration : [user/system] = [10114.84s/0.00s]
+[ Main | info ] Instrumentation summary:
+[ Main | info ] instrumented file count: 
+       1133
+[ Main | info ] instrumentation failed count: 
+       154
+Main (10151.96 secs)
+Dumping allocation sites ... done.
+169 minutes and 13 seconds elapsed.

@@ -1,0 +1,16 @@
+checkout java-bootstrap-debug
+
+cd strategoxt
+find . -type f -name "*.str" | wc -l
+973
+
+wc -l `find . -type f -name "*.str"`
+line-count:  102560
+
+cd strategoxt
+find . -type f -name "*.str" | wc -l
+973
+execute build.sh instrument-all
+
+top-level ch
+all .str files in 
