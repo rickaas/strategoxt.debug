@@ -8,6 +8,15 @@ imports
 strategies
     
     stratego-di-cli-main = 
-        option-wrap(create-dsldi-options, stratego-di-main)
+        //option-wrap(create-dsldi-options, stratego-di-main)
+        option-wrap(create-stratego-di-options, stratego-di-main)
 
     stratego-di-main = init-config ; execute
+    
+    create-stratego-di-options = create-dsldi-options + create-syntax-options
+    
+    create-syntax-options = 
+    ArgOption("-I" + "--Include"
+    , where(<post-extend-config> ("-I", [<id>]))
+    , !"-I p|--Include p   include modules from directory p"
+    )

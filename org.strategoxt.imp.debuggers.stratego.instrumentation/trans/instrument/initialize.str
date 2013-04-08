@@ -42,6 +42,7 @@ strategies
 
         ; init-dsldi
         ; <set-config> ("--file-extension", "str")
+        ; <set-config> ("program", "str-di")
         ; <log-info-msg(|"Initializing Stratego debug instrumentation complete")> ""
 
     override filter-dirs = 

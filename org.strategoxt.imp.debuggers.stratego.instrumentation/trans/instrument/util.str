@@ -6,6 +6,7 @@ imports
   libstratego-sglr
   libstratego-gpp
   libstrc // for pp-stratego-string
+  libstratego-xtc
 
 // sel imports
 imports
@@ -21,6 +22,7 @@ strategies
          ; ?tuple
          ; make-one-based-linenumbers-location // convert to 1-based line numbers
          // RL: but the toplevel term has a wrong line number, I don't know if that's a in the parser bug or not...
+         //<+
          /*
          ; if needs-location-correction then
                !tuple; correct-location
@@ -56,13 +58,23 @@ strategies
 //         parse-stratego-as-dsl = 
 //             //parse-stratego_sugar-file
 //             parse-stratego-file
-
+    
+    //parse-stratego-file from module parse-stratego in strc supports concrete syntax it has multiple parse tables included
+    parse-stratego-as-dsl = ?filename; where(incl := <get-config <+ ![]> "-I"; debug(!"includes: ")); !FILE(filename)
+    //; parse-stratego-file
+    ; args := <flatten-list> ["-i", FILE(filename), <make-include-args> incl]
+    ; debug(!"ARGS: ")
+    ; !FILE(filename)
+    ; parse-stratego-trm(|args)
+    
+    make-include-args = ?paths; map(\path -> ["-I", path]\); flatten-list
 //  parse-stratego_sugar-file-copy =
-    parse-stratego-as-dsl = 
-        parse-file(
-            strsglr-perror, strsglr-report-parse-error
-            | <import-term(include/Stratego-Sugar.tbl)>
-    )
+    // RL: does not support concrete syntax, the parse tables are not included
+    // parse-stratego-as-dsl = 
+    //     parse-file(
+    //         strsglr-perror, strsglr-report-parse-error
+    //         | <import-term(include/Stratego-Sugar.tbl)>
+    // )
     
     // RL: Stratego-pretty.pp is copied from stratego-front/pp/Stratego-pretty.pp
     // This one fails with StringLiterals
