@@ -4,7 +4,6 @@ import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.spoofax.terms.StringTermReader;
 import org.spoofax.terms.TermFactory;
 import org.strategoxt.lang.Context;
-import org.strategoxt.stratego_lib.dr_rule_sets_hashtable_0_0;
 
 public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 
@@ -43,12 +42,12 @@ public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 	 * Returns the active dynamic rule names as an IStrategoTerm (IStrategoList)
 	 * @return
 	 */
-	public IStrategoTerm getDRKeySet()
-	{
+	public IStrategoTerm getDRKeySet() {
 		IStrategoTerm term = null; // the current term, can this be null?
-		term = dr_rule_sets_hashtable_0_0.instance.invoke(context, term);
-		if (term == null)
+		term = context.invokePrimitive("SSL_dynamic_rules_hashtable", term, org.strategoxt.lang.Term.NO_STRATEGIES, org.strategoxt.lang.Term.NO_TERMS);
+		if (term == null) {
 			return null;
+		}
 		term = context.invokePrimitive("SSL_hashtable_keys", null, org.strategoxt.lang.Term.NO_STRATEGIES, new IStrategoTerm[]{term});
 		
 		return term;
@@ -59,15 +58,23 @@ public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 	 * @return
 	 * 
 	 */
-	public String getDRKeySetString()
-	{
-		return this.getDRKeySet().toString();
+	public String getDRKeySetString() {
+		IStrategoTerm keySet = this.getDRKeySet();
+		if (keySet != null) {
+			return this.getDRKeySet().toString();
+		} else {
+			return null;
+		}
 	}
 	
+	/**
+	 * The filename in which the event occured
+	 */
 	protected String filenameString;
+	/**
+	 * Location of the event encoded as String
+	 */
 	protected String locationString;
-	
-	
 
 	public IStrategoTerm recordDebugInformation(Context context, IStrategoTerm current, IStrategoTerm filename, IStrategoTerm location, IStrategoTerm given) {
 		this.context = context;
@@ -75,7 +82,7 @@ public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 		this.locationString = location.toString();
 		this.givenTermString = given.toString();
 		this.current = current;
-		debug("TEST " + filename.toString() + " D:"+getDRKeySetString()); // adding this will prevent a TimeoutException (I think because it will trigger a ClassLoad...)
+		//debug("TEST " + filename.toString() + " D:"+getDRKeySetString()); // adding this will prevent a TimeoutException (I think because it will trigger a ClassLoad...)
 		return current;
 	}
 	
@@ -102,8 +109,7 @@ public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 		this.givenTermString = termString;
 	}
 	
-	private void debug(String s)
-	{
+	private void debug(String s) {
 		//System.out.println(s);
 	}
 }
