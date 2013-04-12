@@ -3,7 +3,7 @@ module stratego-instrumentation
 imports
     instrument/-
 imports
-    libdsldi
+    lib/libdsldi
     
 strategies
     

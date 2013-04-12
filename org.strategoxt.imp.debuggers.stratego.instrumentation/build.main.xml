@@ -54,6 +54,7 @@
 	<target name="update-stratego-sugar">
         <copy file="${stratego.project}/include/stratego_sugar-java.jar" todir="utils" overwrite="true"/>
         <copy file="${stratego.project}/include/stratego_sugar.jar" todir="utils" overwrite="true"/>
+		<copy file="${stratego.project}/include/Stratego-Sugar.tbl" todir="include" overwrite="true" />
 	</target>
 	
     <!-- Stratego to Java compiler -->
@@ -87,7 +88,7 @@
             <arg line="${build.stratego.extraargs}"/>
 <!--            <arg line="${externaljarflags}"/>-->
 <!--            <arg line="${externaldefimport}"/>-->
-            <arg line="-I &quot;${basedir}/${str-lib.dir}&quot; -I &quot;${basedir}/${str-include.dir}&quot; --cache-dir &quot;${basedir}/.cache&quot;"/>
+            <arg line="-I &quot;${basedir}&quot; -I &quot;${basedir}/${str-lib.dir}&quot; -I &quot;${basedir}/${str-include.dir}&quot; --cache-dir &quot;${basedir}/.cache&quot;"/>
         </java>
     </target>
 	

@@ -12,6 +12,9 @@ imports
 imports
   lib/libdsldi
 
+imports
+    lib/stratego_sugar
+    
 strategies
     
     get-a-b-c-d = 
@@ -30,22 +33,7 @@ strategies
                !tuple
            end
          */
-             
 
-          
-    // stratego-term-location = ?term;
-    //       // origin-location  = prim("SSL_EXT_origin_location", <id>)
-    //       // try to use the primitive
-    //       (prim("SSL_EXT_origin_location", <id>)
-    //       // ; ?(a,b,c,d) // (0-based, 0-based, 0-based, 0-based)
-    //       < id // success
-    //       + (
-    //             err-msg(|"Could not extract origin information ")
-    //             ; fail
-    //           )
-    //       )
-          
-          
 strategies
 // pp-stratego-string is in strategoxt.jar in package: /org/strategoxt/strc/pp_stratego_string_0_0
         write-stratego-as-dsl = ?(output-filename, dsl-ast)
@@ -59,22 +47,31 @@ strategies
 //             //parse-stratego_sugar-file
 //             parse-stratego-file
     
+    use-strc-parsing = fail
+    
+    parse-stratego-as-dsl = 
+    	if use-strc-parsing then 
+    	   internal-parse-stratego-as-dsl-strc 
+    	   // We have lost the origin attachments
+    	else 
+    	   internal-parse-stratego-as-dsl-spoofax 
+    	end
+    
     //parse-stratego-file from module parse-stratego in strc supports concrete syntax it has multiple parse tables included
-    parse-stratego-as-dsl = ?filename; where(incl := <get-config <+ ![]> "-I"; debug(!"includes: ")); !FILE(filename)
-    //; parse-stratego-file
-    ; args := <flatten-list> ["-i", FILE(filename), <make-include-args> incl]
-    ; debug(!"ARGS: ")
+    internal-parse-stratego-as-dsl-strc = ?filename; where(incl := <get-config <+ ![]> "-I"); !FILE(filename)
+    //; parse-stratego-file // to support concrete syntax we have to call parse-stratego-trm with extra arguments
+    ; include-args* := <map(\path -> ["-I", path]\); flatten-list> incl
+    ; args := <flatten-list> ["-i", FILE(filename), include-args*]
     ; !FILE(filename)
     ; parse-stratego-trm(|args)
-    
-    make-include-args = ?paths; map(\path -> ["-I", path]\); flatten-list
-//  parse-stratego_sugar-file-copy =
-    // RL: does not support concrete syntax, the parse tables are not included
-    // parse-stratego-as-dsl = 
-    //     parse-file(
-    //         strsglr-perror, strsglr-report-parse-error
-    //         | <import-term(include/Stratego-Sugar.tbl)>
-    // )
+
+    // RL: the parse-file strategy does not support concrete syntax, the parse tables are not included
+    internal-parse-stratego-as-dsl-spoofax = 
+    //   parse-stratego_sugar-file // Cannot call directly because of conflicting trans-package
+         parse-file(
+             strsglr-perror, strsglr-report-parse-error
+             | <import-term(include/Stratego-Sugar.tbl)>
+     )
     
     // RL: Stratego-pretty.pp is copied from stratego-front/pp/Stratego-pretty.pp
     // This one fails with StringLiterals
