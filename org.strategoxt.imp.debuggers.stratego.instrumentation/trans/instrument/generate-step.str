@@ -42,7 +42,7 @@ strategies
             debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
             ;?(filename, a, b, c, d)
             ; program-filename := $["[filename]"]
-            ; location := $["[a],[b],[c],[d]"]
+            ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
             ; step-event := <create-step-call(|program-filename, location)>
             ; instrumented-strategy := <insert-step-event(|step-event)> strategy
               
@@ -53,4 +53,6 @@ strategies
 
 
 strategies
-    create-step-call(|filename, location) = !CallT(SVar("s-step"), [], [NoAnnoList(Str(filename)), NoAnnoList(Str(location))])
+    create-step-call(|filename, location) = 
+        args := <flatten-list; create-f-n-l-list> [filename, location]
+        ; !CallT(SVar("s-step"), [], args)

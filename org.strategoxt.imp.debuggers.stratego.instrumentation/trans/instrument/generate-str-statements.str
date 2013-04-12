@@ -19,19 +19,19 @@ strategies
 
     // r-exit(| "foo.str", "execute", "37,3,40,38"))
     create-r-exit-call(|filename, name, location) = 
-        !CallT(SVar("r-exit"), [], <create-f-n-l-list> [filename, name, location])
+        !CallT(SVar("r-exit"), [], <flatten-list; create-f-n-l-list> [filename, name, location])
 
     create-r-enter-call(|filename, name, location) = 
-        !CallT(SVar("r-enter"), [], <create-f-n-l-list> [filename, name, location])
+        !CallT(SVar("r-enter"), [], <flatten-list; create-f-n-l-list> [filename, name, location])
     
     create-s-enter-call(|filename, name, location) = 
-        !CallT(SVar("s-enter"), [], <create-f-n-l-list> [filename, name, location])
+        !CallT(SVar("s-enter"), [], <flatten-list; create-f-n-l-list> [filename, name, location])
     
     create-s-exit-call(|filename, name, location) = 
-        !CallT(SVar("s-exit"), [], <create-f-n-l-list> [filename, name, location])
+        !CallT(SVar("s-exit"), [], <flatten-list; create-f-n-l-list> [filename, name, location])
     
     create-s-fail-call(|filename, name, location) = 
-        !CallT(SVar("s-fail"), [], <create-f-n-l-list> [filename, name, location])
+        !CallT(SVar("s-fail"), [], <flatten-list; create-f-n-l-list> [filename, name, location])
  
     create-fail = !Fail()
 

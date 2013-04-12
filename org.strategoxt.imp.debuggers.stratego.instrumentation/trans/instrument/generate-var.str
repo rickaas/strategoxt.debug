@@ -18,7 +18,7 @@ strategies
             debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, v-name)
             ;?(filename, a, b, c, d, v-name)
             ; program-filename := $["[filename]"]
-            ; location := $["[a],[b],[c],[d]"]
+            ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
             ; varName := $["[v-name]"]
             ; var-event := <create-var-call(|program-filename, location, varName)>
             ; instrumented-strategy := <insert-var-event(|var-event)> strategy

@@ -20,7 +20,7 @@ strategies
             debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
             ;?(filename, a, b, c, d, f-name)
             ; program-filename := $["[filename]"]
-            ; location := $["[a],[b],[c],[d]"]
+            ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
             ; functionName := $["[f-name]"]
             ; enter-event := <create-s-enter-call(|program-filename, functionName, location)>
             ; instrumented-strategy-def := <insert-enter-event(|enter-event)> strategy-def
@@ -40,7 +40,7 @@ strategies
             debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
             ;?(filename, a, b, c, d, f-name)
             ; program-filename := $["[filename]"]
-            ; location := $["[a],[b],[c],[d]"]
+            ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
             ; functionName := $["[f-name]"]
             ; exit-event := <create-s-exit-call(|program-filename, functionName, location)>
             ; instrumented-strategy-def := <insert-exit-event(|exit-event)> strategy-def

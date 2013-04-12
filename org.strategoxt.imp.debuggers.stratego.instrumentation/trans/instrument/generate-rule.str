@@ -68,7 +68,7 @@ strategies
             debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d, f-name)
             ;?(filename, a, b, c, d, f-name)
             ; program-filename := $["[filename]"]
-            ; location := $["[a],[b],[c],[d]"]
+            ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
             ; functionName := $["[f-name]"]
             ; exit-event := <create-r-exit-call(|program-filename, functionName, location)>
             ; instrumented-rule-def := <insert-exit-event(|exit-event)> rule-def
