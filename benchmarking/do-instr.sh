@@ -39,9 +39,16 @@ di_input=$INSTR_SOURCE
 # If we cannot instrument a file we will just use the original file
 di_output=$INSTR_TARGET
 
+# Let's clean the output directory
+rm -rf $INSTR_TARGET
+
+# forward STDOUT and STDERR to file
+logargs=2>&1 | tee do-instr.log
 
 didate1=$(date +"%s")
-java $javaopts -cp $cp $mainclass --input-dir $di_input --output-dir $di_output $di_input_file $di_opts
+instr_opts="--input-dir $di_input --output-dir $di_output $di_input_file $di_opts"
+echo java $javaopts -cp $cp $mainclass $instr_opts $logargs
+java $javaopts -cp $cp $mainclass $instr_opts $logargs
 
 
 didate2=$(date +"%s")
