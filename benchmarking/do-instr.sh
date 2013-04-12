@@ -11,7 +11,8 @@ INSTR_FILE=$2
 prefix=`dirname "$(cd ${0%/*}/ && echo $PWD/${0##*/})"`
 
 INSTR_SOURCE=$BASEDIR
-INSTR_TARGET="$prefix/../../temp"
+#INSTR_TARGET="$prefix/../../temp" # output to temp directory
+INSTR_TARGET="$prefix/../../strategoxt-instrumented" # output to temp directory
 
 CPBASE=$prefix/../../dist-libdsldi/
 
@@ -40,15 +41,17 @@ di_input=$INSTR_SOURCE
 di_output=$INSTR_TARGET
 
 # Let's clean the output directory
-rm -rf $INSTR_TARGET
+#rm -rf $INSTR_TARGET # Either remove it
+# or do a git clean
+#rm do-instr.log # will get overwritten
 
 # forward STDOUT and STDERR to file
-logargs=2>&1 | tee do-instr.log
+#logargs=2>&1 | tee do-instr.log # && strings do-instr.log > do-instr.log.s
 
 didate1=$(date +"%s")
 instr_opts="--input-dir $di_input --output-dir $di_output $di_input_file $di_opts"
 echo java $javaopts -cp $cp $mainclass $instr_opts $logargs
-java $javaopts -cp $cp $mainclass $instr_opts $logargs
+java $javaopts -cp $cp $mainclass $instr_opts 2>&1 | tee do-instr.log
 
 
 didate2=$(date +"%s")

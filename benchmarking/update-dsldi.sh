@@ -11,5 +11,6 @@ rm -rf $CPBASE
 mkdir $CPBASE
 
 cp -v `find $strdilibdir -name "*.jar"` $CPBASE
+cp -v `find $strdilibdir -name "*.rtree"` $CPBASE
 
 echo `date`
