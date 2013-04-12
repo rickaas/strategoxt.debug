@@ -22,7 +22,7 @@ public class StringLitInstrumentTests extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentSlit() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "slit.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "slit.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;

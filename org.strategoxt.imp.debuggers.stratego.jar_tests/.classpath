@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="lib/instrumentation/strategoxt.jar" sourcepath="/home/rlindeman/Applications/development/eclipse/spoofax-installs/spoofax-dev/workspace/strategoxt-source/src"/>
+	<classpathentry kind="lib" path="lib/instrumentation/strategoxt.jar" sourcepath="/home/rlindeman/Applications/development/eclipse/spoofax-installs/spoofax-dev/workspace/strategoxt-source/test/src"/>
 	<classpathentry kind="lib" path="lib/instrumentation/dsldi-java.jar" sourcepath="lib/instrumentation/dsldi-java-source.jar"/>
 	<classpathentry kind="lib" path="lib/stratego/stratego_sugar-java.jar"/>
 	<classpathentry kind="lib" path="lib/instrumentation/libdsldi.jar" sourcepath="lib/instrumentation/libdsldi-source.jar"/>

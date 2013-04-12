@@ -1,5 +1,7 @@
 package org.languages.str.instrumentation.programs;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -22,9 +24,10 @@ public class ProgramInstrument001 extends ProgramInstrumentationBase {
 		b = HybridInterpreterHelper.safeInvoke(i, "execute");
 		i.getCompiledContext().printStackTrace();
 		Assert.assertTrue(b);
-
 		// extract filenames, returns a list of strings
-		Assert.assertEquals(1, getFilenamesWithSuccess().size());
+		List<String> succeeded = getFilenamesWithSuccess();
+		Assert.assertEquals(1, succeeded.size());
+		System.out.println(succeeded.get(0));
 		Assert.assertEquals(0, getFilenamesWithFailure().size());
 	}
 }

@@ -22,7 +22,7 @@ public class NativeCallsCompatTest extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentNativeCallsCompat() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "native-calls-compat.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "native-calls-compat.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;
@@ -38,7 +38,7 @@ public class NativeCallsCompatTest extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentMoreStringLit() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "more-string-lit.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "more-string-lit.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;

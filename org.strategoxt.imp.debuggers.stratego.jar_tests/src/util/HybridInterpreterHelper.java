@@ -11,6 +11,7 @@ import org.spoofax.interpreter.core.InterpreterErrorExit;
 import org.spoofax.interpreter.core.InterpreterException;
 import org.spoofax.interpreter.core.InterpreterExit;
 import org.spoofax.interpreter.core.UndefinedStrategyException;
+import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.strategoxt.HybridInterpreter;
 import org.strategoxt.IncompatibleJarException;
 import org.strategoxt.NoInteropRegistererJarException;
@@ -105,4 +106,21 @@ public class HybridInterpreterHelper {
 //		i.getContext().getStrategoSignature()
 //		i.lookupUncifiedSVar(strategy);
 //	}
+
+	public static IStrategoTerm makeConfigTuple(HybridInterpreter i, String key, String[] values) {
+		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeList(makeStringList(i, values)));
+	}
+	public static IStrategoTerm makeConfigTuple(HybridInterpreter i, String key, String value) {
+		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeString(value));
+	}
+	public static IStrategoTerm makeConfigTuple(HybridInterpreter i, String key, int value) {
+		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeInt(value));
+	}
+	public static IStrategoTerm[] makeStringList(HybridInterpreter i, String[] values) {
+		IStrategoTerm[] terms = new IStrategoTerm[values.length];
+		for(int index = 0; index < values.length; index++) {
+			terms[index] = i.getFactory().makeString(values[index]);
+		}
+		return terms;
+	}
 }

@@ -1,5 +1,7 @@
 package org.languages.str.instrumentation.programs;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -21,7 +23,7 @@ public class HigherOrderInstrumentTests extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentHigherOrder() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "higher-order.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "higher-order.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;
@@ -30,7 +32,8 @@ public class HigherOrderInstrumentTests extends ProgramInstrumentationBase {
 		Assert.assertTrue(b);
 
 		// extract filenames, returns a list of strings
-		Assert.assertEquals(1, getFilenamesWithSuccess().size());
+		List<String> succeeded = getFilenamesWithSuccess();
+		Assert.assertEquals(1, succeeded.size());
 		Assert.assertEquals(0, getFilenamesWithFailure().size());
 		
 		Assert.fail("Running this program fails due to higher-order strategies");

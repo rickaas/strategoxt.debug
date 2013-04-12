@@ -60,6 +60,9 @@ public class StrategyStepTests extends EventInstrumentationBase {
 	@Test
 	public void instrumentOnestrategydefs()
 	{
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--verbosity", "10"));
+		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
+		
 		sourceDSLLocation = StrTestConstants.STR_SCRIPTS_TESTCASES_DIR + "/fragments/statements/onestrategydefs.str";
 		cleanupGenerated();
 		

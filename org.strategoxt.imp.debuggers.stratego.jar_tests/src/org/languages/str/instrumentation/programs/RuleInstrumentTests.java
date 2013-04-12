@@ -22,7 +22,7 @@ public class RuleInstrumentTests extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentRuleBasic() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "rule-basic.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "rule-basic.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;
@@ -38,7 +38,7 @@ public class RuleInstrumentTests extends ProgramInstrumentationBase {
 	@Test
 	public void instrumentRuleComplex() {
 		
-		i.setCurrent(this.makeConfigTuple("--input-file", "rule-complex.str"));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-file", "rule-complex.str"));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		boolean b = false;

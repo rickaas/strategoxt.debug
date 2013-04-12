@@ -86,7 +86,7 @@ public abstract class ProgramInstrumentationBase {
 		// <set-config> ("--sel",)
 		//String dsldi = StrTestConstants.STR_SCRIPTS_DIR + "/dsldis/StepEnterExit.dsldi";
 		String dsldi = getDsldiLocation();
-		i.setCurrent(makeConfigTuple("--sel", dsldi));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--sel", dsldi));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		// <set-config> ("--file-extension",)
@@ -95,12 +95,12 @@ public abstract class ProgramInstrumentationBase {
 		
 		// <set-config> ("--input-dir",)
 		String dslProgramBasepath = getDslProgramBasePath();
-		i.setCurrent(makeConfigTuple("--input-dir", dslProgramBasepath));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--input-dir", dslProgramBasepath));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 		
 		// <set-config> ("--output-dir",)
 		String output = getGeneratedLocation() + ".str";
-		i.setCurrent(makeConfigTuple("--output-dir", output));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i,"--output-dir", output));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
 
 		// <set-config> ("--fake-run",)
@@ -113,28 +113,11 @@ public abstract class ProgramInstrumentationBase {
 		//i.setCurrent(i.getFactory().makeInt(10));
 		// verbose-level : Debug()     -> 4
 		// Debug
-		i.setCurrent(i.getFactory().makeInt(10));
+		i.setCurrent(i.getFactory().makeInt(4));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-verbosity"));
 
-		i.setCurrent(makeConfigTuple("--statistics", 1));
+		i.setCurrent(HybridInterpreterHelper.makeConfigTuple(i, "--statistics", 1));
 		Assert.assertTrue(HybridInterpreterHelper.safeInvoke(i, "set-config"));
-	}
-	
-	protected IStrategoTerm makeConfigTuple(String key, String[] values) {
-		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeList(makeStringList(values)));
-	}
-	protected IStrategoTerm makeConfigTuple(String key, String value) {
-		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeString(value));
-	}
-	protected IStrategoTerm makeConfigTuple(String key, int value) {
-		return i.getFactory().makeTuple(i.getFactory().makeString(key), i.getFactory().makeInt(value));
-	}
-	private IStrategoTerm[] makeStringList(String[] values) {
-		IStrategoTerm[] terms = new IStrategoTerm[values.length];
-		for(int index = 0; index < values.length; index++) {
-			terms[index] = i.getFactory().makeString(values[index]);
-		}
-		return terms;
 	}
 
 }
