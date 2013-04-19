@@ -2,6 +2,12 @@
 
 BENCHMARK_DIR=`dirname "$(cd ${0%/*}/ && echo $PWD/${0##*/})"`
 
+[ -z "$1" ] && echo "First argument needs to be the stratego home dir" && exit
+
+
+
+
+REPEAT_COUNT=1
 
 STRATEGO_CONTAINER_DIR=`realpath $1`
 
@@ -13,8 +19,15 @@ ANT_LOGS_DIR=$STRATEGO_CONTAINER_DIR/stats/ant-logs/
 mkdir -p $ANT_STATS_DIR
 mkdir -p $ANT_LOGS_DIR
 
-#ANT_EXTRA_ARGS="-Dstr.instrumentation.enabled=true -Dantstatistics.directory="
-ANT_EXTRA_ARGS="-Dantstatistics.directory=$ANT_STATS_DIR"
+THIRD_PARTY_DIR="$BENCHMARK_DIR/../../thirdparty"
+
+ANT_STAT_EXTRA_ARGS="-Dantstatistics.directory=$ANT_STATS_DIR"
+ANT_STAT_ARGS="-lib $THIRD_PARTY_DIR -logger de.pellepelster.ant.statistics.AntStatisticsLogger $ANT_STAT_EXTRA_ARGS"
+
+
+STR_ARGS= # "-Dstr.instrumentation.enabled=true"
+
+ANT_EXTRA_ARGS="$ANT_STAT_ARGS "
 
 function Prepare {
 	echo copy strategoxt.jar
@@ -67,7 +80,6 @@ function CleanAndBuild {
 	./build.sh $ANT_EXTRA_ARGS 2>&1 | tee $ANT_LOGS_DIR/java-bootstrap-build_$1.log
 }
 
-REPEAT_COUNT=2
 for i in $(seq $REPEAT_COUNT)
 do
    echo "Starting iteration $i"
