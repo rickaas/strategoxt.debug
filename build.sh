@@ -39,6 +39,9 @@ if [ "DIST_RELEASE" == "$1" ]; then
 	shift
 fi
 
+# clean all the stuff
+GitClean
+
 STR_RUNTIME_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.runtime
 # build org.strategoxt.imp.debuggers.stratego.runtime
 cd $STR_RUNTIME_HOME
