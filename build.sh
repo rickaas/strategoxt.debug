@@ -19,7 +19,7 @@ function GitClean {
 function Prepare {
 	# copy stuff to utils
 	mkdir $STR_INSTRUMENT_HOME/utils
-	cp $SPOOFAX_DEBUG_DIR/../spoofax-project-utils/* $STR_INSTRUMENT_HOME/utils
+	cp $STRATEGOXT_DEBUG_DIR/../spoofax-project-utils/* $STR_INSTRUMENT_HOME/utils
 }
 
 function DistCopy {
