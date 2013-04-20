@@ -20,6 +20,8 @@ function Prepare {
 	# copy stuff to utils
 	mkdir $STR_INSTRUMENT_HOME/utils
 	cp $STRATEGOXT_DEBUG_DIR/../spoofax-project-utils/* $STR_INSTRUMENT_HOME/utils
+	# copy all dist-libdsldi/release stuff
+	cp $DIST_DIR_BASE/dist-libdsldi/release/* $STR_INSTRUMENT_HOME/utils
 }
 
 function DistCopy {
@@ -53,8 +55,7 @@ GitClean
 # Copy some stuff
 Prepare
 
-ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release"
-
+ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release -Dinstrument.me=true"
 
 
 # build org.strategoxt.imp.debuggers.stratego.runtime
