@@ -2,6 +2,30 @@
 
 <project name="org.strategoxt.imp.debuggers.stratego.instrumentation" default="release" basedir=".">
 
+	<!-- Import Ant contrib -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+    <!-- Import instrumentation Ant contributions -->
+    <import file="ant-contrib/strategoxt-contrib-util.xml" />
+    <import file="ant-contrib/dsldi-contrib.xml" />
+	
+    <!-- instrumentation properties -->
+    <!-- targetdir equals the sourcedir because instrumentation phase is a separate step 
+    (and not yet integrated in the strj compiler) --> 
+    <property name="str.debug.instrumentation.sourcedir" value="trans" />
+    <property name="str.debug.instrumentation.targetdir" value="trans" />
+    <property name="stratego.spoofax.debug.library.base" value="include" />
+    <property name="str.debug.runtime.args.default" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies" />
+
+    <property name="instrument.me" value="" />
+	
+    <!-- put required libraries on path when compiling Stratego to Java -->
+    <property name="str.debug.runtime.args.default" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies" />
+    <condition property="str.debug.runtime.args" value="${str.debug.runtime.args.default}" else="">
+        <!--<isset property="instrument.me"/>-->
+        <!-- explicitly check for "true" -->
+        <equals arg1="true" arg2="${instrument.me}" />
+    </condition>
+	
 	<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
 	
 	<property name="strmodule-name" value="stratego-instrumentation"/>
@@ -23,16 +47,27 @@
 	
 	<loadproperties srcFile="config.properties" />
 	
+	<!-- classpath for strj compiler -->
 	<path id="strategoxt.jar.libraryclasspath">
 	    <pathelement location="utils/strategoxt.jar"/>
 	</path>
 	
+	<!-- classpath for compiling java, requires libdsldi, strategoxt and stratego_sugar -->
 	<path id="compile-java.classpath">
-	    <pathelement location="utils/dsldi-java.jar"/>
+	<!-- <pathelement location="utils/dsldi-java.jar"/> -->
 	<!--	<pathelement location="utils/dsldi.jar"/> -->
+
+		<!-- o.s.i.d.stratego.runtime.jar contains native java code used by runtime and is referenced by stratego-di.jar -->
+		<pathelement location="utils/org.strategoxt.imp.debuggers.stratego.runtime.jar" />
+		
+		<!-- libdsldi.jar is the generic instrumentation library -->
 		<pathelement location="utils/libdsldi.jar"/>
-	   	<pathelement location="utils/strategoxt.jar"/>
-		<pathelement location="utils/stratego_sugar.jar"/> <!-- all classes are in the trans-package, we will most likely get conflicts -->
+	   	
+		<path refid="strategoxt.jar.libraryclasspath" />
+		
+		<!-- stratego_sugar.jar contains strategies for parsing/writing/validating stratego code -->
+		<!-- all classes are in the trans-package, we will most likely get conflicts -->
+		<pathelement location="utils/stratego_sugar.jar"/> 
 	</path>
 	
     <property name="build.stratego.args" value="
@@ -42,16 +77,20 @@
                     -la stratego-sglr 
                     -la stratego-gpp 
                     -la stratego-xtc 
-                    -la stratego-aterm"/>
+                    -la stratego-aterm
+                    ${str.debug.runtime.args}
+    	"/>
 
-	<target name="update-libraries" depends="update-dsldi, update-stratego-sugar" />
-	<target name="update-dsldi">
+	<property name="skip.update" value="true" />
+	<target name="update-libraries" depends="update-dsldi, update-stratego-sugar" unless="skip.update"/>
+	<target name="update-dsldi" unless="skip.update">
+		<!-- TODO: Empty entire utils directory -->
 		<copy file="${dsldi.home}/dist/libdsldi.rtree" todir="lib" preservelastmodified="true" overwrite="true" />
         <copy todir="utils" preservelastmodified="true" overwrite="true">
             <fileset dir="${dsldi.home}/dist" includes="*.jar"/>
         </copy>
 	</target>
-	<target name="update-stratego-sugar">
+	<target name="update-stratego-sugar" unless="skip.update">
         <copy file="${stratego.project}/include/stratego_sugar-java.jar" todir="utils" overwrite="true"/>
         <copy file="${stratego.project}/include/stratego_sugar.jar" todir="utils" overwrite="true"/>
 		<copy file="${stratego.project}/include/Stratego-Sugar.tbl" todir="include" overwrite="true" />
