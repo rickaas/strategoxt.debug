@@ -22,6 +22,7 @@ function Prepare {
 	cp $STRATEGOXT_DEBUG_DIR/../spoofax-project-utils/* $STR_INSTRUMENT_HOME/utils
 	# copy all dist-libdsldi/release stuff
 	cp $DIST_DIR_BASE/dist-libdsldi/release/* $STR_INSTRUMENT_HOME/utils
+	cp $DIST_DIR_BASE/dist-libdsldi/release/libdsldi.rtree $STR_INSTRUMENT_HOME/lib
 }
 
 function DistCopy {
