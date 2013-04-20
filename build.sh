@@ -23,6 +23,7 @@ function Prepare {
 	# copy all dist-libdsldi/release stuff
 	cp $DIST_DIR_BASE/dist-libdsldi/release/* $STR_INSTRUMENT_HOME/utils
 	cp $DIST_DIR_BASE/dist-libdsldi/release/libdsldi.rtree $STR_INSTRUMENT_HOME/lib
+	cp $DIST_DIR_BASE/dist-libdsldi/release/org.strategoxt.imp.debuggers.stratego.runtime.rtree $STR_INSTRUMENT_HOME/lib
 }
 
 function DistCopy {
