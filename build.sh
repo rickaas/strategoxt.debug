@@ -6,11 +6,20 @@ DIST_DIR_BASE=$STRATEGOXT_DEBUG_DIR/../dist
 
 ECJ_DIR=$DIST_DIR_BASE/ecj
 
+STR_RUNTIME_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.runtime
+STR_INSTRUMENT_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.instrumentation
+
 function GitClean {
 	git clean -f -dx .
 	git clean -f -X .
 	git clean -f -x .
 	git checkout .
+}
+
+function Prepare {
+	# copy stuff to utils
+	mkdir $STR_INSTRUMENT_HOME/utils
+	cp $SPOOFAX_DEBUG_DIR/../spoofax-project-utils/* $STR_INSTRUMENT_HOME/utils
 }
 
 function DistCopy {
@@ -41,17 +50,18 @@ fi
 
 # clean all the stuff
 GitClean
+# Copy some stuff
+Prepare
 
 ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release"
 
 
-STR_RUNTIME_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.runtime
+
 # build org.strategoxt.imp.debuggers.stratego.runtime
 cd $STR_RUNTIME_HOME
 ant -f build.main.xml -lib $ECJ_DIR $ARGS
 
 # build stratego-di
-STR_INSTRUMENT_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.instrumentation
 cd $STR_INSTRUMENT_HOME
 
 ANT_OPTS="-Xss8m -Xmx1024m -server -XX:+UseParallelGC -XX:MaxPermSize=256m $EXTRA_ANT_OPTS" ant -f build.main.xml -lib $ECJ_DIR $ARGS "$@"
