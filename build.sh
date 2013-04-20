@@ -42,15 +42,18 @@ fi
 # clean all the stuff
 GitClean
 
+ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release"
+
+
 STR_RUNTIME_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.runtime
 # build org.strategoxt.imp.debuggers.stratego.runtime
 cd $STR_RUNTIME_HOME
-ant -f build.main.xml -lib $ECJ_DIR
+ant -f build.main.xml -lib $ECJ_DIR $ARGS
 
 # build stratego-di
 STR_INSTRUMENT_HOME=$STRATEGOXT_DEBUG_DIR/org.strategoxt.imp.debuggers.stratego.instrumentation
 cd $STR_INSTRUMENT_HOME
-ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release"
+
 ANT_OPTS="-Xss8m -Xmx1024m -server -XX:+UseParallelGC -XX:MaxPermSize=256m $EXTRA_ANT_OPTS" ant -f build.main.xml -lib $ECJ_DIR $ARGS "$@"
 
 if [ -n "$DIST_CONFIG" ]; then
