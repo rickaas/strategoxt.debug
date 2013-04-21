@@ -51,7 +51,6 @@
 <setEntry value="org.eclipse.rcp.source:default"/>
 <setEntry value="org.eclipse.rcp:default"/>
 <setEntry value="org.eclipse.sdk:default"/>
-<setEntry value="org.languages.alng.feature:default"/>
 <setEntry value="org.strategoxt.imp.debuggers.stratego.feature:default"/>
 <setEntry value="org.strategoxt.imp:default"/>
 <setEntry value="org.tigris.subversion.clientadapter.feature:default"/>

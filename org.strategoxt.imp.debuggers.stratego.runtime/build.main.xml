@@ -59,9 +59,11 @@
 	</target>
 	
 	<target name="release" depends="clean, jar, jar-source" />
-	
-	<target name="get-strategoxt">
+
+	<!-- Only copy the strategoxt.jar when the property is available -->
+	<target name="get-strategoxt" if="eclipse.spoofaximp.strategojar" >
 		<mkdir dir="${lib.dir}"/>
+		<echo message="Copying strategoxt from spoofaximp plugin" />
 		<copy file="${eclipse.spoofaximp.strategojar}" todir="${lib.dir}" failonerror="false"/>
 	</target>
 </project>

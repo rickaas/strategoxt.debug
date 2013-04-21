@@ -24,13 +24,15 @@ import org.strategoxt.imp.runtime.stratego.EditorIOAgent;
 
 public class StrHybridInterpreterProvider implements IHybridInterpreterProvider {
 
+	/**
+	 * Returns an HybtidInterpreter with libdsldi and stratego-di on the classpath.
+	 */
 	@Override
 	public HybridInterpreter get() {
 		return getHybridInterpreter();
 	}
 	
-	private static HybridInterpreter getHybridInterpreter()
-	{
+	private static HybridInterpreter getHybridInterpreter() {
 		Descriptor d = StrategoSugarParseController.getDescriptor();
 		SGLRParseController controller = null;
 
@@ -49,19 +51,16 @@ public class StrHybridInterpreterProvider implements IHybridInterpreterProvider 
 		HybridInterpreter i = Environment.createInterpreterFromPrototype(runtime);
 		
 		// Set the language descriptor so the strategy "plugin-path" works.
-		// "plugin-path" returns the path to the ActionLanguage editor plugin
+		// "plugin-path" returns the path to the stratego editor plugin
 		EditorIOAgent ioDerived = (EditorIOAgent) i.getIOAgent();
 		ioDerived.setDescriptor(d);
 		// PluginPathPrimitive should now work because it uses:
 		// Descriptor descriptor = ((EditorIOAgent) agent).getDescriptor();
 		// descriptor.getBasePath().toPortableString();
 
-		URL dsldijava = org.spoofax.debug.instrumentation.util.LibDsldiJarLocations.getDsldiJava();
-		//safeLoadJar(i, dsldijava); // this one has to be in the current classpath
 		URL libdsldi = org.spoofax.debug.instrumentation.util.LibDsldiJarLocations.getLibdsldi();
-		//safeLoadJar(i, libdsldi);
 		URL strategodi = StrategoDI.getJarLocation();
-		safeLoadJar(i, dsldijava, libdsldi, strategodi);
+		safeLoadJar(i, libdsldi, strategodi);
 		
 		return i;
 	}
@@ -98,8 +97,7 @@ public class StrHybridInterpreterProvider implements IHybridInterpreterProvider 
 //		return i;
 //	}
 	
-	public static void safeLoadJar(HybridInterpreter i, String... locations)
-	{
+	public static void safeLoadJar(HybridInterpreter i, String... locations) {
 		try {
 			URL[] urls = new URL[locations.length];
 			for(int index = 0; index < locations.length; index++){
@@ -114,31 +112,33 @@ public class StrHybridInterpreterProvider implements IHybridInterpreterProvider 
 		}
 	}
 	
-	public static void safeLoadJar(HybridInterpreter i, URL... jars)
-	{
+	/**
+	 * Load all the jars in the HybridInterpreter with the same class loader
+	 * @param i
+	 * @param jars
+	 */
+	public static void safeLoadJar(HybridInterpreter i, URL... jars) {
 		ClassLoader l= null;
 		try {
+			// This should give us the correct class loader
 			l = HybridInterpreter.class.getClassLoader();
-
-			//l = org.strategoxt.imp.debug.instrumentation.strategies.Main.class.getClassLoader();
-			//i.loadJars(jar);
 			i.loadJars(l, jars);
+
+			// RL: The next alternatives don't seem to work
+			//i.loadJars(jar);
+			//
+			//l = org.strategoxt.imp.debug.instrumentation.strategies.Main.class.getClassLoader();
 			//i.loadJars(StrHybridInterpreterProvider.class.getClassLoader(), jar);
 		} catch (SecurityException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (NoInteropRegistererJarException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (IncompatibleJarException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (IOException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		}
 	}
 	
@@ -151,23 +151,18 @@ public class StrHybridInterpreterProvider implements IHybridInterpreterProvider 
 	 * @param strategy
 	 * @return
 	 */
-	public static boolean safeInvoke(HybridInterpreter i, String strategy)
-	{
+	public static boolean safeInvoke(HybridInterpreter i, String strategy) {
 		try {
 			boolean b = i.invoke(strategy);
 			return b;
 		} catch (InterpreterErrorExit e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (InterpreterExit e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (UndefinedStrategyException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		} catch (InterpreterException e) {
 			e.printStackTrace();
-//			Assert.fail();
 		}
 		return false;
 	}

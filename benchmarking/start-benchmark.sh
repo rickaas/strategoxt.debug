@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Using the INSTRUMENT option will fail the build script due to GC memory overhead exceeded
-# Let's split building in separate phases so the OS can reclaim some memory. (Big change that some tool is leaking memory...)
-# First INSTRUMENT_ONLY
-# NO_CLEAN GENERATE_JAVA
+# Let's split building in separate phases so the OS can reclaim some memory. (Big chance that some tool is leaking memory...)
+#  
+# INSTRUMENT_ONLY
+# NO_CLEAN GENERATE_JAVA STRJ_LA_DEBUG_RUNTIME
 # NO_CLEAN COMPILE_JAVA
 # NOCLEAN jar install
 
@@ -31,6 +32,13 @@ STR_ARGS=
 
 while (( "$#" )); do
 
+if [ "INIT" == "$1" ]; then
+	STR_ARGS="create-dirs $STR_ARGS"
+fi
+
+if [ "DIST" == "$1" ]; then
+	STR_ARGS="jar install $STR_ARGS"
+fi
 
 if [ "INSTRUMENT" == "$1" ]; then
 	# enable stratego instrumentation
@@ -43,6 +51,11 @@ if [ "INSTRUMENT_ONLY" == "$1" ]; then
 	echo Only perform Stratego Instrumentation
 	# Call instrument-all java target
 	STR_ARGS="instrument-all -Dstr.instrumentation.enabled=true $STR_ARGS"
+fi
+
+if [ "STRJ_LA_DEBUG_RUNTIME" = "$1" ] ; then
+	# add -la str.debug.runtime for all calls to strj
+	STR_ARGS="-Dstr.linkagainst.debug.runtime=true $STR_ARGS"
 fi
 
 if [ "GENERATE_JAVA" == "$1" ] ; then
@@ -67,6 +80,10 @@ fi
 
 if [ "NO_CLEAN" == "$1" ] ; then
 	CLEAN="NO_CLEAN"
+fi
+
+if [ "CLEAN_ALL" == "$1" ] ; then
+	STR_ARGS="clean $STR_ARGS"
 fi
 
 shift
