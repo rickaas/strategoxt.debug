@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Using the INSTRUMENT option will fail the build script due to GC memory overhead exceeded
+# Let's split building in separate phases so the OS can reclaim some memory. (Big change that some tool is leaking memory...)
+# First INSTRUMENT_ONLY
+# NO_CLEAN GENERATE_JAVA
+# NO_CLEAN COMPILE_JAVA
+# NOCLEAN jar install
+
+
+# ant all-task:
+#create-dirs,
+#syntax,
+#generate-java,
+#compile-java,
+#jar,
+#install
+
 BENCHMARK_DIR=`dirname "$(cd ${0%/*}/ && echo $PWD/${0##*/})"`
 
 echo Arg count "$#"
@@ -9,6 +25,8 @@ STRATEGO_CONTAINER_DIR=`realpath $1`
 
 shift
 
+# defaults
+CLEAN="CLEAN_ALL"
 STR_ARGS=
 
 while (( "$#" )); do
@@ -17,34 +35,38 @@ while (( "$#" )); do
 if [ "INSTRUMENT" == "$1" ]; then
 	# enable stratego instrumentation
 	echo Stratego Instrumentation enabled
-	STR_ARGS="-Dstr.instrumentation.enabled=true $STR"
+	STR_ARGS="-Dstr.instrumentation.enabled=true $STR_ARGS"
 fi
 
 if [ "INSTRUMENT_ONLY" == "$1" ]; then
 	# only instrument the stratego files
 	echo Only perform Stratego Instrumentation
 	# Call instrument-all java target
-	STR_ARGS="instrument-all -Dstr.instrumentation.enabled=true $STR"
+	STR_ARGS="instrument-all -Dstr.instrumentation.enabled=true $STR_ARGS"
 fi
 
 if [ "GENERATE_JAVA" == "$1" ] ; then
 	# only generate java
-	STR_ARGS="generate-java $str"
+	STR_ARGS="generate-java $STR_ARGS"
 fi
 
 if [ "GENERATE_INSTR_JAVA" == "$1" ] ; then
 	# instrument, then generate java
-	STR_ARGS="generate-java -Dstr.instrumentation.enabled=true $STR"
+	STR_ARGS="generate-java -Dstr.instrumentation.enabled=true $STR_ARGS"
 fi
 
 if [ "COMPILE_JAVA" == "$1" ] ; then
 	# Only compiles Java
-	STR_ARGS="compile-java $STR"
+	STR_ARGS="compile-java $STR_ARGS"
 fi
 
 if [ "ALLOW_DEBUGGER" == "$1" ] ; then
 	# Start java tasks with debug parameters
 	echo Allow Debugger
+fi
+
+if [ "NO_CLEAN" == "$1" ] ; then
+	CLEAN="NO_CLEAN"
 fi
 
 shift
@@ -81,10 +103,12 @@ function Prepare {
 }
 
 function GitClean {
-	git clean -f -dx .
-	git clean -f -X .
-	git clean -f -x .
-	git checkout .
+	if [ "CLEAN_ALL" == "$CLEAN" ] ; then
+		git clean -f -dx .
+		git clean -f -X .
+		git clean -f -x .
+		git checkout .
+	fi
 }
 
 # assume we are in BENCHMARK_DIR and end in the directory with build.sh
