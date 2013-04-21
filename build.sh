@@ -44,6 +44,9 @@ DIST_CONFIG=
 if [ "DIST_DEBUG" == "$1" ]; then
 	echo Distribute Debug
 	DIST_CONFIG="debug"
+	ARGS="$ARGS -Dstr.instrumentation.enabled=true"
+#	ARGS="$ARGS -lib $DIST_DIR_BASE/dist-libdsldi/release"
+	
 	shift
 fi
 if [ "DIST_RELEASE" == "$1" ]; then
@@ -57,12 +60,10 @@ GitClean
 # Copy some stuff
 Prepare
 
-ARGS="-lib $DIST_DIR_BASE/dist-libdsldi/release -Dinstrument.me=true"
-
 
 # build org.strategoxt.imp.debuggers.stratego.runtime
 cd $STR_RUNTIME_HOME
-ant -f build.main.xml -lib $ECJ_DIR $ARGS
+ant -f build.main.xml -lib $ECJ_DIR
 
 # build stratego-di
 cd $STR_INSTRUMENT_HOME
