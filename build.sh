@@ -37,7 +37,7 @@ function DistCopy {
 	# copy instrumentation
 	rm -rf $DIST_DIR_BASE/str-instrument/$DIST_CONFIG
 	mkdir -p $DIST_DIR_BASE/str-instrument/$DIST_CONFIG
-	cp $STR_INSTRUMENT_HOME/build/jar/* $DIST_DIR
+	cp $STR_INSTRUMENT_HOME/build/jar/* $DIST_DIR_BASE/str-instrument/$DIST_CONFIG
 }
 
 DIST_CONFIG=
