@@ -69,7 +69,7 @@ ant -f build.main.xml -lib $ECJ_DIR "-Dlib.dir=$DIST_DIR_BASE/dist-libdsldi/rele
 # build stratego-di
 cd $STR_INSTRUMENT_HOME
 
-ANT_OPTS="-Xss8m -Xmx1024m -server -XX:+UseParallelGC -XX:MaxPermSize=256m $EXTRA_ANT_OPTS" ant -f build.main.xml -lib $ECJ_DIR $ARGS "$@"
+ANT_OPTS="-Xss8m -Xmx1024m -server -XX:+UseParallelGC -XX:MaxPermSize=256m $EXTRA_ANT_OPTS" ant -f build.main.xml -lib $ECJ_DIR -lib $STR_INSTRUMENT_HOME/utils $ARGS "$@"
 
 if [ -n "$DIST_CONFIG" ]; then
 	# dist is configured, copy it

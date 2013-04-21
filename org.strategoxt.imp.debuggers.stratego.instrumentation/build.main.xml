@@ -14,7 +14,6 @@
     <property name="str.debug.instrumentation.sourcedir" value="trans" />
     <property name="str.debug.instrumentation.targetdir" value="trans" />
     <property name="stratego.spoofax.debug.library.base" value="include" />
-    <property name="str.debug.runtime.args.default" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies" />
 
     <property name="str.instrumentation.enabled" value="false" />
 	
