@@ -58,7 +58,7 @@
 		<move file="${jar.dir}/${jar.name}-source.tmp.jar" tofile="${jar.dir}/${jar.name}-source.jar" />
 	</target>
 	
-	<target name="release" depends="clean, get-strategoxt, jar, jar-source" />
+	<target name="release" depends="clean, jar, jar-source" />
 	
 	<target name="get-strategoxt">
 		<mkdir dir="${lib.dir}"/>

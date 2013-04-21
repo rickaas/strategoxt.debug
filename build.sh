@@ -63,7 +63,9 @@ Prepare
 
 # build org.strategoxt.imp.debuggers.stratego.runtime
 cd $STR_RUNTIME_HOME
-ant -f build.main.xml -lib $ECJ_DIR
+ant -f build.main.xml -lib $ECJ_DIR "-Dlib.dir=$DIST_DIR_BASE/dist-libdsldi/release"
+
+exit
 
 # build stratego-di
 cd $STR_INSTRUMENT_HOME
