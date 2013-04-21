@@ -16,14 +16,14 @@
     <property name="stratego.spoofax.debug.library.base" value="include" />
     <property name="str.debug.runtime.args.default" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies" />
 
-    <property name="instrument.me" value="" />
+    <property name="str.instrumentation.enabled" value="false" />
 	
     <!-- put required libraries on path when compiling Stratego to Java -->
     <property name="str.debug.runtime.args.default" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies" />
     <condition property="str.debug.runtime.args" value="${str.debug.runtime.args.default}" else="">
         <!--<isset property="instrument.me"/>-->
         <!-- explicitly check for "true" -->
-        <equals arg1="true" arg2="${instrument.me}" />
+        <equals arg1="true" arg2="${str.instrumentation.enabled}" />
     </condition>
 	
 	<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
@@ -99,6 +99,13 @@
     <!-- Stratego to Java compiler -->
     <target name="generate-java">
     	<echo message="Generating Java from Stratego" />
+        <!-- before compiling str to Java, we might have to instrument the stratego code -->
+        <if>
+            <equals arg1="${str.instrumentation.enabled}" arg2="true" />
+            <then>
+                <antcall target="instrument-all" />
+            </then>
+        </if>
         <antcall target="stratego.jvm.helper">
             <param name="build.stratego.outputfile" value="${java-src.gen.dir}/${package-root-dir}/Main.java"/>
         	<!-- do "-la trans" to include packages from stratego_sugar.jar, unfortunatly this fails because Main is in both java-jars.... -->

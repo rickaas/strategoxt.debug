@@ -31,8 +31,8 @@ function DistCopy {
 	# copy runtime, no difference between Release and Debug
 	rm -rf $DIST_DIR_BASE/str-runtime
 	mkdir -p $DIST_DIR_BASE/str-runtime
-	cp $STR_RUNTIME_HOME/jar/* $DIST_DIR_BASE/str-runtime
-	cp $STR_RUNTIME_HOME/str-lib/* $DIST_DIR_BASE/str-runtime
+	cp $STR_RUNTIME_HOME/build/jar/* $DIST_DIR_BASE/str-runtime
+	cp $STR_RUNTIME_HOME/build/str-lib/* $DIST_DIR_BASE/str-runtime
 	
 	# copy instrumentation
 	rm -rf $DIST_DIR_BASE/str-instrument/$DIST_CONFIG
