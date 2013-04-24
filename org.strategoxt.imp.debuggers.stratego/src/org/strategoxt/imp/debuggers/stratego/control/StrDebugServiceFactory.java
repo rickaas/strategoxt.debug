@@ -22,6 +22,13 @@ public class StrDebugServiceFactory implements IDebugServiceFactory {
 		StrDebugTarget target = new StrDebugTarget(getLanguageID(), launch, port);
 		return target;
 	}
+	
+	@Override
+	public LIDebugTarget createDebugTarget(String languageID, ILaunch launch,
+			VirtualMachine vm) {
+		StrDebugTarget target = new StrDebugTarget(languageID, launch, vm);
+		return target;
+	}
 
 	@Override
 	public LIConstants getLIConstants() {

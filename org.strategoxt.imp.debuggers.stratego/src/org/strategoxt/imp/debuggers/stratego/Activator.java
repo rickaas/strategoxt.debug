@@ -62,8 +62,10 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	private void registerDebugger() { 
-		String languageID = org.strategoxt.imp.editors.stratego.Activator.getInstance().getLanguageID();
+	private void registerDebugger() {
+		// RL: Do we want to use the StrategoEditor language id: StrategoSugar, or just Stratego
+		//String languageID = org.strategoxt.imp.editors.stratego.Activator.getInstance().getLanguageID();
+		String languageID = StrategoConstants.getLanguageID();
 		System.out.println("Trying to register debugger for language : " + languageID);
 		//Platform.getPlugin(id) // or can we use something like that to lookup the Activator classes
 		//Platform.getPlugin(org.spoofax.debug.core.Activator.PLUGIN_ID); // deprecated

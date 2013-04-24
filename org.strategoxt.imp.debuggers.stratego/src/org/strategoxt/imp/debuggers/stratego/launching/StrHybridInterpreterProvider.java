@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.spoofax.debug.instrumentation.util.JavaDebugLibraryJarLocation;
 import org.spoofax.interpreter.core.InterpreterErrorExit;
 import org.spoofax.interpreter.core.InterpreterException;
 import org.spoofax.interpreter.core.InterpreterExit;
@@ -14,6 +15,7 @@ import org.strategoxt.IncompatibleJarException;
 import org.strategoxt.NoInteropRegistererJarException;
 import org.strategoxt.imp.debuggers.stratego.instrumentation.util.IHybridInterpreterProvider;
 import org.strategoxt.imp.debuggers.stratego.libraries.StrategoDI;
+import org.strategoxt.imp.debuggers.stratego.libraries.StrategoRuntimeDebug;
 import org.strategoxt.imp.editors.stratego.StrategoSugarParseController;
 import org.strategoxt.imp.runtime.Environment;
 import org.strategoxt.imp.runtime.dynamicloading.BadDescriptorException;
@@ -58,9 +60,17 @@ public class StrHybridInterpreterProvider implements IHybridInterpreterProvider 
 		// Descriptor descriptor = ((EditorIOAgent) agent).getDescriptor();
 		// descriptor.getBasePath().toPortableString();
 
+		// RL: We can get an IncompatibleJarException when one of the jars we want to load is instrumented
+		// and we forgot to load the stratego debug runtime library.
 		URL libdsldi = org.spoofax.debug.instrumentation.util.LibDsldiJarLocations.getLibdsldi();
 		URL strategodi = StrategoDI.getJarLocation();
-		safeLoadJar(i, libdsldi, strategodi);
+		// spoofax debug runtime library
+		URL interfaces = JavaDebugLibraryJarLocation.getInterfacesPath();
+		URL javaInterfaces = JavaDebugLibraryJarLocation.getJavaInterfacesPath();
+		
+		// stratego debug runtime library
+		URL strategoDebugRuntimeLibrary = StrategoRuntimeDebug.getJarLocation();
+		safeLoadJar(i, libdsldi, strategodi, interfaces, javaInterfaces, strategoDebugRuntimeLibrary);
 		
 		return i;
 	}

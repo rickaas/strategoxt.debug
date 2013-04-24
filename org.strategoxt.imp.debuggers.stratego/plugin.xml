@@ -52,6 +52,14 @@
             sourceLocatorId="org.strategoxt.imp.debuggers.stratego.sourceLocator"
             sourcePathComputerId="org.strategoxt.imp.debuggers.stratego.sourcePathComputer">
       </launchConfigurationType>
+      <launchConfigurationType
+            delegate="org.strategoxt.imp.debuggers.stratego.launching.StrRemoteLaunchDelegate"
+            id="org.strategoxt.imp.debuggers.stratego.remoteLaunchConfigurationType"
+            modes="run,debug"
+            name="Remote Stratego"
+            sourceLocatorId="org.strategoxt.imp.debuggers.stratego.sourceLocator"
+            sourcePathComputerId="org.strategoxt.imp.debuggers.stratego.sourcePathComputer">
+      </launchConfigurationType>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
@@ -61,6 +69,12 @@
             id="org.strategoxt.imp.debuggers.stratego.launchConfigurationTabGroup"
             type="org.strategoxt.imp.debuggers.stratego.launchConfigurationType">
       </launchConfigurationTabGroup>
+      <launchConfigurationTabGroup
+            class="org.strategoxt.imp.debuggers.stratego.launching.ui.RemoteStrTabGroup"
+            description="Remote Stratego Program"
+            id="org.strategoxt.imp.debuggers.stratego.remoteLaunchConfigurationTabGroup"
+            type="org.strategoxt.imp.debuggers.stratego.remoteLaunchConfigurationType">
+      </launchConfigurationTabGroup>
    </extension>
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
@@ -68,6 +82,11 @@
             configTypeID="org.strategoxt.imp.debuggers.stratego.launchConfigurationType"
             icon="icons/strategoxt_logo_16.png"
             id="org.strategoxt.imp.debuggers.stratego.launchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            configTypeID="org.strategoxt.imp.debuggers.stratego.remoteLaunchConfigurationType"
+            icon="icons/strategoxt_logo_16.png"
+            id="org.strategoxt.imp.debuggers.stratego.remoteLaunchConfigurationTypeImage">
       </launchConfigurationTypeImage>
    </extension>
    <extension

@@ -15,12 +15,14 @@ public class StrategoConstants {
 	 * program. The path is a string representing a full path
 	 * to a ActionLanguage program in the workspace. 
 	 */
-	public static final String ATTR_STR_PROGRAM = ID_STR_DEBUG_MODEL + ".ATTR_ALNG_PROGRAM";
+	public static final String ATTR_STR_PROGRAM = ID_STR_DEBUG_MODEL + ".ATTR_STR_PROGRAM";
 	
 	// org.strategoxt.imp.debuggers.stratego.launchConfigurationType
 	public static final String STR_LAUNCH_CONFIG_TYPE = ID_STR_DEBUG_MODEL + ".launchConfigurationType";
 	
 	public static final String STR_LINEBREAKPOINT_MARKER = ID_STR_DEBUG_MODEL + ".lineBreakpoint.marker";
+
+	public static final String ATTR_LANGUAGE = ID_STR_DEBUG_MODEL + ".ATTR_LANGUAGE";
 	
 	public static String getLanguageID() {
 		return "Stratego";
@@ -37,10 +39,16 @@ public class StrategoConstants {
 		public String getDebugModel() {
 			return ID_STR_DEBUG_MODEL;
 		}
-
+		
 		@Override
 		public String getLineBreakpointMarker() {
 			return STR_LINEBREAKPOINT_MARKER;
+		}
+		
+		@Override
+		public String getLanguage() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }
