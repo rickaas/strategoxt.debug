@@ -12,7 +12,8 @@ import util.StrTestConstants;
 public class ProgramInstrument001 extends ProgramInstrumentationBase {
 
 	protected String getDsldiLocation() {
-		return StrTestConstants.STR_SCRIPTS_DIR + "/dsldis/StrategyDefEnterExit.dsldi";
+		return "str_scripts/dsldis/Stratego.dsldi";
+		//return StrTestConstants.STR_SCRIPTS_DIR + "/dsldis/StrategyDefEnterExit.dsldi";
 	}
 	protected String getDslProgramBasePath() {
 		return StrTestConstants.STR_SCRIPTS_TESTCASES_DIR + "/programs/001_tiny";

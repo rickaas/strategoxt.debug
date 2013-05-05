@@ -10,7 +10,8 @@ import util.StrTestConstants;
 public class ProgramInstrument005 extends ProgramInstrumentationBase {
 
 	protected String getDsldiLocation() {
-		return "str_scripts/dsldis/StrategyDefEnterExit.dsldi";
+		return "str_scripts/dsldis/Stratego.dsldi";
+		//return "str_scripts/dsldis/StrategyDefEnterExit.dsldi";
 	}
 	protected String getDslProgramBasePath() {
 		return StrTestConstants.STR_SCRIPTS_TESTCASES_DIR + "/programs/005_multiplefiles";
