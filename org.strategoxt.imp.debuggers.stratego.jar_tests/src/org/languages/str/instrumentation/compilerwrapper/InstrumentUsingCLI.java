@@ -15,7 +15,6 @@ public class InstrumentUsingCLI {
 				"--output-dir","str_scripts/generated/cli",
 				"--fake-run", "true",
 				"--jar", StrTestConstants.LIBDSLDI_JAR,
-				"--jar", StrTestConstants.DSLDI_JAVA_JAR,
 				"--jar", StrTestConstants.STRATEGOSUGAR_JAR,
 				"--jar", StrTestConstants.STRATEGO_DI_JAR,
 		};
@@ -32,7 +31,6 @@ public class InstrumentUsingCLI {
 				"--output-dir","str_scripts/generated/cli/strategoxt",
 //				"--fake-run", "true",
 				"--jar", StrTestConstants.LIBDSLDI_JAR,
-				"--jar", StrTestConstants.DSLDI_JAVA_JAR,
 				"--jar", StrTestConstants.STRATEGOSUGAR_JAR,
 				"--jar", StrTestConstants.STRATEGO_DI_JAR,
 		};

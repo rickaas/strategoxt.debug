@@ -10,7 +10,7 @@ public class StrTestConstants {
 	public static String LIB_DIR = "lib";
 	public static String LIB_INSTRUMENTATION_DIR = LIB_DIR + "/instrumentation";
 
-	public static String DSLDI_JAVA_JAR = LIB_INSTRUMENTATION_DIR + "/dsldi-java.jar";
+	//public static String DSLDI_JAVA_JAR = LIB_INSTRUMENTATION_DIR + "/dsldi-java.jar";
 	public static String DSLDI_JAR = LIB_INSTRUMENTATION_DIR + "/dsldi.jar";
 	public static String LIBDSLDI_JAR = LIB_INSTRUMENTATION_DIR + "/libdsldi.jar";
 	

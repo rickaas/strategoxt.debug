@@ -36,20 +36,7 @@ public class FileTests {
 			Assert.fail();
 		}
 	}
-	
-	@Test
-	public void testZipFile2() {
-		try {
-			ZipFile zip = new ZipFile(StrTestConstants.DSLDI_JAVA_JAR);
-			System.out.println(zip.getName());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Assert.fail();
-		}
-	}
-	
-	
+
 	@Test
 	public void testZipFile5() {
 		try {

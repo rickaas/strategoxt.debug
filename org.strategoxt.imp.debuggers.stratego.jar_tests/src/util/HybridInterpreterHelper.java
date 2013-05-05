@@ -34,7 +34,7 @@ public class HybridInterpreterHelper {
 		safeLoadJar(i, StrTestConstants.LIBDSLDI_JAR);
 		// also load dsldi-java because it contains strategies implemented in java
 		// TODO: move the java strategies from dsldi-java.jar to lidsldi-java.jar
-		safeLoadJar(i, StrTestConstants.DSLDI_JAVA_JAR);
+		// safeLoadJar(i, StrTestConstants.DSLDI_JAVA_JAR); // is merged into libdsldi.jar
 		// language specific strategies
 		safeLoadJar(i, StrTestConstants.STRATEGOSUGAR_JAR);
 		safeLoadJar(i, StrTestConstants.STRATEGO_DI_JAR);
