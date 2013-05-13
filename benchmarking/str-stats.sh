@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# str-stats.sh BASEDIR
+# BASEDIR points to a directory with stratego files
+# The program will:
+# * count all .str files
+# * Count all lines (including blank and comments) in stratego files
+# * Line count (no blanks, no comments and pretty printed)
+
 BASEDIR=$1
 if [ -z "${BASEDIR}" ]; then
     echo "BASEDIR is unset or set to the empty string"

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# linecount.sh FILE COUNT_TYPE
+# FILE location of a file
+# COUNT_TYPE = usewc | usepp
+#              usewc: count all lines (including blank and comments)
+#              usepp: pretty-print the file (comments are dropped, lines can be split/joined together) then count all non-blank lines
+
 #INSTR_STR_SRC=strategoxt-di-source
 
 #cd $INSTR_STR_SRC
