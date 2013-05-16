@@ -44,4 +44,32 @@ public class DebugEvents {
 		String s = s1 + "\t" + s2;
 		return s;
 	}
+	
+	/**
+	 * Replace all java_*-strategies with their silent_*-counterpart.
+	 */
+	public static void disableEvents() {
+		// RL: Is it safe to replace the instances at runtime?
+		java_s_var_0_4.instance = new silent_s_var_0_4();
+		java_s_step_0_3.instance = new silent_s_step_0_3();
+		java_s_fail_0_3.instance = new silent_s_fail_0_3();
+		java_s_exit_0_4.instance = new silent_s_exit_0_4();
+		java_s_enter_0_4.instance = new silent_s_enter_0_4();
+		java_r_exit_0_4.instance = new silent_r_exit_0_4();
+		java_r_enter_0_4.instance = new java_r_enter_0_4();
+	}
+	
+	/**
+	 * Re-create the java_*-strategy instances.
+	 */
+	public static void enableEvents() {
+		// RL: Is it safe to replace the instances at runtime?
+		java_s_var_0_4.instance = new java_s_var_0_4();
+		java_s_step_0_3.instance = new java_s_step_0_3();
+		java_s_fail_0_3.instance = new java_s_fail_0_3();
+		java_s_exit_0_4.instance = new java_s_exit_0_4();
+		java_s_enter_0_4.instance = new java_s_enter_0_4();
+		java_r_exit_0_4.instance = new java_r_exit_0_4();
+		java_r_enter_0_4.instance = new java_r_enter_0_4();
+	}
 }
