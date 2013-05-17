@@ -31,7 +31,7 @@ function DoBenchmarkUseDebugJavaDebug {
 		echo "Starting iteration $i"
 		rm -rf $3
 		mkdir -p $3
-		./do_benchmark.sh USE_DEBUG JAVA_DEBUG DO_REDIRECT output/$1.debug.javadebug.log -i $2 -o $3/$1.java
+		./do_benchmark.sh USE_DEBUG JAVA_DEBUG_WAIT DO_REDIRECT output/$1.debug.javadebug.log -i $2 -o $3/$1.java
 	done
 }
 
@@ -63,23 +63,24 @@ function DoBenchmarkUseReleaseJavaDebug {
 	done
 }
 
+
 echo =====================
 echo =====================
 echo 001_tiny
 
 rm output/tiny.debug.log
-DoBenchmarkUseDebug tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/debug
+#DoBenchmarkUseDebug tiny $MINI_PROGRAMS/001_tiny/tiny.rtree $prefix/output/001_tiny/debug
 
 rm output/tiny.debug.javadebug.log
 DoBenchmarkUseDebugJavaDebug tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/debug
-
+exit
 echo ------------
 
 rm output/tiny.release.log
-DoBenchmarkUseRelease tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/release
+#DoBenchmarkUseRelease tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/release
 
 rm output/tiny.release.javadebug.log
-DoBenchmarkUseReleaseJavaDebug tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/release
+#DoBenchmarkUseReleaseJavaDebug tiny $MINI_PROGRAMS/001_tiny/tiny.str $prefix/output/001_tiny/release
 
 echo =====================
 echo =====================

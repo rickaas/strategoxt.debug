@@ -30,6 +30,12 @@ if [ "JAVA_DEBUG" == "$1" ] ; then
 	# Allow debugger to connect
 fi
 
+if [ "JAVA_DEBUG_WAIT" == "$1" ] ; then
+	shift
+	RUN_OPTS="DEBUG_SUSPEND"
+	# Wait for debugger to attach
+fi
+
 echo "args"
 echo "$@"
 # "DEBUG_SUSPEND"
