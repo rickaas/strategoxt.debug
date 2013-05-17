@@ -1,75 +1,35 @@
 package org.strategoxt.imp.debuggers.stratego.runtime;
 
-import org.spoofax.debug.interfaces.java.FireEvent;
-import org.spoofax.debug.interfaces.java.GlobalVarEnvironmentScope;
-
+/**
+ * Global Stratego event handling class.
+ * All events are passed on to the DebugEventsForwarder which will forward the events 
+ * to the generic debug event handling library.
+ * @author rlindeman
+ *
+ */
 public class DebugEvents {
 
+	public static DebugEventsForwarder INSTANCE;
+	static {
+		INSTANCE = new DebugEventsForwarder();
+	}
+	
 	public static void enter(String filename, String location, String functionName) {
-		String eventInfo = join(filename, location, functionName);
-		GlobalVarEnvironmentScope.get().enterFrame();
-		FireEvent.enter(eventInfo);
+		INSTANCE.enter(filename, location, functionName);
 	}
-	
 	public static void exit(String filename, String location, String functionName) {
-		String eventInfo = join(filename, location, functionName);
-		GlobalVarEnvironmentScope.get().exitFrame(); // Or should this be after exit?
-		FireEvent.exit(eventInfo);
+		INSTANCE.exit(filename, location, functionName);
 	}
-	
 	public static void var(String filename, String location, String varName, Object value) {
-		String eventInfo = join(filename, location, varName);
-		GlobalVarEnvironmentScope.get().setVar(varName, value);
-		FireEvent.var(eventInfo);
+		INSTANCE.var(filename, location, varName, value);
 	}
-	
-	/**
-	 * After each step the current term can be changed.
-	 * Save the current term in the Variable Environment but do not include it in the debug event.
-	 * The value is retrieved when the program is suspended. 
-	 * @param filename
-	 * @param location
-	 */
 	public static void step(String filename, String location) {
-		String eventInfo = join(filename, location);
-		FireEvent.step(eventInfo);
+		INSTANCE.step(filename, location);
 	}
-	
-	private static String join(String s1, String s2, String s3) {
-		String s = s1 + "\t" + s2 + "\t" + s3;
-		return s;
-	}
-	
-	private static String join(String s1, String s2) {
-		String s = s1 + "\t" + s2;
-		return s;
-	}
-	
-	/**
-	 * Replace all java_*-strategies with their silent_*-counterpart.
-	 */
 	public static void disableEvents() {
-		// RL: Is it safe to replace the instances at runtime?
-		java_s_var_0_4.instance = new silent_s_var_0_4();
-		java_s_step_0_3.instance = new silent_s_step_0_3();
-		java_s_fail_0_3.instance = new silent_s_fail_0_3();
-		java_s_exit_0_4.instance = new silent_s_exit_0_4();
-		java_s_enter_0_4.instance = new silent_s_enter_0_4();
-		java_r_exit_0_4.instance = new silent_r_exit_0_4();
-		java_r_enter_0_4.instance = new java_r_enter_0_4();
+		INSTANCE.disableEvents();
 	}
-	
-	/**
-	 * Re-create the java_*-strategy instances.
-	 */
 	public static void enableEvents() {
-		// RL: Is it safe to replace the instances at runtime?
-		java_s_var_0_4.instance = new java_s_var_0_4();
-		java_s_step_0_3.instance = new java_s_step_0_3();
-		java_s_fail_0_3.instance = new java_s_fail_0_3();
-		java_s_exit_0_4.instance = new java_s_exit_0_4();
-		java_s_enter_0_4.instance = new java_s_enter_0_4();
-		java_r_exit_0_4.instance = new java_r_exit_0_4();
-		java_r_enter_0_4.instance = new java_r_enter_0_4();
+		INSTANCE.enableEvents();
 	}
 }

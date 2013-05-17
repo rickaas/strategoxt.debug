@@ -80,7 +80,7 @@ public abstract class DebugCallStrategy extends org.strategoxt.lang.Strategy {
 		this.context = context;
 		this.filenameString = filename.toString();
 		this.locationString = location.toString();
-		this.givenTermString = given.toString();
+		//this.givenTermString = given.toString(); // very slowwwwww....
 		this.current = current;
 		//debug("TEST " + filename.toString() + " D:"+getDRKeySetString()); // adding this will prevent a TimeoutException (I think because it will trigger a ClassLoad...)
 		return current;
