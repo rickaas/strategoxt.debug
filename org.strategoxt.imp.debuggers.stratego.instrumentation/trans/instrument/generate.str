@@ -12,7 +12,7 @@ imports instrument/generate-str-statements
 
 strategies
 	stratego-post-instrumentation =
-        add-debug-import
+        add-debug-import; fix-lifted-strategy-arguments
         
 strategies
 // add the imports stratego-debug-lib
@@ -22,3 +22,82 @@ strategies
         // insert Imports([Import("strategodebuglib")])
         with def'* := <insert> (0, Imports([Import("org.strategoxt.imp.debuggers.stratego.runtime")]), def*)
         // make sure strategodebuglib.rtree is on the path when compiling str to java
+        
+    fix-lifted-strategy-arguments =
+        bottomup(try(
+            fix-call-arguments
+            //; debug(!"AFTER: ")
+        ))
+        
+    fix-call-arguments :
+        c@CallT(name, s-args*, t-args*) -> CallT(name, s-args'*, t-args*)
+        where <is-list> s-args* //; <debug(!"CT:")> c
+            //; <map(debug(!"SARG: "))> s-args*
+            ; s-args'* := <map(
+                  //debug(!"ARG BEFORE: ") ;
+                  try(drop-first-step-event)
+                  //; debug(!"ARG AFTER : ")
+                    )> s-args*
+    fix-call-arguments :
+        c@Call(name, s-args*) -> Call(name, s-args'*)
+        where <is-list> s-args* //; <debug(!"C :")> c
+            //; <map(debug(!"SARG: "))> s-args*
+            ; s-args'* := <map(
+                  //debug(!"ARG BEFORE: "); 
+                  try(drop-first-step-event)
+                  //; debug(!"ARG AFTER : ")
+                    )> s-args*
+             
+    drop-first-step-event :
+        LChoice(s-left, s-right) -> rewrite
+        //s -> s
+        //where <debug(!"Seq   ")> s
+        where
+             if <is-step-event-call> s-left then
+                 //debug(!"REMOVE STEP  ");
+                 !s-right
+                 ; try(drop-first-step-event)
+             else
+                 //<debug(!"LEFT SEQ: ")> s-left ;
+                 s-left' := <try(drop-first-step-event)> s-left
+                 ; !LChoice(s-left', s-right)
+        //         ; !Seq(left', right)
+             end
+             ; ?rewrite
+               
+    drop-first-step-event :
+        s@Seq(s-left, s-right) -> rewrite
+        //s -> s
+        //where <debug(!"Seq   ")> s
+        where
+             if <is-step-event-call> s-left then
+                 //debug(!"REMOVE STEP  ");
+                 !s-right
+                 ; try(drop-first-step-event)
+             else
+                 //<debug(!"LEFT SEQ: ")> s-left ;
+                 s-left' := <try(drop-first-step-event)> s-left
+	             ; !Seq(s-left', s-right)
+        //         ; !Seq(left', right)
+             end
+             ; ?rewrite
+    
+    is-step-event-call :
+        c@CallT(SVar("s-step"),_,_) -> c
+              
+              /*
+    drop-first-step-event :
+        Seq(left, remainder) -> remainder'
+        where debug(!"CallT   ")
+        where !left => CallT(SVar("s-step"),_,_)
+        where
+            remainder' := <debug(!"REMAINDER: "); try(drop-first-step-event)> remainder
+    drop-first-step-event :
+        Seq(left, right) -> Seq(left', right)
+        where debug(!"Seq   ")
+        where
+            left' := <debug(!"SEQ LEFT: "); try(drop-first-step-event)> left
+            */
+//    drop-first-step-event :
+//        Seq(Seq(CallT(SVar("s-step"),_,_), remainder1), remainder2) -> Seq(remainder1, remainder2)
+        

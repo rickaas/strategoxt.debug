@@ -35,11 +35,21 @@ strategies
     gen-step:
         strategy -> instrumented-strategy
         where
-            //id; GET-DSL-PROGRAM-SOURCE
-            //; lib-position-of-term(?strategy); // find the position of the current term in the source ast
-            // determine if strategy is used as an argument (the parent of the current ATerm is a strategy call)
-            // and try to find the signature of the parent strategy call
-            debug-information := <GET-CURRENT-DEBUG-INFORMATION> // debug-information := (filename, a, b, c, d)
+            id
+            // ; debug; GET-DSL-PROGRAM-SOURCE
+            // RL: disabled because lib-position-of-term always returns the first occurance (value-equals is used)
+            // ; lib-position-of-term(?strategy) => my-position// find the position of the current term in the source ast
+            // ; debug
+            // ; lib-parent-position => position-of-parent; debug // position of parent
+            // ; lib-parent-position => position-of-grandparent; debug
+            // ; GET-DSL-PROGRAM-SOURCE
+            // ; lib-term-at-position(|position-of-parent) => parent ; debug(!"P: ")
+            // ; GET-DSL-PROGRAM-SOURCE
+            // ; lib-term-at-position(|position-of-grandparent) => grandparent ; debug(!"GP: ")
+            // // determine if strategy is used as an argument (the parent of the current ATerm is a strategy call)
+            // // and try to find the signature of the parent strategy call
+            // ; not(<skip-step-instr(|<last;inc;debug>my-position)> grandparent)
+            ; debug-information := <GET-CURRENT-DEBUG-INFORMATION> strategy // debug-information := (filename, a, b, c, d)
             ;?(filename, a, b, c, d)
             ; program-filename := $["[filename]"]
             ; location := <map(\item -> $["[item]"]\)> [a,b,c,d]
@@ -52,6 +62,27 @@ strategies
             s' := Seq(step-event, s)
 
 
+    // Call(SVar("do-foo"),[CallNoArgs(SVar("foo1"))])
+    skip-step-instr(|s-arg-index) :
+        c@Call(_, s-args*) -> c
+        where
+            <is-list> s-args*
+            ; index(|s-arg-index)
+            ; is-call
+    skip-step-instr(|s-arg-index) :
+        c@CallT(_,s-args*,_) -> c
+        where
+            <is-list> s-args*
+            ; index(|s-arg-index)
+            ; is-call
+              
+    is-call :
+        c@Call(_, _) -> c
+    is-call :
+        c@CallT(_, _, _) -> c
+    is-call :
+        c@CallNoArgs(_) -> c
+        
 strategies
     create-step-call(|filename, location) = 
         args := <flatten-list; create-f-n-l-list> [filename, location]
