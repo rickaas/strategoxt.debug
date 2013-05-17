@@ -6,7 +6,9 @@ strategies
     
     main = do-foo(foo1); do-foo(foo2)
     
-    do-foo(foo-strategy) = foo-strategy(debug, debug|"TERM")
+    // foo-strategy(s,s,t)
+    do-foo(foo-strategy) = foo-strategy(debug, debug<+ id;debug|"TERM")
     
-    foo1(s1,s2|t1) = id
-    foo2(s1,s2|t1) = id
+    foo1(s1,s2|t1) = s1(!t1)
+    foo2(s1,s2|t1) = s1(!t1); s2
+
